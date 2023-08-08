@@ -33,9 +33,9 @@ export const enum MaaStatusEnum {
 }
 
 export const MaaId = koffi.alias('MaaId', 'int64')
+export type MaaID = bigint
 export const MaaCtrlId = koffi.alias('MaaCtrlId', 'MaaId')
 export const MaaResId = koffi.alias('MaaResId', 'MaaId')
-export type MaaResID = bigint
 export const MaaTaskId = koffi.alias('MaaTaskId', 'MaaId')
 export const MaaInvalidId = 0
 

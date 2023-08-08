@@ -1,12 +1,12 @@
-import path from 'path'
 import koffi from 'koffi'
+import path from 'path'
 
 type AcceptPlatform = 'win32' | 'linux' | 'darwin'
 
 const plat = process.platform as AcceptPlatform
 
 const libName: Record<AcceptPlatform, (d: string, l: string) => string> = {
-  win32: l => `${l}.dll`,
+  win32: (d, l) => path.join(d, `${l}.dll`),
   linux: (d, l) => path.join(d, `lib${l}.so`),
   darwin: (d, l) => path.join(d, `lib${l}.dylib`)
 }
@@ -14,7 +14,7 @@ const libName: Record<AcceptPlatform, (d: string, l: string) => string> = {
 let win_dll_paths: string[] | null = null
 
 export function loadLibrary(file: string) {
-  const dir = path.dirname(file)
+  const dir = path.resolve(path.dirname(file))
   const lib = path.basename(file)
 
   if (plat === 'win32') {

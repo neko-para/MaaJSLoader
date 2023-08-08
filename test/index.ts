@@ -1,13 +1,40 @@
-import { MaaFrameworkLoader, MaaResource } from '..'
+import fs from 'fs/promises'
 
-const loader = new MaaFrameworkLoader()
+import { MaaController, MaaFrameworkLoader, MaaInstance, MaaResource } from '..'
+import { MaaAdbControllerTypeEnum } from '../src/framework/types'
 
-console.log(loader.load('./install/bin'))
+async function main() {
+  const loader = new MaaFrameworkLoader()
+  loader.load('./install/bin')
 
-const res = new MaaResource(loader, (msg, detail) => {
-  console.log(msg, detail)
+  loader.setLogging('./debug')
+
+  const res = new MaaResource(loader)
+  console.log(await res.load('./install/share/resource'))
+
+  const ctrl = new MaaController(
+    loader,
+    'adb.exe',
+    '127.0.0.1:16384',
+    MaaAdbControllerTypeEnum.Input_Preset_Adb | MaaAdbControllerTypeEnum.Screencap_RawWithGzip,
+    await fs.readFile('./install/share/controller_config.json', 'utf-8'),
+    (msg, detail) => {
+      console.log(msg, detail)
+    }
+  )
+  console.log(await ctrl.connect())
+
+  const inst = new MaaInstance(loader, (msg, detail) => {
+    console.log(msg, detail)
+  })
+
+  inst.bindResource(res)
+  inst.bindController(ctrl)
+
+  console.log(inst.inited())
+}
+
+const res = setTimeout(() => {}, 1000 * 60 * 60)
+main().then(() => {
+  clearTimeout(res)
 })
-
-console.log(res.post('./install/share/resource'))
-
-setTimeout(() => {}, 1000 * 60 * 60)
