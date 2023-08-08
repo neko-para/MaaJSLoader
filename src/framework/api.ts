@@ -48,9 +48,9 @@ const protos = {
   MaaControllerWait: 'MaaStatus MaaControllerWait(MaaControllerHandle ctrl, MaaCtrlId id)',
   MaaControllerConnected: 'MaaBool MaaControllerConnected(MaaControllerHandle ctrl)',
   MaaControllerGetImage:
-    'MaaSize MaaControllerGetImage(MaaControllerHandle ctrl, void* buff, MaaSize buff_size)',
+    'MaaSize MaaControllerGetImage(MaaControllerHandle ctrl, _Out_ void* buff, MaaSize buff_size)',
   MaaControllerGetUUID:
-    'MaaSize MaaControllerGetUUID(MaaControllerHandle ctrl, char* buff, MaaSize buff_size)',
+    'MaaSize MaaControllerGetUUID(MaaControllerHandle ctrl, _Out_ char* buff, MaaSize buff_size)',
 
   MaaCreate:
     'MaaInstanceHandle MaaCreate(MaaInstanceCallback callback, MaaCallbackTransparentArg callback_arg)',

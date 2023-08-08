@@ -122,9 +122,26 @@ export class MaaController {
   }
 
   screencap() {
-    return this.dispatcher.post(this.loader.func.MaaControllerPostScreencap(this.handle))
+    return this.dispatcher.post(this.loader.func.MaaControllerPostScreencap(this.handle)).promise
   }
 
-  // image()
-  // uuid()
+  image(cache = 4 << 20) {
+    const buf = Buffer.allocUnsafe(cache)
+    const rsize: bigint = this.loader.func.MaaControllerGetImage(this.handle, buf, cache)
+    if (rsize === 0xffffffffffffffffn) {
+      return null
+    } else {
+      return buf
+    }
+  }
+
+  uuid(cache = 64 + 2) {
+    let out = ['\0'.repeat(cache)]
+    const rsize = this.loader.func.MaaControllerGetUUID(this.handle, out, 65)
+    if (rsize === 0xffffffffffffffffn) {
+      return null
+    } else {
+      return out[0]
+    }
+  }
 }

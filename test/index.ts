@@ -23,6 +23,11 @@ async function main() {
     }
   )
   console.log(await ctrl.connect())
+  await ctrl.screencap()
+  const buf = ctrl.image()
+  if (buf) {
+    await fs.writeFile('test.png', buf)
+  }
 
   const inst = new MaaInstance(loader, (msg, detail) => {
     console.log(msg, detail)
