@@ -2,15 +2,19 @@ import koffi from 'koffi'
 
 export const MaaResourceAPI = koffi.opaque('MaaResourceAPI')
 export const MaaResourceHandle = koffi.alias('MaaResourceHandle', 'MaaResourceAPI*')
+export type MaaResourceHandle = unknown
 
 export const MaaControllerAPI = koffi.opaque('MaaControllerAPI')
 export const MaaControllerHandle = koffi.alias('MaaControllerHandle', 'MaaControllerAPI*')
+export type MaaControllerHandle = unknown
 
 export const MaaInstanceAPI = koffi.opaque('MaaInstanceAPI')
 export const MaaInstanceHandle = koffi.alias('MaaInstanceHandle', 'MaaInstanceAPI*')
+export type MaaInstanceHandle = unknown
 
 export const MaaSyncContextAPI = koffi.opaque('MaaSyncContextAPI')
 export const MaaSyncContextHandle = koffi.alias('MaaSyncContextHandle', 'MaaSyncContextAPI*')
+export type MaaSyncContextHandle = unknown
 
 export const MaaBool = koffi.alias('MaaBool', 'uint8')
 export const MaaSize = koffi.alias('MaaSize', 'uint64')
@@ -31,6 +35,7 @@ export const enum MaaStatusEnum {
 export const MaaId = koffi.alias('MaaId', 'int64')
 export const MaaCtrlId = koffi.alias('MaaCtrlId', 'MaaId')
 export const MaaResId = koffi.alias('MaaResId', 'MaaId')
+export type MaaResID = bigint
 export const MaaTaskId = koffi.alias('MaaTaskId', 'MaaId')
 export const MaaInvalidId = 0
 
@@ -101,6 +106,7 @@ export const MaaAPICallback = koffi.alias('MaaAPICallback', koffi.pointer(MaaAPI
 export const MaaResourceCallback = koffi.alias('MaaResourceCallback', 'MaaAPICallback')
 export const MaaControllerCallback = koffi.alias('MaaControllerCallback', 'MaaAPICallback')
 export const MaaInstanceCallback = koffi.alias('MaaInstanceCallback', 'MaaAPICallback')
+export type MaaAPICallback = (msg: string, details: string) => void
 
 export const MaaRect = koffi.struct('MaaRect', {
   x: 'int32',

@@ -1,3 +1,1 @@
-import { MaaFrameworkLoader } from './framework'
-
-export { MaaFrameworkLoader }
+export * from './framework'
