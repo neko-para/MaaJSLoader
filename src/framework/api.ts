@@ -6,6 +6,10 @@ const protos = {
   MaaVersion: 'MaaString MaaVersion()',
   MaaSetGlobalOption:
     'MaaBool MaaSetGlobalOption(MaaGlobalOption key, MaaOptionValue value, MaaOptionValueSize val_size)',
+  MaaSetGlobalOptionString:
+    'MaaBool MaaSetGlobalOption(MaaGlobalOption key, const char* value, MaaOptionValueSize val_size)',
+  MaaSetGlobalOptionBool:
+    'MaaBool MaaSetGlobalOption(MaaGlobalOption key, uint8_t* value, MaaOptionValueSize val_size)',
 
   MaaResourceCreate:
     'MaaResourceHandle MaaResourceCreate(MaaResourceCallback callback, MaaCallbackTransparentArg callback_arg)',
@@ -29,6 +33,11 @@ const protos = {
   MaaControllerDestroy: 'void MaaControllerDestroy(MaaControllerHandle ctrl)',
   MaaControllerSetOption:
     'MaaBool MaaControllerSetOption(MaaControllerHandle ctrl, MaaCtrlOption key, MaaOptionValue value, MaaOptionValueSize val_size)',
+  MaaControllerSetOptionString:
+    'MaaBool MaaControllerSetOption(MaaControllerHandle ctrl, MaaCtrlOption key, const char* value, MaaOptionValueSize val_size)',
+  MaaControllerSetOptionInt:
+    'MaaBool MaaControllerSetOption(MaaControllerHandle ctrl, MaaCtrlOption key, int32_t* value, MaaOptionValueSize val_size)',
+
   MaaControllerPostConnection: 'MaaCtrlId MaaControllerPostConnection(MaaControllerHandle ctrl)',
   MaaControllerPostClick:
     'MaaCtrlId MaaControllerPostClick(MaaControllerHandle ctrl, int32_t x, int32_t y)',

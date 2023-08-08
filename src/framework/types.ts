@@ -41,7 +41,8 @@ export const MaaOptionValueSize = koffi.alias('MaaOptionValueSize', 'uint64')
 export const MaaGlobalOption = koffi.alias('MaaGlobalOption', 'MaaOption')
 export const enum MaaGlobalOptionEnum {
   Invalid = 0,
-  Logging = 1
+  Logging = 1,
+  DebugMode = 2
 }
 
 export const MaaResOption = koffi.alias('MaaResOption', 'MaaOption')
