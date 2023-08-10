@@ -50,26 +50,9 @@ export class Dispatcher {
     this.task = {}
   }
 
-  post(id: bigint): {
-    status: DispatcherStatus
-    promise: Promise<boolean>
-  } {
-    const key = `${id}`
-    if (key in this.task) {
-      return this.task[key]
-    } else {
-      const res = {
-        status: DispatcherStatus.Pending,
-        ...getPromise<boolean>()
-      }
-      this.task[`${id}`] = res
-      return res
-    }
-  }
-
-  postWithCB(
+  post(
     id: bigint,
-    onstatus: (status: DispatcherStatus) => {}
+    onstatus?: (status: DispatcherStatus) => {}
   ): {
     status: DispatcherStatus
     promise: Promise<boolean>
@@ -80,8 +63,8 @@ export class Dispatcher {
     } else {
       const res = {
         status: DispatcherStatus.Pending,
-        ...getPromise<boolean>(),
-        onstatus
+        onstatus,
+        ...getPromise<boolean>()
       }
       this.task[`${id}`] = res
       return res
