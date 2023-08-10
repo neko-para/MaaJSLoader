@@ -29,6 +29,7 @@ export class Dispatcher {
       status: DispatcherStatus
     } & PromiseInfo<boolean>
   >
+  passlog = false
 
   constructor(state: Record<string, DispatcherStatus>, rest?: MaaAPICallback) {
     this.callback = (msg: string, detail: string) => {
@@ -36,6 +37,9 @@ export class Dispatcher {
       if (st === DispatcherStatus.Invalid) {
         rest?.(msg, detail)
       } else {
+        if (this.passlog) {
+          rest?.(msg, detail)
+        }
         const obj = JSON.parse(detail) as {
           id: bigint
         }
