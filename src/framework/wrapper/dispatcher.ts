@@ -52,7 +52,7 @@ export class Dispatcher {
 
   post(
     id: bigint,
-    onstatus?: (status: DispatcherStatus) => {}
+    onstatus?: (status: DispatcherStatus) => void
   ): {
     status: DispatcherStatus
     promise: Promise<boolean>
