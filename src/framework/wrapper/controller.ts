@@ -131,7 +131,7 @@ export class MaaController {
     if (rsize === 0xffffffffffffffffn) {
       return null
     } else {
-      return buf
+      return buf.subarray(0, parseInt(rsize.toString()))
     }
   }
 
@@ -141,7 +141,7 @@ export class MaaController {
     if (rsize === 0xffffffffffffffffn) {
       return null
     } else {
-      return out[0]
+      return out[0].substring(0, rsize)
     }
   }
 }
