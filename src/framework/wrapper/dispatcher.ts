@@ -27,6 +27,7 @@ export class Dispatcher {
     string,
     {
       status: DispatcherStatus
+      onstatus?: (status: DispatcherStatus) => void
     } & PromiseInfo<boolean>
   >
   passlog = false
@@ -66,6 +67,27 @@ export class Dispatcher {
     }
   }
 
+  postWithCB(
+    id: bigint,
+    onstatus: (status: DispatcherStatus) => {}
+  ): {
+    status: DispatcherStatus
+    promise: Promise<boolean>
+  } {
+    const key = `${id}`
+    if (key in this.task) {
+      return this.task[key]
+    } else {
+      const res = {
+        status: DispatcherStatus.Pending,
+        ...getPromise<boolean>(),
+        onstatus
+      }
+      this.task[`${id}`] = res
+      return res
+    }
+  }
+
   trigger(id: bigint, state: DispatcherStatus) {
     const key = `${id}`
     let info = this.task[key]
@@ -82,19 +104,23 @@ export class Dispatcher {
         break
       case DispatcherStatus.Started:
         info.status = DispatcherStatus.Started
+        info.onstatus?.(info.status)
         break
       case DispatcherStatus.Completed:
         info.status = DispatcherStatus.Completed
+        info.onstatus?.(info.status)
         info.resolve(true)
         delete this.task[key]
         break
       case DispatcherStatus.Failed:
         info.status = DispatcherStatus.Failed
+        info.onstatus?.(info.status)
         info.resolve(false)
         delete this.task[key]
         break
       case DispatcherStatus.Stopped:
         info.status = DispatcherStatus.Stopped
+        info.onstatus?.(info.status)
         info.resolve(false)
         delete this.task[key]
         break
