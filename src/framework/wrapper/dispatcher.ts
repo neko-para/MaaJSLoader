@@ -1,16 +1,5 @@
-import { MaaAPICallback } from '../types'
-
-type PromiseInfo<T> = {
-  resolve: (state: T) => void
-  promise: Promise<T>
-}
-function getPromise<T>(): PromiseInfo<T> {
-  const result: Partial<PromiseInfo<T>> = {}
-  result.promise = new Promise<T>(resolve => {
-    result.resolve = resolve
-  })
-  return result as PromiseInfo<T>
-}
+import { MaaAPICallback } from '..'
+import { PromiseInfo, getPromise } from '../../utils'
 
 export const enum DispatcherStatus {
   Invalid,

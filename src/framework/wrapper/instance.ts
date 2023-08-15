@@ -1,9 +1,8 @@
 import koffi, { IKoffiRegisteredCallback } from 'koffi'
 
 import { MaaController, MaaResource } from '.'
-import { MaaFrameworkLoader } from '..'
+import { MaaAPICallback, MaaFrameworkLoader, MaaInstanceCallback, MaaInstanceHandle } from '..'
 import { MaaMsg } from '../msg'
-import { MaaAPICallback, MaaInstanceCallback, MaaInstanceHandle } from '../types'
 import { Dispatcher, DispatcherStatus } from './dispatcher'
 
 export class MaaInstance {

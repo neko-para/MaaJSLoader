@@ -1,15 +1,14 @@
 import koffi, { IKoffiRegisteredCallback } from 'koffi'
 
-import { MaaFrameworkLoader } from '..'
-import { MaaMsg } from '../msg'
 import {
   MaaAPICallback,
-  MaaAdbControllerTypeEnum,
   MaaControllerCallback,
   MaaControllerHandle,
   MaaCtrlOptionEnum,
+  MaaFrameworkLoader,
   MaaID
-} from '../types'
+} from '..'
+import { MaaMsg } from '../msg'
 import { Dispatcher, DispatcherStatus } from './dispatcher'
 
 export class MaaController {

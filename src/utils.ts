@@ -31,3 +31,15 @@ export function loadLibrary(file: string) {
 
   return koffi.load(libName[plat](dir, lib))
 }
+
+export type PromiseInfo<T> = {
+  resolve: (state: T) => void
+  promise: Promise<T>
+}
+export function getPromise<T>(): PromiseInfo<T> {
+  const result: Partial<PromiseInfo<T>> = {}
+  result.promise = new Promise<T>(resolve => {
+    result.resolve = resolve
+  })
+  return result as PromiseInfo<T>
+}

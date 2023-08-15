@@ -1,7 +1,12 @@
 import fs from 'fs/promises'
 
-import { MaaController, MaaFrameworkLoader, MaaInstance, MaaResource } from '..'
-import { MaaAdbControllerTypeEnum } from '../src/framework/types'
+import {
+  MaaAdbControllerTypeEnum,
+  MaaController,
+  MaaFrameworkLoader,
+  MaaInstance,
+  MaaResource
+} from '..'
 
 async function main() {
   const loader = new MaaFrameworkLoader()
