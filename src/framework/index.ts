@@ -3,8 +3,9 @@ import path from 'path'
 
 import { loadLibrary } from '../utils'
 import { MaaFrameworkExports, load } from './api'
-import './types'
 import { MaaGlobalOptionEnum } from './types'
+
+export * from './types'
 
 export class MaaFrameworkLoader {
   loaded: boolean = false
@@ -44,6 +45,7 @@ export class MaaFrameworkLoader {
       return false
     }
     this.loaded = false
+    return true
   }
 
   version() {
