@@ -10,6 +10,7 @@ export const AsstSize = koffi.alias('AsstSize', 'uint64')
 export const AsstId = koffi.alias('AsstId', 'int32')
 export const AsstMsgId = koffi.alias('AsstMsgId', 'AsstId')
 export const AsstTaskId = koffi.alias('AsstTaskId', 'AsstId')
+export type AsstTaskId = number
 export const AsstAsyncCallId = koffi.alias('AsstAsyncCallId', 'AsstId')
 
 export const AsstOptionKey = koffi.alias('AsstOptionKey', 'int32')

@@ -1,6 +1,13 @@
 import koffi, { IKoffiRegisteredCallback } from 'koffi'
 
-import { AsstApiCallback, AsstHandle, AsstInstanceOptionKeyEnum, AsstMsg, MaaCoreLoader } from '..'
+import {
+  AsstApiCallback,
+  AsstHandle,
+  AsstInstanceOptionKeyEnum,
+  AsstMsg,
+  AsstTaskId,
+  MaaCoreLoader
+} from '..'
 import { PromiseInfo, getPromise } from '../../utils'
 
 type AsyncCallInfo = {
@@ -76,6 +83,41 @@ export class AsstInstance {
     )
   }
 
+  appendTask(type: string, params: Record<string, unknown>) {
+    return this.loader.func.AsstAppendTask(this.handle, type, JSON.stringify(params)) as AsstTaskId
+  }
+
+  setTaskParams(id: AsstTaskId, params: Record<string, unknown>) {
+    return !!this.loader.func.AsstSetTaskParams(this.handle, id, JSON.stringify(params))
+  }
+
+  start() {
+    return !!this.loader.func.AsstStart()
+  }
+
+  stop() {
+    return !!this.loader.func.AsstStop()
+  }
+
+  running() {
+    return !!this.loader.func.AsstRunning()
+  }
+
+  connected() {
+    return !!this.loader.func.AsstConnected()
+  }
+
+  post(id: number) {
+    if (id in this.asyncCallInfo) {
+      const pro = this.asyncCallInfo[id].promise
+      delete this.asyncCallInfo[id]
+      return pro
+    } else {
+      this.asyncCallInfo[id] = getPromise()
+      return this.asyncCallInfo[id].promise
+    }
+  }
+
   connect(adb_path: string, address: string, config: string) {
     const id: number = this.loader.func.AsstAsyncConnect(
       this.handle,
@@ -84,13 +126,46 @@ export class AsstInstance {
       config,
       false
     )
-    if (id in this.asyncCallInfo) {
-      const pro = this.asyncCallInfo[id].promise
-      delete this.asyncCallInfo[id]
-      return pro
+    return this.post(id)
+  }
+
+  click(x: number, y: number) {
+    const id: number = this.loader.func.AsstAsyncClick(this.handle, x, y, false)
+    return this.post(id)
+  }
+
+  screencap() {
+    const id: number = this.loader.func.AsstAsyncScreencap(this.handle, false)
+    return this.post(id)
+  }
+
+  image(cache = 4 << 20) {
+    const buf = Buffer.allocUnsafe(cache)
+    const rsize: bigint = this.loader.func.AsstGetImage(this.handle, buf, cache)
+    if (rsize === 0xffffffffffffffffn) {
+      return null
     } else {
-      this.asyncCallInfo[id] = getPromise()
-      return this.asyncCallInfo[id].promise
+      return buf.subarray(0, parseInt(rsize.toString()))
+    }
+  }
+
+  uuid(cache = 64 + 2) {
+    let out = ['\0'.repeat(cache)]
+    const rsize = this.loader.func.AsstGetUUID(this.handle, out, 65)
+    if (rsize === 0xffffffffffffffffn) {
+      return null
+    } else {
+      return out[0].substring(0, rsize)
+    }
+  }
+
+  tasksList(cache = 256) {
+    let out = Array.from({ length: cache }, () => 0)
+    const rsize = this.loader.func.AsstGetTasksList(this.handle, out, 65)
+    if (rsize === 0xffffffffffffffffn) {
+      return null
+    } else {
+      return out.slice(0, rsize)
     }
   }
 }
