@@ -13,7 +13,7 @@ export class MaaCoreLoader {
 
   load(dir: string) {
     if (this.loaded) {
-      return true
+      return
     }
     try {
       this.loaded = true
@@ -21,27 +21,26 @@ export class MaaCoreLoader {
       this.lib = loadLibrary(path.join(dir, 'MaaCore'))
       this.func = load(this.lib)
 
-      const version = this.func.AsstGetVersion() as string
-      if (version) {
-        console.log('MaaCore version', version)
-      }
-      return true
+      // const version = this.func.AsstGetVersion() as string
+      // if (version) {
+      //   console.log('MaaCore version', version)
+      // }
     } catch (err) {
       console.error((err as Error).message)
       this.dispose()
-      return false
+      throw err
     }
   }
 
   dispose() {
     if (!this.loaded) {
-      return true
+      return
     }
     try {
       this.lib.unload()
     } catch (err) {
-      console.error((err as Error).message)
-      return false
+      // console.error((err as Error).message)
+      throw err
     }
     this.loaded = false
   }
