@@ -38,7 +38,7 @@ export class MaaFrameworkLoader {
       return
     }
     try {
-      this.lib.unload()
+      this.lib?.unload()
     } catch (err) {
       // console.error((err as Error).message)
       throw err
