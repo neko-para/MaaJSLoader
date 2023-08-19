@@ -33,22 +33,7 @@ export class MaaController {
         [MaaMsg.Controller_Action_Completed]: DispatcherStatus.Completed,
         [MaaMsg.Controller_Action_Failed]: DispatcherStatus.Failed
       },
-      (msg, detail) => {
-        switch (msg) {
-          case MaaMsg.Controller_ConnectSuccess:
-            if (this.connectId) {
-              this.dispatcher.trigger(this.connectId, DispatcherStatus.Completed)
-            }
-            break
-          case MaaMsg.Controller_ConnectFailed:
-            if (this.connectId) {
-              this.dispatcher.trigger(this.connectId, DispatcherStatus.Failed)
-            }
-            break
-          default:
-            cb?.(msg, detail)
-        }
-      }
+      cb
     )
     this.callback = koffi.register(this.dispatcher.callback, MaaControllerCallback)
     this.handle = this.loader.func.MaaAdbControllerCreate(
