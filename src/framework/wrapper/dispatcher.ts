@@ -15,6 +15,7 @@ export class Dispatcher {
   task: Record<
     string,
     {
+      id: bigint
       status: DispatcherStatus
       onstatus?: (status: DispatcherStatus) => void
     } & PromiseInfo<boolean>
@@ -43,6 +44,7 @@ export class Dispatcher {
     id: bigint,
     onstatus?: (status: DispatcherStatus) => void
   ): {
+    id: bigint
     status: DispatcherStatus
     promise: Promise<boolean>
   } {
@@ -51,6 +53,7 @@ export class Dispatcher {
       return this.task[key]
     } else {
       const res = {
+        id,
         status: DispatcherStatus.Pending,
         onstatus,
         ...getPromise<boolean>()
@@ -65,6 +68,7 @@ export class Dispatcher {
     let info = this.task[key]
     if (!info) {
       info = {
+        id,
         status: DispatcherStatus.Pending,
         ...getPromise<boolean>()
       }

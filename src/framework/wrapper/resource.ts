@@ -1,5 +1,6 @@
 import koffi, { IKoffiRegisteredCallback } from 'koffi'
 
+import { MaaStringBuffer } from '.'
 import { MaaAPICallback, MaaFrameworkLoader, MaaResourceCallback, MaaResourceHandle } from '..'
 import { MaaMsg } from '../msg'
 import { Dispatcher, DispatcherStatus } from './dispatcher'
@@ -29,6 +30,17 @@ export class MaaResource {
   }
 
   load(path: string) {
-    return this.dispatcher.post(this.loader.func.MaaResourcePostResource(this.handle, path)).promise
+    return this.dispatcher.post(this.loader.func.MaaResourcePostPath(this.handle, path)).promise
+  }
+
+  hash() {
+    const sb = new MaaStringBuffer(this.loader)
+    if (!this.loader.func.MaaResourceGetHash(this.handle, sb.handle)) {
+      sb.destroy()
+      return ''
+    }
+    const str = sb.get()
+    sb.destroy()
+    return str
   }
 }

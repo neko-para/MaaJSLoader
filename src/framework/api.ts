@@ -3,33 +3,55 @@ import koffi from 'koffi'
 import './types'
 
 const protos = {
-  MaaVersion: 'MaaString MaaVersion()',
+  MaaVersion: 'MaaStringView MaaVersion()',
+
+  MaaCreateStringBuffer: 'MaaStringBufferHandle MaaCreateStringBuffer()',
+  MaaDestroyStringBuffer: 'void MaaDestroyStringBuffer(MaaStringBufferHandle handle)',
+  MaaGetString: 'void* MaaGetString(MaaStringBufferHandle handle)',
+  MaaGetStringSize: 'MaaSize MaaGetStringSize(MaaStringBufferHandle handle)',
+  MaaSetString: 'MaaBool MaaSetString(MaaStringBufferHandle handle, MaaStringView str)',
+  MaaSetStringEx:
+    'MaaBool MaaSetStringEx(MaaStringBufferHandle handle, MaaStringView str, MaaSize size)',
+
+  MaaCreateImageBuffer: 'MaaImageBufferHandle MaaCreateImageBuffer()',
+  MaaDestroyImageBuffer: 'void MaaDestroyImageBuffer(MaaImageBufferHandle handle)',
+  MaaGetImageRawData: 'MaaImageRawData MaaGetImageRawData(MaaImageBufferHandle handle)',
+  MaaGetImageWidth: 'int32_t MaaGetImageWidth(MaaImageBufferHandle handle)',
+  MaaGetImageHeight: 'int32_t MaaGetImageHeight(MaaImageBufferHandle handle)',
+  MaaGetImageType: 'int32_t MaaGetImageType(MaaImageBufferHandle handle)',
+  MaaSetImageRawData:
+    'MaaBool MaaSetImageRawData(MaaImageBufferHandle handle, MaaImageRawData data, int32_t width, int32_t height, int32_t type)',
+
+  MaaGetImageEncoded: 'MaaImageEncodedData MaaGetImageEncoded(MaaImageBufferHandle handle)',
+  MaaGetImageEncodedSize: 'MaaSize MaaGetImageEncodedSize(MaaImageBufferHandle handle)',
+  MaaSetImageEncoded:
+    'MaaBool MaaSetImageEncoded(MaaImageBufferHandle handle, MaaImageEncodedData data, MaaSize size)',
+
   MaaSetGlobalOption:
     'MaaBool MaaSetGlobalOption(MaaGlobalOption key, MaaOptionValue value, MaaOptionValueSize val_size)',
   MaaSetGlobalOptionString:
     'MaaBool MaaSetGlobalOption(MaaGlobalOption key, const char* value, MaaOptionValueSize val_size)',
   MaaSetGlobalOptionBool:
-    'MaaBool MaaSetGlobalOption(MaaGlobalOption key, uint8_t* value, MaaOptionValueSize val_size)',
+    'MaaBool MaaSetGlobalOption(MaaGlobalOption key, MaaStringBufferHandle buffer)',
 
   MaaResourceCreate:
     'MaaResourceHandle MaaResourceCreate(MaaResourceCallback callback, MaaCallbackTransparentArg callback_arg)',
   MaaResourceDestroy: 'void MaaResourceDestroy(MaaResourceHandle res)',
-  MaaResourcePostResource:
-    'MaaResId MaaResourcePostResource(MaaResourceHandle res, MaaString path)',
+  MaaResourcePostPath: 'MaaResId MaaResourcePostPath(MaaResourceHandle res, MaaStringView path)',
   MaaResourceStatus: 'MaaStatus MaaResourceStatus(MaaResourceHandle res, MaaResId id)',
   MaaResourceWait: 'MaaStatus MaaResourceWait(MaaResourceHandle res, MaaResId id)',
   MaaResourceLoaded: 'MaaBool MaaResourceLoaded(MaaResourceHandle res)',
   MaaResourceSetOption:
     'MaaBool MaaResourceSetOption(MaaResourceHandle res, MaaResOption key, MaaOptionValue value, MaaOptionValueSize val_size)',
   MaaResourceGetHash:
-    'MaaSize MaaResourceGetHash(MaaResourceHandle res, char* buff, MaaSize buff_size)',
+    'MaaSize MaaResourceGetHash(MaaResourceHandle res, MaaStringBufferHandle buffer)',
 
   MaaAdbControllerCreate:
-    'MaaControllerHandle MaaAdbControllerCreate(MaaString adb_path, MaaString address, MaaAdbControllerType type, MaaJsonString config, MaaControllerCallback callback, MaaCallbackTransparentArg callback_arg)',
+    'MaaControllerHandle MaaAdbControllerCreate(MaaStringView adb_path, MaaStringView address, MaaAdbControllerType type, MaaStringView config, MaaControllerCallback callback, MaaCallbackTransparentArg callback_arg)',
   MaaCustomControllerCreate:
     'MaaControllerHandle MaaCustomControllerCreate(MaaCustomControllerHandle handle, MaaControllerCallback callback, MaaCallbackTransparentArg callback_arg)',
   MaaThriftControllerCreate:
-    'MaaControllerHandle MaaThriftControllerCreate(MaaString param, MaaControllerCallback callback, MaaCallbackTransparentArg callback_arg)',
+    'MaaControllerHandle MaaThriftControllerCreate(MaaStringView param, MaaControllerCallback callback, MaaCallbackTransparentArg callback_arg)',
   MaaControllerDestroy: 'void MaaControllerDestroy(MaaControllerHandle ctrl)',
   MaaControllerSetOption:
     'MaaBool MaaControllerSetOption(MaaControllerHandle ctrl, MaaCtrlOption key, MaaOptionValue value, MaaOptionValueSize val_size)',
@@ -48,9 +70,9 @@ const protos = {
   MaaControllerWait: 'MaaStatus MaaControllerWait(MaaControllerHandle ctrl, MaaCtrlId id)',
   MaaControllerConnected: 'MaaBool MaaControllerConnected(MaaControllerHandle ctrl)',
   MaaControllerGetImage:
-    'MaaSize MaaControllerGetImage(MaaControllerHandle ctrl, _Out_ void* buff, MaaSize buff_size)',
+    'MaaBool MaaControllerGetImage(MaaControllerHandle ctrl, MaaImageBufferHandle buffer)',
   MaaControllerGetUUID:
-    'MaaSize MaaControllerGetUUID(MaaControllerHandle ctrl, _Out_ char* buff, MaaSize buff_size)',
+    'MaaBool MaaControllerGetUUID(MaaControllerHandle ctrl, MaaImageBufferHandle buffer)',
 
   MaaCreate:
     'MaaInstanceHandle MaaCreate(MaaInstanceCallback callback, MaaCallbackTransparentArg callback_arg)',
@@ -61,18 +83,19 @@ const protos = {
   MaaBindController: 'MaaBool MaaBindController(MaaInstanceHandle inst, MaaControllerHandle ctrl)',
   MaaInited: 'MaaBool MaaInited(MaaInstanceHandle inst)',
   MaaRegisterCustomRecognizer:
-    'MaaBool MaaRegisterCustomRecognizer(MaaInstanceHandle inst, MaaString name, MaaCustomRecognizerHandle recognizer)',
+    'MaaBool MaaRegisterCustomRecognizer(MaaInstanceHandle inst, MaaStringView name, MaaCustomRecognizerHandle recognizer)',
   MaaUnregisterCustomRecognizer:
-    'MaaBool MaaUnregisterCustomRecognizer(MaaInstanceHandle inst, MaaString name)',
+    'MaaBool MaaUnregisterCustomRecognizer(MaaInstanceHandle inst, MaaStringView name)',
   MaaClearCustomRecognizer: 'MaaBool MaaClearCustomRecognizer(MaaInstanceHandle inst)',
   MaaRegisterCustomAction:
-    'MaaBool MaaRegisterCustomAction(MaaInstanceHandle inst, MaaString name, MaaCustomActionHandle action)',
+    'MaaBool MaaRegisterCustomAction(MaaInstanceHandle inst, MaaStringView name, MaaCustomActionHandle action)',
   MaaUnregisterCustomAction:
-    'MaaBool MaaUnregisterCustomAction(MaaInstanceHandle inst, MaaString name)',
+    'MaaBool MaaUnregisterCustomAction(MaaInstanceHandle inst, MaaStringView name)',
   MaaClearCustomAction: 'MaaBool MaaClearCustomAction(MaaInstanceHandle inst)',
-  MaaPostTask: 'MaaTaskId MaaPostTask(MaaInstanceHandle inst, MaaString task, MaaJsonString param)',
+  MaaPostTask:
+    'MaaTaskId MaaPostTask(MaaInstanceHandle inst, MaaStringView task, MaaStringView param)',
   MaaSetTaskParam:
-    'MaaBool MaaSetTaskParam(MaaInstanceHandle inst, MaaTaskId id, MaaJsonString param)',
+    'MaaBool MaaSetTaskParam(MaaInstanceHandle inst, MaaTaskId id, MaaStringView param)',
   MaaTaskStatus: 'MaaStatus MaaTaskStatus(MaaInstanceHandle inst, MaaTaskId id)',
   MaaWaitTask: 'MaaStatus MaaWaitTask(MaaInstanceHandle inst, MaaTaskId id)',
   MaaTaskAllFinished: 'MaaBool MaaTaskAllFinished(MaaInstanceHandle inst)',
@@ -81,15 +104,19 @@ const protos = {
   MaaGetController: 'MaaControllerHandle MaaGetController(MaaInstanceHandle inst)',
 
   MaaSyncContextRunTask:
-    'MaaBool MaaSyncContextRunTask(MaaSyncContextHandle sync_context, MaaString task, MaaJsonString param)',
+    'MaaBool MaaSyncContextRunTask(MaaSyncContextHandle sync_context, MaaStringView task, MaaStringView param)',
+  MaaSyncContextRunRecognizer:
+    'MaaBool MaaSyncContextRunRecognizer(MaaSyncContextHandle sync_context, MaaImageBufferHandle image, MaaStringView task, MaaStringView task_param, _Out_ MaaRectHandle box, MaaStringBufferHandle detail_buff)',
+  MaaSyncContextRunAction:
+    'MaaBool MaaSyncContextRunAction(MaaSyncContextHandle sync_context, MaaStringView task, MaaStringView task_param, MaaRectHandle cur_box, MaaStringView cur_rec_detail)',
   MaaSyncContextClick:
     'void MaaSyncContextClick(MaaSyncContextHandle sync_context, int32_t x, int32_t y)',
   MaaSyncContextSwipe:
     'void MaaSyncContextSwipe(MaaSyncContextHandle sync_context, int32_t* x_steps_buff_, int32_t* y_steps_buff, int32_t* step_delay_buff, MaaSize buff_size)',
   MaaSyncContextScreencap:
-    'MaaSize MaaSyncContextScreencap(MaaSyncContextHandle sync_context, void* buff, MaaSize buff_size)',
+    'MaaBool MaaSyncContextScreencap(MaaSyncContextHandle sync_context, MaaImageBufferHandle buffer)',
   MaaSyncContextGetTaskResult:
-    'MaaSize MaaSyncContextGetTaskResult(MaaSyncContextHandle sync_context, MaaString task, char* buff, MaaSize buff_size)'
+    'MaaBool MaaSyncContextGetTaskResult(MaaSyncContextHandle sync_context, MaaStringView task, MaaStringBufferHandle buffer)'
 }
 
 export type MaaFrameworkExports = Record<keyof typeof protos, koffi.KoffiFunction>

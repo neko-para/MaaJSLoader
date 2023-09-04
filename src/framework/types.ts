@@ -1,5 +1,13 @@
 import koffi from 'koffi'
 
+export const MaaStringBufferAPI = koffi.opaque('MaaStringBuffer')
+export const MaaStringBufferHandle = koffi.alias('MaaStringBufferHandle', 'MaaStringBuffer*')
+export type MaaStringBufferHandle = unknown
+
+export const MaaImageBufferAPI = koffi.opaque('MaaImageBuffer')
+export const MaaImageBufferHandle = koffi.alias('MaaImageBufferHandle', 'MaaImageBuffer*')
+export type MaaImageBufferHandle = unknown
+
 export const MaaResourceAPI = koffi.opaque('MaaResourceAPI')
 export const MaaResourceHandle = koffi.alias('MaaResourceHandle', 'MaaResourceAPI*')
 export type MaaResourceHandle = unknown
@@ -20,8 +28,7 @@ export const MaaBool = koffi.alias('MaaBool', 'uint8')
 export const MaaSize = koffi.alias('MaaSize', 'uint64')
 export const MaaNullSize = 0xffffffffffffffffn
 
-export const MaaString = koffi.alias('MaaString', 'const char*')
-export const MaaJsonString = koffi.alias('MaaJsonString', 'MaaString')
+export const MaaStringView = koffi.alias('MaaStringView', 'const char*')
 
 export const MaaStatus = koffi.alias('MaaStatus', 'int32')
 export const enum MaaStatusEnum {
@@ -99,7 +106,7 @@ export const enum MaaAdbControllerTypeEnum {
 export const MaaCallbackTransparentArg = koffi.alias('MaaCallbackTransparentArg', 'intptr')
 
 export const MaaAPICallback_Prototype = koffi.proto(
-  'void MaaAPICallback_Prototype(MaaString msg, MaaJsonString details_json, MaaCallbackTransparentArg callback_arg)'
+  'void MaaAPICallback_Prototype(MaaStringView msg, MaaStringView details_json, MaaCallbackTransparentArg callback_arg)'
 )
 
 export const MaaAPICallback = koffi.alias('MaaAPICallback', koffi.pointer(MaaAPICallback_Prototype))
@@ -114,17 +121,12 @@ export const MaaRect = koffi.struct('MaaRect', {
   width: 'int32',
   height: 'int32'
 })
-
-export const MaaImage = koffi.struct('MaaImage', {
-  rows: 'int32',
-  cols: 'int32',
-  type: 'int32',
-  data: 'void*'
-})
+export const MaaRectHandle = koffi.alias('MaaRectHandle', 'MaaRect*')
+export type MaaRectHandle = unknown
 
 export const MaaCustomControllerAPI = koffi.struct('MaaCustomControllerAPI', {
   set_option: koffi.pointer(
-    koffi.proto('MaaBool MaaCustomControllerAPI_SetOption(MaaCtrlOption key, MaaString value)')
+    koffi.proto('MaaBool MaaCustomControllerAPI_SetOption(MaaCtrlOption key, MaaStringView value)')
   ),
 
   connect: koffi.pointer(koffi.proto('MaaBool MaaCustomControllerAPI_Connect(void)')),
@@ -137,20 +139,22 @@ export const MaaCustomControllerAPI = koffi.struct('MaaCustomControllerAPI', {
   press_key: koffi.pointer(koffi.proto('MaaBool MaaCustomControllerAPI_PressKey(int32_t keycode)')),
 
   start_app: koffi.pointer(
-    koffi.proto('MaaBool MaaCustomControllerAPI_StartApp(MaaString package_name)')
+    koffi.proto('MaaBool MaaCustomControllerAPI_StartApp(MaaStringView package_name)')
   ),
   stop_app: koffi.pointer(
-    koffi.proto('MaaBool MaaCustomControllerAPI_StopApp(MaaString package_name)')
+    koffi.proto('MaaBool MaaCustomControllerAPI_StopApp(MaaStringView package_name)')
   ),
 
   get_resolution: koffi.pointer(
-    koffi.proto('MaaBool MaaCustomControllerAPI_GetResolution(int32_t* width, int32_t* height)')
+    koffi.proto(
+      'MaaBool MaaCustomControllerAPI_GetResolution(_Out_ int32_t* width, _Out_ int32_t* height)'
+    )
   ),
   get_image: koffi.pointer(
-    koffi.proto('MaaSize MaaCustomControllerAPI_GetImage(uint8_t* buff, MaaSize buff_size)')
+    koffi.proto('MaaSize MaaCustomControllerAPI_GetImage(_Out_ uint8_t* buff, MaaSize buff_size)')
   ),
   get_uuid: koffi.pointer(
-    koffi.proto('MaaSize MaaCustomControllerAPI_GetUUID(char* buff, MaaSize buff_size)')
+    koffi.proto('MaaSize MaaCustomControllerAPI_GetUUID(_Out_ char* buff, MaaSize buff_size)')
   )
 })
 export const MaaCustomControllerHandle = koffi.alias(
@@ -158,17 +162,10 @@ export const MaaCustomControllerHandle = koffi.alias(
   'MaaCustomControllerAPI*'
 )
 
-export const MaaRecognitionResultDetailBuffSize = 16384
-
-export const MaaRecognitionResult = koffi.struct('MaaRecognitionResult', {
-  box: 'MaaRect',
-  detail_buf: 'char*' // this should be char
-})
-
 export const MaaCustomRecognizerAPI = koffi.struct('MaaCustomRecognizerAPI', {
   analyze: koffi.pointer(
     koffi.proto(
-      'MaaBool MaaCustomRecognizerAPI_Analyze(const MaaImage* image, MaaJsonString custom_recognition_param, _Out_ MaaRecognitionResult* result)'
+      'MaaBool MaaCustomRecognizerAPI_Analyze(MaaSyncContextHandle sync_context, const MaaImageBufferHandle image, MaaStringView task_name, MaaStringView custom_recognition_param, MaaRectHandle box, MaaStringBufferHandle detail_buff)'
     )
   )
 })
@@ -180,9 +177,15 @@ export const MaaCustomRecognizerHandle = koffi.alias(
 export const MaaCustomActionAPI = koffi.struct('MaaCustomActionAPI', {
   run: koffi.pointer(
     koffi.proto(
-      'MaaBool MaaCustomActionAPI_Run(MaaJsonString custom_action_param, const MaaRect* cur_box, MaaJsonString recognition_result_detail)'
+      'MaaBool MaaCustomActionAPI_Run(MaaSyncContextHandle sync_context, MaaStringView task_name, MaaStringView custom_action_param, MaaRectHandle cur_box, MaaStringView cur_rec_detail)'
     )
   ),
   stop: koffi.pointer(koffi.proto('void MaaCustomActionAPI_Stop()'))
 })
 export const MaaCustomActionHandle = koffi.alias('MaaCustomActionHandle', 'MaaCustomActionAPI*')
+
+export const MaaImageRawData = koffi.alias('MaaImageRawData', 'void*')
+export type MaaImageRawData = unknown
+
+export const MaaImageEncodedData = koffi.alias('MaaImageEncodedData', 'void*')
+export type MaaImageEncodedData = unknown

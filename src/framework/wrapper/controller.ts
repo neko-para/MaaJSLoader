@@ -1,5 +1,6 @@
 import koffi, { IKoffiRegisteredCallback } from 'koffi'
 
+import { MaaImageBuffer, MaaStringBuffer } from '.'
 import {
   MaaAPICallback,
   MaaControllerCallback,
@@ -109,23 +110,23 @@ export class MaaController {
     return this.dispatcher.post(this.loader.func.MaaControllerPostScreencap(this.handle)).promise
   }
 
-  image(cache = 4 << 20) {
-    const buf = Buffer.allocUnsafe(cache)
-    const rsize: bigint = this.loader.func.MaaControllerGetImage(this.handle, buf, cache)
-    if (rsize === 0xffffffffffffffffn) {
+  image() {
+    const ib = new MaaImageBuffer(this.loader)
+    if (!this.loader.func.MaaControllerGetImage(this.handle, ib.handle)) {
+      ib.destroy()
       return null
-    } else {
-      return buf.subarray(0, parseInt(rsize.toString()))
     }
+    return ib
   }
 
-  uuid(cache = 64 + 2) {
-    let out = ['\0'.repeat(cache)]
-    const rsize = this.loader.func.MaaControllerGetUUID(this.handle, out, 65)
-    if (rsize === 0xffffffffffffffffn) {
+  uuid() {
+    const sb = new MaaStringBuffer(this.loader)
+    if (!this.loader.func.MaaControllerGetUUID(this.handle, sb.handle)) {
+      sb.destroy()
       return null
-    } else {
-      return out[0].substring(0, rsize)
     }
+    const str = sb.get()
+    sb.destroy()
+    return str
   }
 }

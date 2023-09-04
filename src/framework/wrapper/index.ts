@@ -1,4 +1,6 @@
 export { DispatcherStatus } from './dispatcher'
 export * from './controller'
-export * from './resource'
+export * from './image'
 export * from './instance'
+export * from './resource'
+export * from './string'
