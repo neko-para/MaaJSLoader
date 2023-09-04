@@ -17,12 +17,23 @@ async function main() {
   const res = new MaaResource(loader)
   console.log(await res.load('./install/share/resource'))
 
-  const ctrl = new MaaController(
+  // const ctrl = MaaController.createAdbController(
+  //   loader,
+  //   'adb.exe',
+  //   '127.0.0.1:16384',
+  //   MaaAdbControllerTypeEnum.Input_Preset_Adb | MaaAdbControllerTypeEnum.Screencap_RawWithGzip,
+  //   await fs.readFile('./install/share/controller_config.json', 'utf-8'),
+  //   (msg, detail) => {
+  //     console.log(msg, detail)
+  //   }
+  // )
+  const ctrl = MaaController.createCustomController(
     loader,
-    'adb.exe',
-    '127.0.0.1:16384',
-    MaaAdbControllerTypeEnum.Input_Preset_Adb | MaaAdbControllerTypeEnum.Screencap_RawWithGzip,
-    await fs.readFile('./install/share/controller_config.json', 'utf-8'),
+    {
+      connect: () => {
+        return true
+      }
+    },
     (msg, detail) => {
       console.log(msg, detail)
     }
@@ -31,7 +42,7 @@ async function main() {
   await ctrl.screencap()
   const buf = ctrl.image()
   if (buf) {
-    await fs.writeFile('test.png', buf)
+    await fs.writeFile('test.png', buf.encoded())
   }
 
   const inst = new MaaInstance(loader, (msg, detail) => {

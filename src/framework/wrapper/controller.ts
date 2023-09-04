@@ -19,12 +19,56 @@ export class MaaController {
   handle: MaaControllerHandle
   connectId?: MaaID
 
-  constructor(
+  static createAdbController(
     l: MaaFrameworkLoader,
     adb: string,
     address: string,
     type: number,
     config: string,
+    cb?: MaaAPICallback
+  ) {
+    return new MaaController(
+      l,
+      c => {
+        return l.func.MaaAdbControllerCreate(adb, address, type, config, c, 0)
+      },
+      cb
+    )
+  }
+
+  static createCustomController(
+    l: MaaFrameworkLoader,
+    ctrl: {
+      connect: () => boolean
+
+      // get_resolution: () => null | [number, number]
+      // get_image: () => Uint8Array
+      // get_uuid: () => string
+    },
+    cb?: MaaAPICallback
+  ) {
+    const connect_callback = koffi.register(() => {
+      console.log('custom controller: connect')
+      return ctrl.connect()
+    }, 'MaaCustomControllerAPI_Connect*')
+    return new MaaController(
+      l,
+      c => {
+        return l.func.MaaCustomControllerCreate(
+          {
+            connect: connect_callback
+          },
+          c,
+          0
+        )
+      },
+      cb
+    )
+  }
+
+  constructor(
+    l: MaaFrameworkLoader,
+    h: (c: IKoffiRegisteredCallback) => MaaControllerHandle,
     cb?: MaaAPICallback
   ) {
     this.loader = l
@@ -37,14 +81,7 @@ export class MaaController {
       cb
     )
     this.callback = koffi.register(this.dispatcher.callback, MaaControllerCallback)
-    this.handle = this.loader.func.MaaAdbControllerCreate(
-      adb,
-      address,
-      type,
-      config,
-      this.callback,
-      0
-    )
+    this.handle = h(this.callback)
   }
 
   destroy() {
