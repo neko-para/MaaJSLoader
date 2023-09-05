@@ -6,7 +6,7 @@ import { MaaFrameworkExports, load } from './api'
 import { MaaGlobalOptionEnum } from './types'
 
 export * from './types'
-export * from './toolkit'
+export * from './wrapper'
 
 export class MaaFrameworkLoader {
   loaded: boolean = false

@@ -38,6 +38,7 @@ export const enum MaaStatusEnum {
   Success = 3000,
   Failed = 4000
 }
+export type MaaStatus = number
 
 export const MaaId = koffi.alias('MaaId', 'int64')
 export type MaaID = bigint
@@ -102,6 +103,7 @@ export const enum MaaAdbControllerTypeEnum {
   Input_Preset_Minitouch = Touch_MiniTouch | Key_Adb,
   Input_Preset_Maatouch = Touch_MaaTouch | Key_MaaTouch
 }
+export type MaaAdbControllerType = number
 
 export const MaaCallbackTransparentArg = koffi.alias('MaaCallbackTransparentArg', 'intptr')
 

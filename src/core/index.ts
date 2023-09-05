@@ -5,6 +5,7 @@ import { loadLibrary } from '../utils'
 import { MaaCoreExports, load } from './api'
 
 export * from './types'
+export * from './wrapper'
 
 export class MaaCoreLoader {
   loaded: boolean = false

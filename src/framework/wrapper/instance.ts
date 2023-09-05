@@ -1,7 +1,13 @@
 import koffi, { IKoffiRegisteredCallback } from 'koffi'
 
 import { MaaController, MaaResource } from '.'
-import { MaaAPICallback, MaaFrameworkLoader, MaaInstanceCallback, MaaInstanceHandle } from '..'
+import {
+  MaaAPICallback,
+  MaaFrameworkLoader,
+  MaaInstanceCallback,
+  MaaInstanceHandle,
+  MaaStatus
+} from '..'
 import { MaaMsg } from '../msg'
 import { Dispatcher, DispatcherStatus } from './dispatcher'
 
@@ -38,7 +44,7 @@ export class MaaInstance {
     return !!this.loader.func.MaaBindController(this.handle, ctrl.handle)
   }
 
-  inited() {
+  get inited() {
     return !!this.loader.func.MaaInited(this.handle)
   }
 
@@ -49,6 +55,16 @@ export class MaaInstance {
       ...info,
       config: (param: unknown) => {
         return !!this.loader.func.MaaSetTaskParam(this.handle, id, JSON.stringify(param))
+      },
+      status: () => {
+        return this.loader.func.MaaTaskStatus(this.handle, id) as MaaStatus
+      },
+      wait: () => {
+        return new Promise<MaaStatus>(resolve => {
+          this.loader.func.MaaWaitTask.async(this.handle, id, (_err: unknown, res: MaaStatus) => {
+            resolve(res)
+          })
+        })
       }
     }
   }
@@ -58,6 +74,10 @@ export class MaaInstance {
   }
 
   stop() {
-    return !!this.loader.func.MaaStop(this.handle)
+    return new Promise<boolean>(resolve => {
+      this.loader.func.MaaStop.async(this.handle, (_err: unknown, res: boolean) => {
+        resolve(res)
+      })
+    })
   }
 }
