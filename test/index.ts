@@ -5,12 +5,17 @@ import {
   MaaController,
   MaaFrameworkLoader,
   MaaInstance,
-  MaaResource
+  MaaResource,
+  MaaToolKitLoader
 } from '..'
 
 async function main() {
   const loader = new MaaFrameworkLoader()
   loader.load('./install/bin')
+  const tloader = new MaaToolKitLoader()
+  tloader.load('./install/bin')
+  console.log(tloader.init())
+  console.log(tloader.uninit())
 
   loader.setLogging('./debug')
 

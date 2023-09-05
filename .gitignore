@@ -1,5 +1,11 @@
 node_modules
 
+# Library
 install.core
 install
+
+# MaaFramework
 debug
+
+# MaaToolKit
+config

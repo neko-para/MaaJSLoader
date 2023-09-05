@@ -6,6 +6,7 @@ import { MaaFrameworkExports, load } from './api'
 import { MaaGlobalOptionEnum } from './types'
 
 export * from './types'
+export * from './toolkit'
 
 export class MaaFrameworkLoader {
   loaded: boolean = false
@@ -18,16 +19,9 @@ export class MaaFrameworkLoader {
     }
     try {
       this.loaded = true
-
       this.lib = loadLibrary(path.join(dir, 'MaaFramework'))
       this.func = load(this.lib)
-
-      // const version = this.func.MaaVersion() as string
-      // if (version) {
-      //   console.log('MaaFramework version', version)
-      // }
     } catch (err) {
-      // console.error((err as Error).message)
       this.dispose()
       throw err
     }
@@ -40,7 +34,6 @@ export class MaaFrameworkLoader {
     try {
       this.lib?.unload()
     } catch (err) {
-      // console.error((err as Error).message)
       throw err
     }
     this.loaded = false
