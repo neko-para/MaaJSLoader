@@ -121,7 +121,7 @@ const protos = {
 
 export type MaaFrameworkExports = Record<keyof typeof protos, koffi.KoffiFunction>
 
-export function load(lib: koffi.IKoffiLib) {
+export function getExports(lib: koffi.IKoffiLib) {
   const result: Record<string, koffi.KoffiFunction> = {}
   for (const key in protos) {
     result[key] = lib.func(protos[key as keyof typeof protos])

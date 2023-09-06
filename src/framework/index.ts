@@ -2,7 +2,7 @@ import koffi from 'koffi'
 import path from 'path'
 
 import { loadLibrary } from '../utils'
-import { MaaFrameworkExports, load } from './api'
+import { MaaFrameworkExports, getExports } from './api'
 import { MaaGlobalOptionEnum } from './types'
 
 export * from './types'
@@ -20,7 +20,7 @@ export class MaaFrameworkLoader {
     try {
       this.loaded = true
       this.lib = loadLibrary(path.join(dir, 'MaaFramework'))
-      this.func = load(this.lib)
+      this.func = getExports(this.lib)
     } catch (err) {
       this.dispose()
       throw err

@@ -3,7 +3,7 @@ import path from 'path'
 
 import { MaaFrameworkLoader } from '..'
 import { loadLibrary } from '../../utils'
-import { MaaToolKitExports, load } from './api'
+import { MaaToolKitExports, getExports } from './api'
 
 export * from './types'
 export * from './wrapper'
@@ -25,7 +25,7 @@ export class MaaToolKitLoader {
     try {
       this.framework.load(dir)
       this.lib = loadLibrary(path.join(dir, 'MaaToolKit'))
-      this.func = load(this.lib)
+      this.func = getExports(this.lib)
     } catch (err) {
       this.dispose()
       throw err
