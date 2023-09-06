@@ -9,3 +9,5 @@ debug
 
 # MaaToolKit
 config
+
+.DS_Store

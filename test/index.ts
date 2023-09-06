@@ -1,7 +1,6 @@
 import fs from 'fs/promises'
 
 import {
-  MaaAdbControllerTypeEnum,
   MaaConfig,
   MaaController,
   MaaFindDevice,
@@ -19,12 +18,12 @@ async function testToolKit() {
   const tloader = new MaaToolKitLoader()
   tloader.load('./install/bin')
   tloader.init()
-  // console.log(MaaFindDevice(tloader))
-  const c = MaaConfig.get(tloader, 1)
-  console.log(c.name, c.description)
-  const cc = c.clone('111')
-  cc.setDescription('222')
-  console.log(cc.name, cc.description)
+  console.log(MaaFindDevice(tloader))
+  // const c = MaaConfig.get(tloader, 1)
+  // console.log(c.name, c.description)
+  // const cc = c.clone('111')
+  // cc.setDescription('222')
+  // console.log(cc.name, cc.description)
   // console.log(MaaConfig.size(tloader))
   tloader.uninit()
 }
@@ -73,10 +72,10 @@ async function testFramework() {
   inst.bindResource(res)
   inst.bindController(ctrl)
 
-  console.log(inst.inited())
+  console.log(inst.inited)
 }
 
 const res = setTimeout(() => {}, 1000 * 60 * 60)
-testFramework().then(() => {
+testToolKit().then(() => {
   clearTimeout(res)
 })

@@ -12,7 +12,11 @@ export class MaaToolKitLoader {
   loaded: boolean = false
   lib!: koffi.IKoffiLib
   func!: MaaToolKitExports
-  framework!: MaaFrameworkLoader
+  framework: MaaFrameworkLoader
+
+  constructor() {
+    this.framework = new MaaFrameworkLoader()
+  }
 
   load(dir: string) {
     if (this.loaded) {
