@@ -16,6 +16,9 @@ const protos = {
     'MaaAdbControllerType MaaToolKitGetDeviceAdbControllerType(MaaSize index)',
   MaaToolKitGetDeviceAdbConfig: 'MaaStringView MaaToolKitGetDeviceAdbConfig(MaaSize index)',
 
+  MaaToolKitGetCustomInfo: 'void* MaaToolKitGetCustomInfo(MaaStringView key)',
+  MaaToolKitSetCustomInfo:
+    'MaaBool MaaToolKitSetCustomInfo(MaaStringView key, MaaStringView value)',
   MaaToolKitConfigSize: 'MaaSize MaaToolKitConfigSize()',
   MaaToolKitGetConfig: 'MaaToolKitConfigHandle MaaToolKitGetConfig(MaaSize index)',
 

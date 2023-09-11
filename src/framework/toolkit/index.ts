@@ -53,4 +53,18 @@ export class MaaToolKitLoader {
   uninit() {
     return !!this.func.MaaToolKitUninit()
   }
+
+  get(key: string) {
+    const val = this.func.MaaToolKitGetCustomInfo(key)
+    if (val === null) {
+      return val
+    }
+    // 这玩意好像会crash，不知道为啥
+    return koffi.decode(val, 'MaaStringView')
+    // return koffi.address(val)
+  }
+
+  set(key: string, val: string) {
+    return !!this.func.MaaToolKitSetCustomInfo(key, val)
+  }
 }

@@ -11,13 +11,14 @@ import {
 } from '..'
 
 async function testToolKit() {
-  const loader = new MaaFrameworkLoader()
-  loader.load('./install/bin')
-  loader.setLogging('./debug')
-
   const tloader = new MaaToolKitLoader()
   tloader.load('./install/bin')
   tloader.init()
+
+  console.log(tloader.get('123'))
+  tloader.set('123', '456')
+  console.log(tloader.get('123'))
+
   console.log(MaaFindDevice(tloader))
   // const c = MaaConfig.get(tloader, 1)
   // console.log(c.name, c.description)

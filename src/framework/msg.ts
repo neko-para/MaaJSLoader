@@ -71,5 +71,22 @@ export const enum MaaMsg {
   Task_Started = 'Task.Started',
   Task_Completed = 'Task.Completed',
   Task_Failed = 'Task.Failed',
-  Task_Stopped = 'Task.Stopped'
+  Task_Stopped = 'Task.Stopped',
+
+  /*
+    {
+        id: number,
+        entry: string,
+        name: string,
+        uuid: string,
+        hash: string,
+        recognition: object,
+        run_times: number,
+        last_time: string,
+        status: string
+    }
+*/
+  Task_Focus_Hit = 'Task.Focus.Hit',
+  Task_Focus_Runout = 'Task.Focus.Runout',
+  Task_Focus_Completed = 'Task.Focus.Completed'
 }
