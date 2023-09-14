@@ -135,9 +135,22 @@ export const MaaCustomControllerAPI = koffi.struct('MaaCustomControllerAPI', {
   click: koffi.pointer(koffi.proto('MaaBool MaaCustomControllerAPI_Click(int32_t x, int32_t y)')),
   swipe: koffi.pointer(
     koffi.proto(
-      'MaaBool MaaCustomControllerAPI_Swipe(int32_t* x_steps_buff, int32_t* y_steps_buff, int32_t* step_delay_buff, MaaSize buff_size)'
+      'MaaBool MaaCustomControllerAPI_Swipe(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t duration)'
     )
   ),
+
+  touch_down: koffi.pointer(
+    koffi.proto(
+      'MaaBool MaaCustomControllerAPI_TouchDown(int32_t contact, int32_t x, int32_t y, int32_t pressure)'
+    )
+  ),
+  touch_move: koffi.pointer(
+    koffi.proto(
+      'MaaBool MaaCustomControllerAPI_TouchMove(int32_t contact, int32_t x, int32_t y, int32_t pressure)'
+    )
+  ),
+  touch_up: koffi.pointer(koffi.proto('MaaBool MaaCustomControllerAPI_TouchUp(int32_t contact)')),
+
   press_key: koffi.pointer(koffi.proto('MaaBool MaaCustomControllerAPI_PressKey(int32_t keycode)')),
 
   start_app: koffi.pointer(
@@ -153,10 +166,10 @@ export const MaaCustomControllerAPI = koffi.struct('MaaCustomControllerAPI', {
     )
   ),
   get_image: koffi.pointer(
-    koffi.proto('MaaSize MaaCustomControllerAPI_GetImage(_Out_ uint8_t* buff, MaaSize buff_size)')
+    koffi.proto('MaaBool MaaCustomControllerAPI_GetImage(MaaImageBufferHandle buffer)')
   ),
   get_uuid: koffi.pointer(
-    koffi.proto('MaaSize MaaCustomControllerAPI_GetUUID(_Out_ char* buff, MaaSize buff_size)')
+    koffi.proto('MaaBool MaaCustomControllerAPI_GetUUID(MaaStringBufferHandle buffer)')
   )
 })
 export const MaaCustomControllerHandle = koffi.alias(

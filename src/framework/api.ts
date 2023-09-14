@@ -52,7 +52,9 @@ const protos = {
     'MaaControllerHandle MaaCustomControllerCreate(MaaCustomControllerHandle handle, MaaControllerCallback callback, MaaCallbackTransparentArg callback_arg)',
   MaaThriftControllerCreate:
     'MaaControllerHandle MaaThriftControllerCreate(MaaStringView param, MaaControllerCallback callback, MaaCallbackTransparentArg callback_arg)',
+
   MaaControllerDestroy: 'void MaaControllerDestroy(MaaControllerHandle ctrl)',
+
   MaaControllerSetOption:
     'MaaBool MaaControllerSetOption(MaaControllerHandle ctrl, MaaCtrlOption key, MaaOptionValue value, MaaOptionValueSize val_size)',
   MaaControllerSetOptionString:
@@ -64,8 +66,19 @@ const protos = {
   MaaControllerPostClick:
     'MaaCtrlId MaaControllerPostClick(MaaControllerHandle ctrl, int32_t x, int32_t y)',
   MaaControllerPostSwipe:
-    'MaaCtrlId MaaControllerPostSwipe(MaaControllerHandle ctrl, int32_t* x_steps_buff, int32_t* y_steps_buff, int32_t* step_delay_buff, MaaSize buff_size)',
+    'MaaCtrlId MaaControllerPostSwipe(MaaControllerHandle ctrl, int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t duration)',
+  MaaControllerPostPressKey:
+    'MaaCtrlId MaaControllerPostPressKey(MaaControllerHandle ctrl, int32_t keycode)',
+
+  MaaControllerPostTouchDown:
+    'MaaCtrlId MaaControllerPostTouchDown(MaaControllerHandle ctrl, int32_t contact, int32_t x, int32_t y, int32_t pressure)',
+  MaaControllerPostTouchMove:
+    'MaaCtrlId MaaControllerPostTouchMove(MaaControllerHandle ctrl, int32_t contact, int32_t x, int32_t y, int32_t pressure)',
+  MaaControllerPostTouchUp:
+    'MaaCtrlId MaaControllerPostTouchUp(MaaControllerHandle ctrl, int32_t contact)',
+
   MaaControllerPostScreencap: 'MaaCtrlId MaaControllerPostScreencap(MaaControllerHandle ctrl)',
+
   MaaControllerStatus: 'MaaStatus MaaControllerStatus(MaaControllerHandle ctrl, MaaCtrlId id)',
   MaaControllerWait: 'MaaStatus MaaControllerWait(MaaControllerHandle ctrl, MaaCtrlId id)',
   MaaControllerConnected: 'MaaBool MaaControllerConnected(MaaControllerHandle ctrl)',
@@ -99,7 +112,7 @@ const protos = {
   MaaTaskStatus: 'MaaStatus MaaTaskStatus(MaaInstanceHandle inst, MaaTaskId id)',
   MaaWaitTask: 'MaaStatus MaaWaitTask(MaaInstanceHandle inst, MaaTaskId id)',
   MaaTaskAllFinished: 'MaaBool MaaTaskAllFinished(MaaInstanceHandle inst)',
-  MaaStop: 'void MaaStop(MaaInstanceHandle inst)',
+  MaaStop: 'MaaBool MaaStop(MaaInstanceHandle inst)',
   MaaGetResource: 'MaaResourceHandle MaaGetResource(MaaInstanceHandle inst)',
   MaaGetController: 'MaaControllerHandle MaaGetController(MaaInstanceHandle inst)',
 
@@ -110,9 +123,19 @@ const protos = {
   MaaSyncContextRunAction:
     'MaaBool MaaSyncContextRunAction(MaaSyncContextHandle sync_context, MaaStringView task, MaaStringView task_param, MaaRectHandle cur_box, MaaStringView cur_rec_detail)',
   MaaSyncContextClick:
-    'void MaaSyncContextClick(MaaSyncContextHandle sync_context, int32_t x, int32_t y)',
+    'MaaBool MaaSyncContextClick(MaaSyncContextHandle sync_context, int32_t x, int32_t y)',
   MaaSyncContextSwipe:
-    'void MaaSyncContextSwipe(MaaSyncContextHandle sync_context, int32_t* x_steps_buff_, int32_t* y_steps_buff, int32_t* step_delay_buff, MaaSize buff_size)',
+    'MaaBool MaaSyncContextSwipe(MaaSyncContextHandle sync_context, int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t duration)',
+  MaaSyncContextPressKey:
+    'MaaBool MaaSyncContextPressKey(MaaSyncContextHandle sync_context, int32_t keycode)',
+
+  MaaSyncContextTouchDown:
+    'MaaBool MaaSyncContextTouchDown(MaaSyncContextHandle sync_context, int32_t contact, int32_t x, int32_t y, int32_t pressure)',
+  MaaSyncContextTouchMove:
+    'MaaBool MaaSyncContextTouchMove(MaaSyncContextHandle sync_context, int32_t contact, int32_t x, int32_t y, int32_t pressure)',
+  MaaSyncContextTouchUp:
+    'MaaBool MaaSyncContextTouchUp(MaaSyncContextHandle sync_context, int32_t contact)',
+
   MaaSyncContextScreencap:
     'MaaBool MaaSyncContextScreencap(MaaSyncContextHandle sync_context, MaaImageBufferHandle buffer)',
   MaaSyncContextGetTaskResult:

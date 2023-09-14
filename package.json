@@ -13,7 +13,7 @@
     "test": "test"
   },
   "dependencies": {
-    "koffi": "^2.5.20"
+    "koffi": "^2.6.0"
   },
   "author": "nekosu",
   "license": "AGPL"

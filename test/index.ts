@@ -53,7 +53,9 @@ async function testFramework() {
     {
       connect: () => {
         return true
-      }
+      },
+      get_resolution: () => [640, 480],
+      get_uuid: () => '114514'
     },
     (msg, detail) => {
       console.log(msg, detail)
@@ -61,10 +63,11 @@ async function testFramework() {
   )
   console.log(await ctrl.connect())
   await ctrl.screencap()
+  await ctrl.click(1, 2).promise
   const buf = ctrl.image()
-  if (buf) {
-    await fs.writeFile('test.png', buf.encoded())
-  }
+  // if (buf) {
+  //   await fs.writeFile('test.png', buf.encoded())
+  // }
 
   const inst = new MaaInstance(loader, (msg, detail) => {
     console.log(msg, detail)
@@ -74,9 +77,16 @@ async function testFramework() {
   inst.bindController(ctrl)
 
   console.log(inst.inited)
+
+  await inst.destroy()
+  await ctrl.destroy()
+  await res.destroy()
 }
 
 const res = setTimeout(() => {}, 1000 * 60 * 60)
-testToolKit().then(() => {
+// testToolKit().then(() => {
+//   clearTimeout(res)
+// })
+testFramework().then(() => {
   clearTimeout(res)
 })

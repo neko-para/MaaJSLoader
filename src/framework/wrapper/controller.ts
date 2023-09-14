@@ -1,4 +1,4 @@
-import koffi, { IKoffiRegisteredCallback } from 'koffi'
+import koffi from 'koffi'
 
 import { MaaImageBuffer, MaaStringBuffer } from '.'
 import {
@@ -12,11 +12,33 @@ import {
 import { MaaMsg } from '../msg'
 import { Dispatcher, DispatcherStatus } from './dispatcher'
 
+export interface MaaCustomControllerInfo {
+  // set_option?: (key: number, value: string) => boolean
+
+  connect?: () => boolean
+  click?: (x: number, y: number) => boolean
+  swipe?: (x1: number, y1: number, x2: number, y2: number, duration: number) => boolean
+
+  touch_down?: (contact: number, x: number, y: number, pressure: number) => boolean
+  touch_move?: (contact: number, x: number, y: number, pressure: number) => boolean
+  touch_up?: (contact: number) => boolean
+
+  press_key?: (key: number) => boolean
+
+  start_app?: (pkg: string) => boolean
+  stop_app?: (pkg: string) => boolean
+
+  get_resolution?: () => null | [number, number]
+  get_image?: (ib: MaaImageBuffer) => boolean
+  get_uuid?: () => null | string
+}
+
 export class MaaController {
   loader: MaaFrameworkLoader
   dispatcher: Dispatcher
-  callback: IKoffiRegisteredCallback
+  callback: koffi.IKoffiRegisteredCallback
   handle: MaaControllerHandle
+  onDestroy: () => void
   connectId?: MaaID
 
   static createAdbController(
@@ -38,38 +60,141 @@ export class MaaController {
 
   static createCustomController(
     l: MaaFrameworkLoader,
-    ctrl: {
-      connect: () => boolean
-
-      // get_resolution: () => null | [number, number]
-      // get_image: () => Uint8Array
-      // get_uuid: () => string
-    },
+    ctrl: MaaCustomControllerInfo,
     cb?: MaaAPICallback
   ) {
-    const connect_callback = koffi.register(() => {
-      console.log('custom controller: connect')
-      return ctrl.connect()
+    // const set_option_cb = koffi.register((key, value) => {
+    //   console.log(key, value)
+    //   // return ctrl?.set_option()
+    // }, 'MaaCustomControllerAPI_SetOption*')
+
+    const connect_cb = koffi.register(() => {
+      return ctrl?.connect?.() ?? false ? 1 : 0
     }, 'MaaCustomControllerAPI_Connect*')
+
+    const click_cb = koffi.register((x: number, y: number) => {
+      return ctrl?.click?.(x, y) ?? false ? 1 : 0
+    }, 'MaaCustomControllerAPI_Click*')
+
+    const swipe_cb = koffi.register(
+      (x1: number, y1: number, x2: number, y2: number, duration: number) => {
+        return ctrl?.swipe?.(x1, y1, x2, y2, duration) ?? false ? 1 : 0
+      },
+      'MaaCustomControllerAPI_Swipe*'
+    )
+
+    const touch_down_cb = koffi.register(
+      (contact: number, x: number, y: number, pressure: number) => {
+        return ctrl?.touch_down?.(contact, x, y, pressure) ?? false ? 1 : 0
+      },
+      'MaaCustomControllerAPI_TouchDown*'
+    )
+
+    const touch_move_cb = koffi.register(
+      (contact: number, x: number, y: number, pressure: number) => {
+        return ctrl?.touch_move?.(contact, x, y, pressure) ?? false ? 1 : 0
+      },
+      'MaaCustomControllerAPI_TouchMove*'
+    )
+
+    const touch_up_cb = koffi.register((contact: number) => {
+      return ctrl?.touch_up?.(contact) ?? false ? 1 : 0
+    }, 'MaaCustomControllerAPI_TouchUp*')
+
+    const press_key_cb = koffi.register((key: number) => {
+      return ctrl?.press_key?.(key) ?? false ? 1 : 0
+    }, 'MaaCustomControllerAPI_PressKey*')
+
+    const start_app_cb = koffi.register((key: unknown) => {
+      return ctrl?.start_app?.(koffi.decode(key, 'MaaStringView')) ?? false ? 1 : 0
+    }, 'MaaCustomControllerAPI_StartApp*')
+
+    const stop_app_cb = koffi.register((key: unknown) => {
+      return ctrl?.stop_app?.(koffi.decode(key, 'MaaStringView')) ?? false ? 1 : 0
+    }, 'MaaCustomControllerAPI_StopApp*')
+
+    const get_resolution_cb = koffi.register((width: unknown, height: unknown) => {
+      const res = ctrl?.get_resolution?.() ?? null
+      if (res) {
+        koffi.encode(width, 'int32_t', res[0])
+        koffi.encode(height, 'int32_t', res[1])
+        return 1
+      } else {
+        return 0
+      }
+    }, 'MaaCustomControllerAPI_GetResolution*')
+
+    const get_image_cb = koffi.register((buffer: unknown) => {
+      const ib = new MaaImageBuffer(l, buffer)
+      return ctrl?.get_image?.(ib) ?? false ? 1 : 0
+    }, 'MaaCustomControllerAPI_GetImage*')
+
+    const get_uuid_cb = koffi.register((buffer: unknown) => {
+      const sb = new MaaStringBuffer(l, buffer)
+      const res = ctrl?.get_uuid?.() ?? null
+      if (res) {
+        return sb.set(res) ? 1 : 0
+      } else {
+        return 0
+      }
+    }, 'MaaCustomControllerAPI_GetUUID*')
+
     return new MaaController(
       l,
       c => {
         return l.func.MaaCustomControllerCreate(
           {
-            connect: connect_callback
+            // set_option: set_option_cb,
+
+            connect: connect_cb,
+            click: click_cb,
+            swipe: swipe_cb,
+
+            touch_down: touch_down_cb,
+            touch_move: touch_move_cb,
+            touch_up: touch_up_cb,
+
+            press_key: press_key_cb,
+
+            start_app: start_app_cb,
+            stop_app: stop_app_cb,
+
+            get_resolution: get_resolution_cb,
+            get_image: get_image_cb,
+            get_uuid: get_uuid_cb
           },
           c,
           0
         )
       },
-      cb
+      cb,
+      () => {
+        // koffi.unregister(set_option_cb)
+        koffi.unregister(connect_cb)
+        koffi.unregister(click_cb)
+        koffi.unregister(swipe_cb)
+
+        koffi.unregister(touch_down_cb)
+        koffi.unregister(touch_move_cb)
+        koffi.unregister(touch_up_cb)
+
+        koffi.unregister(press_key_cb)
+
+        koffi.unregister(start_app_cb)
+        koffi.unregister(stop_app_cb)
+
+        koffi.unregister(get_resolution_cb)
+        koffi.unregister(get_image_cb)
+        koffi.unregister(get_uuid_cb)
+      }
     )
   }
 
   constructor(
     l: MaaFrameworkLoader,
-    h: (c: IKoffiRegisteredCallback) => MaaControllerHandle,
-    cb?: MaaAPICallback
+    h: (c: koffi.IKoffiRegisteredCallback) => MaaControllerHandle,
+    cb?: MaaAPICallback,
+    od = () => {}
   ) {
     this.loader = l
     this.dispatcher = new Dispatcher(
@@ -82,10 +207,20 @@ export class MaaController {
     )
     this.callback = koffi.register(this.dispatcher.callback, MaaControllerCallback)
     this.handle = h(this.callback)
+    this.onDestroy = od
   }
 
   destroy() {
-    this.loader.func.MaaControllerDestroy(this.handle)
+    return new Promise<boolean>(resolve => {
+      this.loader.func.MaaControllerDestroy.async(this.handle, (err: any, res: void) => {
+        this.onDestroy()
+        if (err) {
+          resolve(false)
+        } else {
+          resolve(true)
+        }
+      })
+    })
   }
 
   setWidth(width: number) {
@@ -134,13 +269,30 @@ export class MaaController {
     return this.dispatcher.post(this.loader.func.MaaControllerPostClick(this.handle, x, y))
   }
 
-  swipe(steps: { x: number; y: number; delay: number }[]) {
-    const xs = steps.map(({ x }) => x)
-    const ys = steps.map(({ y }) => y)
-    const ss = steps.map(({ delay }) => delay)
+  swipe(x1: number, y1: number, x2: number, y2: number, duration: number) {
     return this.dispatcher.post(
-      this.loader.func.MaaControllerPostSwipe(this.handle, xs, ys, ss, steps.length)
+      this.loader.func.MaaControllerPostSwipe(this.handle, x1, y1, x2, y2, duration)
     )
+  }
+
+  key(key: number) {
+    return this.dispatcher.post(this.loader.func.MaaControllerPostPressKey(this.handle, key))
+  }
+
+  touchDown(contact: number, x: number, y: number, pressure: number) {
+    return this.dispatcher.post(
+      this.loader.func.MaaControllerPostTouchDown(this.handle, contact, x, y, pressure)
+    )
+  }
+
+  touchMove(contact: number, x: number, y: number, pressure: number) {
+    return this.dispatcher.post(
+      this.loader.func.MaaControllerPostTouchMove(this.handle, contact, x, y, pressure)
+    )
+  }
+
+  touchUp(contact: number) {
+    return this.dispatcher.post(this.loader.func.MaaControllerPostTouchUp(this.handle, contact))
   }
 
   screencap() {

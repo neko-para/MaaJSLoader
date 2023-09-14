@@ -1,4 +1,4 @@
-import koffi, { IKoffiRegisteredCallback } from 'koffi'
+import koffi from 'koffi'
 
 import { MaaController, MaaResource } from '.'
 import {
@@ -14,7 +14,7 @@ import { Dispatcher, DispatcherStatus } from './dispatcher'
 export class MaaInstance {
   loader: MaaFrameworkLoader
   dispatcher: Dispatcher
-  callback: IKoffiRegisteredCallback
+  callback: koffi.IKoffiRegisteredCallback
   handle: MaaInstanceHandle
 
   constructor(l: MaaFrameworkLoader, cb?: MaaAPICallback) {
@@ -33,7 +33,15 @@ export class MaaInstance {
   }
 
   destroy() {
-    this.loader.func.MaaDestroy(this.handle)
+    return new Promise<boolean>(resolve => {
+      this.loader.func.MaaDestroy.async(this.handle, (err: any, res: void) => {
+        if (err) {
+          resolve(false)
+        } else {
+          resolve(true)
+        }
+      })
+    })
   }
 
   bindResource(res: MaaResource) {

@@ -1,5 +1,5 @@
 import koffi from 'koffi'
-import path from 'path'
+import * as path from 'path'
 
 import { loadLibrary } from '../utils'
 import { MaaFrameworkExports, getExports } from './api'

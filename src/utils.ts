@@ -1,5 +1,5 @@
 import koffi from 'koffi'
-import path from 'path'
+import * as path from 'path'
 
 type AcceptPlatform = 'win32' | 'linux' | 'darwin'
 
