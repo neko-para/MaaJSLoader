@@ -1,12 +1,20 @@
 import koffi from 'koffi'
 import * as path from 'path'
 
-import { MaaFrameworkLoader } from '..'
+import { MaaAdbControllerType, MaaFrameworkLoader } from '..'
 import { loadLibrary } from '../../utils'
 import { MaaToolKitExports, getExports } from './api'
 
 export * from './types'
 export * from './wrapper'
+
+export interface MaaDevice {
+  name: string
+  adbPath: string
+  adbSerial: string
+  adbControllerType: MaaAdbControllerType
+  adbConfig: string
+}
 
 export class MaaToolKitLoader {
   loaded: boolean = false
@@ -60,5 +68,20 @@ export class MaaToolKitLoader {
 
   set(key: string, val: string) {
     return !!this.func.MaaToolKitSetCustomInfo(key, val)
+  }
+
+  query_device(idx: number): MaaDevice {
+    return {
+      name: this.func.MaaToolKitGetDeviceName(idx),
+      adbPath: this.func.MaaToolKitGetDeviceAdbPath(idx),
+      adbSerial: this.func.MaaToolKitGetDeviceAdbSerial(idx),
+      adbControllerType: this.func.MaaToolKitGetDeviceAdbControllerType(idx),
+      adbConfig: this.func.MaaToolKitGetDeviceAdbConfig(idx)
+    }
+  }
+
+  find_device(): MaaDevice[] {
+    const size = this.func.MaaToolKitFindDevice()
+    return Array.from({ length: size }, (_, idx) => this.query_device(idx))
   }
 }

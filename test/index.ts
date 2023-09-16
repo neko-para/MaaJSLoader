@@ -3,7 +3,6 @@ import fs from 'fs/promises'
 import {
   MaaConfig,
   MaaController,
-  MaaFindDevice,
   MaaFrameworkLoader,
   MaaInstance,
   MaaResource,
@@ -19,7 +18,7 @@ async function testToolKit() {
   tloader.set('123', '456')
   console.log(tloader.get('123'))
 
-  console.log(MaaFindDevice(tloader))
+  console.log(tloader.find_device())
   // const c = MaaConfig.get(tloader, 1)
   // console.log(c.name, c.description)
   // const cc = c.clone('111')
