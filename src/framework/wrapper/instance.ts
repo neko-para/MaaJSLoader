@@ -57,7 +57,7 @@ export class MaaInstance {
   }
 
   post(task: string, param?: unknown, onstatus?: (status: DispatcherStatus) => void) {
-    const id = this.loader.func.MaaPostTask(this.handle, task, JSON.stringify(param))
+    const id = this.loader.func.MaaPostTask(this.handle, task, JSON.stringify(param ?? {}))
     const info = this.dispatcher.post(id, onstatus)
     return {
       ...info,

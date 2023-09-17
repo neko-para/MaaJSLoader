@@ -32,7 +32,7 @@ const protos = {
   MaaSetGlobalOptionString:
     'MaaBool MaaSetGlobalOption(MaaGlobalOption key, const char* value, MaaOptionValueSize val_size)',
   MaaSetGlobalOptionBool:
-    'MaaBool MaaSetGlobalOption(MaaGlobalOption key, MaaStringBufferHandle buffer)',
+    'MaaBool MaaSetGlobalOption(MaaGlobalOption key, uint8_t* value, MaaOptionValueSize val_size)',
 
   MaaResourceCreate:
     'MaaResourceHandle MaaResourceCreate(MaaResourceCallback callback, MaaCallbackTransparentArg callback_arg)',
