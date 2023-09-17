@@ -66,8 +66,8 @@ export const enum MaaResOptionEnum {
 export const MaaCtrlOption = koffi.alias('MaaCtrlOption', 'MaaOption')
 export const enum MaaCtrlOptionEnum {
   Invalid = 0,
-  ScreenshotTargetWidth = 1,
-  ScreenshotTargetHeight = 2,
+  ScreenshotTargetLongSide = 1,
+  ScreenshotTargetShortSide = 2,
   DefaultAppPackageEntry = 3,
   DefaultAppPackage = 4
 }

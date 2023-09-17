@@ -223,20 +223,20 @@ export class MaaController {
     })
   }
 
-  setWidth(width: number) {
+  setLongSide(size: number) {
     return !!this.loader.func.MaaControllerSetOptionInt(
       this.handle,
-      MaaCtrlOptionEnum.ScreenshotTargetWidth,
-      [width],
+      MaaCtrlOptionEnum.ScreenshotTargetLongSide,
+      [size],
       4
     )
   }
 
-  setHeight(height: number) {
+  setShortSide(size: number) {
     return !!this.loader.func.MaaControllerSetOptionInt(
       this.handle,
-      MaaCtrlOptionEnum.ScreenshotTargetHeight,
-      [height],
+      MaaCtrlOptionEnum.ScreenshotTargetShortSide,
+      [size],
       4
     )
   }
