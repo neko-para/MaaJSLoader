@@ -9,7 +9,7 @@ export const enum MaaMsg {
 */
   Resource_StartLoading = 'Resource.StartLoading',
   Resource_LoadingCompleted = 'Resource.LoadingCompleted',
-  Resource_LoadingError = 'Resource.LoadingError',
+  Resource_LoadingError = 'Resource.LoadingFailed',
 
   /*
     {
