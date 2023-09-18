@@ -11,11 +11,27 @@ export class MaaConfig {
   }
 
   static get(l: MaaToolKitLoader, idx: number) {
-    return new MaaConfig(l, l.func.MaaToolKitGetConfig(idx))
+    const handle = l.func.MaaToolKitGetConfig(idx)
+    if (handle === null) {
+      return null
+    }
+    return new MaaConfig(l, handle)
   }
 
   static current(l: MaaToolKitLoader) {
-    return new MaaConfig(l, l.func.MaaToolKitCurrentConfig())
+    const handle = l.func.MaaToolKitCurrentConfig()
+    if (handle === null) {
+      return null
+    }
+    return new MaaConfig(l, handle)
+  }
+
+  static add(l: MaaToolKitLoader, name: string) {
+    const handle = l.func.MaaToolKitAddConfig(name, null)
+    if (handle === null) {
+      return null
+    }
+    return new MaaConfig(l, handle)
   }
 
   constructor(l: MaaToolKitLoader, h: MaaToolKitTaskHandle) {
@@ -28,7 +44,11 @@ export class MaaConfig {
   }
 
   clone(name: string) {
-    return new MaaConfig(this.loader, this.loader.func.MaaToolKitAddConfig(name, this.handle))
+    const handle = this.loader.func.MaaToolKitAddConfig(name, this.handle)
+    if (handle === null) {
+      return null
+    }
+    return new MaaConfig(this.loader, handle)
   }
 
   del() {
@@ -68,14 +88,19 @@ export class MaaConfig {
   }
 
   task(index: number) {
-    return new MaaTask(this.loader, this.loader.func.MaaToolKitGetTask(this.handle, index))
+    const handle = this.loader.func.MaaToolKitGetTask(this.handle, index)
+    if (handle === null) {
+      return null
+    }
+    return new MaaTask(this.loader, handle)
   }
 
-  taskClone(task: MaaTask, name: string) {
-    return new MaaTask(
-      this.loader,
-      this.loader.func.MaaToolKitAddTask(this.handle, name, task.handle)
-    )
+  taskClone(name: string, task?: MaaTask) {
+    const handle = this.loader.func.MaaToolKitAddTask(this.handle, name, task?.handle ?? null)
+    if (handle === null) {
+      return null
+    }
+    return new MaaTask(this.loader, handle)
   }
 
   taskDel(task: MaaTask) {

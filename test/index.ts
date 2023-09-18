@@ -18,7 +18,14 @@ async function testToolKit() {
   tloader.set('123', '456')
   console.log(tloader.get('123'))
 
-  console.log(tloader.find_device())
+  const c = MaaConfig.add(tloader, 'bbb')
+  if (c) {
+    c.description = '999'
+    console.log(c.name, c.description)
+  }
+
+  // console.log(tloader.find_device())
+
   // const c = MaaConfig.get(tloader, 1)
   // console.log(c.name, c.description)
   // const cc = c.clone('111')
@@ -83,9 +90,9 @@ async function testFramework() {
 }
 
 const res = setTimeout(() => {}, 1000 * 60 * 60)
-// testToolKit().then(() => {
-//   clearTimeout(res)
-// })
-testFramework().then(() => {
+testToolKit().then(() => {
   clearTimeout(res)
 })
+// testFramework().then(() => {
+//   clearTimeout(res)
+// })
