@@ -62,7 +62,7 @@ export class MaaTask {
   }
 
   setEnabled(e: boolean) {
-    return !!this.loader.func.MaaToolKitSetTaskEnabled(this.handle, e)
+    return !!this.loader.func.MaaToolKitSetTaskEnabled(this.handle, e ? 1 : 0)
   }
 
   get(key: string) {
