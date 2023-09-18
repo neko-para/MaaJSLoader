@@ -1,3 +1,5 @@
+import koffi from 'koffi'
+
 import { MaaToolKitConfigHandle, MaaToolKitLoader, MaaToolKitTaskHandle } from '..'
 import { MaaInstance, MaaStatus } from '../..'
 import { MaaTask } from './task'
@@ -41,6 +43,10 @@ export class MaaConfig {
   constructor(l: MaaToolKitLoader, h: MaaToolKitTaskHandle) {
     this.loader = l
     this.handle = h
+  }
+
+  equal(other: MaaConfig | null | undefined) {
+    return other && koffi.address(this.handle) === koffi.address(other.handle)
   }
 
   bind(inst: MaaInstance) {
