@@ -65,6 +65,14 @@ export class MaaTask {
     return !!this.loader.func.MaaToolKitSetTaskEnabled(this.handle, e)
   }
 
+  get(key: string) {
+    return this.loader.func.MaaToolKitGetTaskCustomInfo(this.handle, key) as string | null
+  }
+
+  set(key: string, val: string) {
+    return !!this.loader.func.MaaToolKitSetTaskCustomInfo(this.handle, key, val)
+  }
+
   get status() {
     return this.loader.func.MaaToolKitTaskStatus(this.handle) as MaaStatus
   }

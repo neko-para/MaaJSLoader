@@ -19,6 +19,14 @@ export class MaaImageBuffer {
     this.loader.func.MaaDestroyImageBuffer(this.handle)
   }
 
+  get empty() {
+    return !!this.loader.func.MaaIsImageEmpty(this.handle)
+  }
+
+  clear() {
+    return !!this.loader.func.MaaClearImage(this.handle)
+  }
+
   width() {
     return this.loader.func.MaaGetImageWidth(this.handle) as number
   }

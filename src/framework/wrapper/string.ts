@@ -19,6 +19,14 @@ export class MaaStringBuffer {
     this.loader.func.MaaDestroyStringBuffer(this.handle)
   }
 
+  get empty() {
+    return !!this.loader.func.MaaIsStringEmpty(this.handle)
+  }
+
+  clear() {
+    return !!this.loader.func.MaaClearString(this.handle)
+  }
+
   set(str: string) {
     return !!this.loader.func.MaaSetStringEx(this.handle, str, str.length)
   }

@@ -7,6 +7,9 @@ const protos = {
 
   MaaCreateStringBuffer: 'MaaStringBufferHandle MaaCreateStringBuffer()',
   MaaDestroyStringBuffer: 'void MaaDestroyStringBuffer(MaaStringBufferHandle handle)',
+  MaaIsStringEmpty: 'MaaBool MaaIsStringEmpty(MaaStringBufferHandle handle)',
+  MaaClearString: 'MaaBool MaaClearString(MaaStringBufferHandle handle)',
+
   MaaGetString: 'void* MaaGetString(MaaStringBufferHandle handle)',
   MaaGetStringSize: 'MaaSize MaaGetStringSize(MaaStringBufferHandle handle)',
   MaaSetString: 'MaaBool MaaSetString(MaaStringBufferHandle handle, MaaStringView str)',
@@ -15,6 +18,9 @@ const protos = {
 
   MaaCreateImageBuffer: 'MaaImageBufferHandle MaaCreateImageBuffer()',
   MaaDestroyImageBuffer: 'void MaaDestroyImageBuffer(MaaImageBufferHandle handle)',
+  MaaIsImageEmpty: 'MaaBool MaaIsImageEmpty(MaaImageBufferHandle handle)',
+  MaaClearImage: 'MaaBool MaaClearImage(MaaImageBufferHandle handle)',
+
   MaaGetImageRawData: 'MaaImageRawData MaaGetImageRawData(MaaImageBufferHandle handle)',
   MaaGetImageWidth: 'int32_t MaaGetImageWidth(MaaImageBufferHandle handle)',
   MaaGetImageHeight: 'int32_t MaaGetImageHeight(MaaImageBufferHandle handle)',

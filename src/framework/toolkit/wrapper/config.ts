@@ -55,6 +55,14 @@ export class MaaConfig {
     return !!this.loader.func.MaaToolKitSetConfigDescription(this.handle, desc)
   }
 
+  get(key: string) {
+    return this.loader.func.MaaToolKitGetConfigCustomInfo(this.handle, key) as string | null
+  }
+
+  set(key: string, val: string) {
+    return !!this.loader.func.MaaToolKitSetConfigCustomInfo(this.handle, key, val)
+  }
+
   taskSize() {
     return this.loader.func.MaaToolKitTaskSize(this.handle) as number
   }

@@ -36,6 +36,10 @@ const protos = {
     'MaaStringView MaaToolKitGetConfigDescription(MaaToolKitConfigHandle config_handle)',
   MaaToolKitSetConfigDescription:
     'MaaBool MaaToolKitSetConfigDescription(MaaToolKitConfigHandle config_handle, MaaStringView new_description)',
+  MaaToolKitGetConfigCustomInfo:
+    'MaaStringView MaaToolKitGetConfigCustomInfo(MaaToolKitConfigHandle config_handle, MaaStringView key)',
+  MaaToolKitSetConfigCustomInfo:
+    'MaaBool MaaToolKitSetConfigCustomInfo(MaaToolKitConfigHandle config_handle, MaaStringView key, MaaStringView value)',
 
   MaaToolKitTaskSize: 'MaaSize MaaToolKitTaskSize(MaaToolKitConfigHandle config_handle)',
   MaaToolKitGetTask:
@@ -62,6 +66,10 @@ const protos = {
   MaaToolKitGetTaskEnabled: 'MaaBool MaaToolKitGetTaskEnabled(MaaToolKitTaskHandle task_handle)',
   MaaToolKitSetTaskEnabled:
     'MaaBool MaaToolKitSetTaskEnabled(MaaToolKitTaskHandle task_handle, MaaBool new_enabled)',
+  MaaToolKitGetTaskCustomInfo:
+    'MaaStringView MaaToolKitGetTaskCustomInfo(MaaToolKitTaskHandle task_handle, MaaStringView key)',
+  MaaToolKitSetTaskCustomInfo:
+    'MaaBool MaaToolKitSetTaskCustomInfo(MaaToolKitTaskHandle task_handle, MaaStringView key, MaaStringView value)',
 
   MaaToolKitPostAllTask: 'MaaBool MaaToolKitPostAllTask(MaaToolKitConfigHandle config_handle)',
   MaaToolKitWaitAllTask: 'MaaStatus MaaToolKitWaitAllTask(MaaToolKitConfigHandle config_handle)',
