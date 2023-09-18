@@ -26,6 +26,10 @@ export class MaaConfig {
     return new MaaConfig(l, handle)
   }
 
+  static setCurrent(l: MaaToolKitLoader, name: string) {
+    return !!l.func.MaaToolKitSetCurrentConfig(name)
+  }
+
   static add(l: MaaToolKitLoader, name: string) {
     const handle = l.func.MaaToolKitAddConfig(name, null)
     if (handle === null) {
