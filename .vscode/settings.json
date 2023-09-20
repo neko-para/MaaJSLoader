@@ -1,0 +1,7 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}/binding",
+  "cmake.buildDirectory": "${workspaceFolder}/binding/build",
+  "files.associations": {
+    "iostream": "cpp"
+  }
+}

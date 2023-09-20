@@ -6,6 +6,7 @@
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@tsconfig/node18": "^18.2.0",
     "@types/node": "^18.17.1",
+    "node-addon-api": "^7.0.0",
     "typescript": "^5.1.6"
   },
   "directories": {

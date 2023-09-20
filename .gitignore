@@ -11,3 +11,5 @@ debug
 config
 
 .DS_Store
+
+binding/build
