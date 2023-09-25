@@ -8,13 +8,13 @@ static Napi::Value version(const Napi::CallbackInfo &info) {
   return Napi::String::New(info.Env(), MaaVersion());
 }
 
-static void destroy_string(Napi::Env env, MaaStringBuffer *h) {
+static void _destroy_string(Napi::Env env, MaaStringBuffer *h) {
   MaaDestroyStringBuffer(h);
 }
 
 static Napi::Value new_string(const Napi::CallbackInfo &info) {
   return Napi::External<MaaStringBuffer>::New(
-      info.Env(), MaaCreateStringBuffer(), destroy_string);
+      info.Env(), MaaCreateStringBuffer(), _destroy_string);
 }
 
 static Napi::Value get_string(const Napi::CallbackInfo &info) {
@@ -40,13 +40,13 @@ static Napi::Value set_string(const Napi::CallbackInfo &info) {
   }
 }
 
-static void destroy_image(Napi::Env env, MaaImageBuffer *h) {
+static void _destroy_image(Napi::Env env, MaaImageBuffer *h) {
   MaaDestroyImageBuffer(h);
 }
 
 static Napi::Value new_image(const Napi::CallbackInfo &info) {
   return Napi::External<MaaImageBuffer>::New(info.Env(), MaaCreateImageBuffer(),
-                                             destroy_image);
+                                             _destroy_image);
 }
 
 static Napi::Value is_image_empty(const Napi::CallbackInfo &info) {
@@ -105,6 +105,16 @@ static Napi::Value set_global_option(const Napi::CallbackInfo &info) {
     return Napi::Boolean::New(info.Env(), false);
   }
 }
+
+void _maa_callback(MaaStringView msg, MaaStringView detials,
+                   MaaCallbackTransparentArg arg) {}
+
+static Napi::ThreadSafeFunction _wrap_callback(Napi::Env env,
+                                               Napi::Function func) {
+  return Napi::ThreadSafeFunction::New(env, func, "maacallback", 0, 0);
+}
+
+static Napi::Value resource_new(const Napi::CallbackInfo &info) {}
 
 #define BIND(name)                                                             \
   exports.Set(Napi::String::New(env, #name), Napi::Function::New(env, name))
