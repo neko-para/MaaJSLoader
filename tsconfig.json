@@ -3,5 +3,5 @@
   "compilerOptions": {
     "isolatedModules": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "grpc/**/*.ts"]
 }
