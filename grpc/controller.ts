@@ -10,7 +10,7 @@ import * as grpc_1 from "@grpc/grpc-js";
 export class AdbControllerRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
     constructor(data?: any[] | ({} & (({
-        callback?: dependency_1.Id;
+        id?: string;
     }) | ({
         adb_path?: string;
     }) | ({
@@ -23,8 +23,8 @@ export class AdbControllerRequest extends pb_1.Message {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("callback" in data && data.callback != undefined) {
-                this.callback = data.callback;
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
             }
             if ("adb_path" in data && data.adb_path != undefined) {
                 this.adb_path = data.adb_path;
@@ -40,13 +40,13 @@ export class AdbControllerRequest extends pb_1.Message {
             }
         }
     }
-    get callback() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 1) as dependency_1.Id;
+    get id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set callback(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_callback() {
+    get has_id() {
         return pb_1.Message.getField(this, 1) != null;
     }
     get adb_path() {
@@ -85,12 +85,12 @@ export class AdbControllerRequest extends pb_1.Message {
     get has_adb_config() {
         return pb_1.Message.getField(this, 5) != null;
     }
-    get _callback() {
+    get _id() {
         const cases: {
-            [index: number]: "none" | "callback";
+            [index: number]: "none" | "id";
         } = {
             0: "none",
-            1: "callback"
+            1: "id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
@@ -131,15 +131,15 @@ export class AdbControllerRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [5])];
     }
     static fromObject(data: {
-        callback?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        id?: string;
         adb_path?: string;
         adb_serial?: string;
         adb_type?: number;
         adb_config?: string;
     }): AdbControllerRequest {
         const message = new AdbControllerRequest({});
-        if (data.callback != null) {
-            message.callback = dependency_1.Id.fromObject(data.callback);
+        if (data.id != null) {
+            message.id = data.id;
         }
         if (data.adb_path != null) {
             message.adb_path = data.adb_path;
@@ -157,14 +157,14 @@ export class AdbControllerRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            callback?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            id?: string;
             adb_path?: string;
             adb_serial?: string;
             adb_type?: number;
             adb_config?: string;
         } = {};
-        if (this.callback != null) {
-            data.callback = this.callback.toObject();
+        if (this.id != null) {
+            data.id = this.id;
         }
         if (this.adb_path != null) {
             data.adb_path = this.adb_path;
@@ -184,8 +184,8 @@ export class AdbControllerRequest extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_callback)
-            writer.writeMessage(1, this.callback, () => this.callback.serialize(writer));
+        if (this.has_id)
+            writer.writeString(1, this.id);
         if (this.has_adb_path)
             writer.writeString(2, this.adb_path);
         if (this.has_adb_serial)
@@ -204,7 +204,7 @@ export class AdbControllerRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.callback, () => message.callback = dependency_1.Id.deserialize(reader));
+                    message.id = reader.readString();
                     break;
                 case 2:
                     message.adb_path = reader.readString();
@@ -408,7 +408,7 @@ export class ControllerSetOptionRequest extends pb_1.Message {
 export class ControllerPostClickRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
         param?: dependency_1.ClickParam;
     })))) {
@@ -424,10 +424,10 @@ export class ControllerPostClickRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -460,12 +460,12 @@ export class ControllerPostClickRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        handle?: string;
         param?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
     }): ControllerPostClickRequest {
         const message = new ControllerPostClickRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.param != null) {
             message.param = dependency_1.ClickParam.fromObject(data.param);
@@ -474,11 +474,11 @@ export class ControllerPostClickRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            handle?: string;
             param?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.param != null) {
             data.param = this.param.toObject();
@@ -490,7 +490,7 @@ export class ControllerPostClickRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_param)
             writer.writeMessage(2, this.param, () => this.param.serialize(writer));
         if (!w)
@@ -503,7 +503,7 @@ export class ControllerPostClickRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     reader.readMessage(message.param, () => message.param = dependency_1.ClickParam.deserialize(reader));
@@ -523,7 +523,7 @@ export class ControllerPostClickRequest extends pb_1.Message {
 export class ControllerPostSwipeRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
         param?: dependency_1.SwipeParam;
     })))) {
@@ -539,10 +539,10 @@ export class ControllerPostSwipeRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -575,12 +575,12 @@ export class ControllerPostSwipeRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        handle?: string;
         param?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
     }): ControllerPostSwipeRequest {
         const message = new ControllerPostSwipeRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.param != null) {
             message.param = dependency_1.SwipeParam.fromObject(data.param);
@@ -589,11 +589,11 @@ export class ControllerPostSwipeRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            handle?: string;
             param?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.param != null) {
             data.param = this.param.toObject();
@@ -605,7 +605,7 @@ export class ControllerPostSwipeRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_param)
             writer.writeMessage(2, this.param, () => this.param.serialize(writer));
         if (!w)
@@ -618,7 +618,7 @@ export class ControllerPostSwipeRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     reader.readMessage(message.param, () => message.param = dependency_1.SwipeParam.deserialize(reader));
@@ -638,7 +638,7 @@ export class ControllerPostSwipeRequest extends pb_1.Message {
 export class ControllerPostKeyRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
         param?: dependency_1.KeyParam;
     })))) {
@@ -654,10 +654,10 @@ export class ControllerPostKeyRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -690,12 +690,12 @@ export class ControllerPostKeyRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        handle?: string;
         param?: ReturnType<typeof dependency_1.KeyParam.prototype.toObject>;
     }): ControllerPostKeyRequest {
         const message = new ControllerPostKeyRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.param != null) {
             message.param = dependency_1.KeyParam.fromObject(data.param);
@@ -704,11 +704,11 @@ export class ControllerPostKeyRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            handle?: string;
             param?: ReturnType<typeof dependency_1.KeyParam.prototype.toObject>;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.param != null) {
             data.param = this.param.toObject();
@@ -720,7 +720,7 @@ export class ControllerPostKeyRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_param)
             writer.writeMessage(2, this.param, () => this.param.serialize(writer));
         if (!w)
@@ -733,7 +733,7 @@ export class ControllerPostKeyRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     reader.readMessage(message.param, () => message.param = dependency_1.KeyParam.deserialize(reader));
@@ -753,7 +753,7 @@ export class ControllerPostKeyRequest extends pb_1.Message {
 export class ControllerPostTouchRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
         param?: dependency_1.TouchParam;
     })))) {
@@ -769,10 +769,10 @@ export class ControllerPostTouchRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -805,12 +805,12 @@ export class ControllerPostTouchRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        handle?: string;
         param?: ReturnType<typeof dependency_1.TouchParam.prototype.toObject>;
     }): ControllerPostTouchRequest {
         const message = new ControllerPostTouchRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.param != null) {
             message.param = dependency_1.TouchParam.fromObject(data.param);
@@ -819,11 +819,11 @@ export class ControllerPostTouchRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            handle?: string;
             param?: ReturnType<typeof dependency_1.TouchParam.prototype.toObject>;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.param != null) {
             data.param = this.param.toObject();
@@ -835,7 +835,7 @@ export class ControllerPostTouchRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_param)
             writer.writeMessage(2, this.param, () => this.param.serialize(writer));
         if (!w)
@@ -848,7 +848,7 @@ export class ControllerPostTouchRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     reader.readMessage(message.param, () => message.param = dependency_1.TouchParam.deserialize(reader));
@@ -868,9 +868,9 @@ export class ControllerPostTouchRequest extends pb_1.Message {
 export class ControllerGetImageRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
-        image?: dependency_1.Handle;
+        image_handle?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -878,27 +878,27 @@ export class ControllerGetImageRequest extends pb_1.Message {
             if ("handle" in data && data.handle != undefined) {
                 this.handle = data.handle;
             }
-            if ("image" in data && data.image != undefined) {
-                this.image = data.image;
+            if ("image_handle" in data && data.image_handle != undefined) {
+                this.image_handle = data.image_handle;
             }
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get image() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 2) as dependency_1.Handle;
+    get image_handle() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set image(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    set image_handle(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
     }
-    get has_image() {
+    get has_image_handle() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get _handle() {
@@ -910,38 +910,38 @@ export class ControllerGetImageRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _image() {
+    get _image_handle() {
         const cases: {
-            [index: number]: "none" | "image";
+            [index: number]: "none" | "image_handle";
         } = {
             0: "none",
-            2: "image"
+            2: "image_handle"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-        image?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        handle?: string;
+        image_handle?: string;
     }): ControllerGetImageRequest {
         const message = new ControllerGetImageRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
-        if (data.image != null) {
-            message.image = dependency_1.Handle.fromObject(data.image);
+        if (data.image_handle != null) {
+            message.image_handle = data.image_handle;
         }
         return message;
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-            image?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            handle?: string;
+            image_handle?: string;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
-        if (this.image != null) {
-            data.image = this.image.toObject();
+        if (this.image_handle != null) {
+            data.image_handle = this.image_handle;
         }
         return data;
     }
@@ -950,9 +950,9 @@ export class ControllerGetImageRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
-        if (this.has_image)
-            writer.writeMessage(2, this.image, () => this.image.serialize(writer));
+            writer.writeString(1, this.handle);
+        if (this.has_image_handle)
+            writer.writeString(2, this.image_handle);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -963,10 +963,10 @@ export class ControllerGetImageRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.image, () => message.image = dependency_1.Handle.deserialize(reader));
+                    message.image_handle = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -1057,8 +1057,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.HandleRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         post_click: {
             path: "/maarpc.Controller/post_click",
@@ -1066,8 +1066,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: ControllerPostClickRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => ControllerPostClickRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         post_swipe: {
             path: "/maarpc.Controller/post_swipe",
@@ -1075,8 +1075,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: ControllerPostSwipeRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => ControllerPostSwipeRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         post_press_key: {
             path: "/maarpc.Controller/post_press_key",
@@ -1084,8 +1084,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: ControllerPostKeyRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => ControllerPostKeyRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         post_touch_down: {
             path: "/maarpc.Controller/post_touch_down",
@@ -1093,8 +1093,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: ControllerPostTouchRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         post_touch_move: {
             path: "/maarpc.Controller/post_touch_move",
@@ -1102,8 +1102,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: ControllerPostTouchRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         post_touch_up: {
             path: "/maarpc.Controller/post_touch_up",
@@ -1111,8 +1111,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: ControllerPostTouchRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         post_screencap: {
             path: "/maarpc.Controller/post_screencap",
@@ -1120,15 +1120,15 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.HandleRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         status: {
             path: "/maarpc.Controller/status",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleIdRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIdRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleIIdRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIIdRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.StatusResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.StatusResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1136,8 +1136,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/wait",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleIdRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIdRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleIIdRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIIdRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1175,16 +1175,16 @@ export abstract class UnimplementedControllerService {
     abstract create_custom(call: grpc_1.ServerWritableStream<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse>): void;
     abstract submit_custom_controller(call: grpc_1.ServerUnaryCall<dependency_2.SubmitCustomControllerRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract set_option(call: grpc_1.ServerUnaryCall<ControllerSetOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract post_connection(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract post_click(call: grpc_1.ServerUnaryCall<ControllerPostClickRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract post_swipe(call: grpc_1.ServerUnaryCall<ControllerPostSwipeRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract post_press_key(call: grpc_1.ServerUnaryCall<ControllerPostKeyRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract post_touch_down(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract post_touch_move(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract post_touch_up(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract post_screencap(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
-    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIdRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract post_connection(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_click(call: grpc_1.ServerUnaryCall<ControllerPostClickRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_swipe(call: grpc_1.ServerUnaryCall<ControllerPostSwipeRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_press_key(call: grpc_1.ServerUnaryCall<ControllerPostKeyRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_touch_down(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_touch_move(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_touch_up(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_screencap(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
+    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract connected(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
     abstract image(call: grpc_1.ServerUnaryCall<ControllerGetImageRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract uuid(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
@@ -1244,11 +1244,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_connection: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.IdResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_connection: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.IIdResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_connection(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_connection(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1256,11 +1256,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_click: GrpcPromiseServiceInterface<ControllerPostClickRequest, dependency_1.IdResponse> = (message: ControllerPostClickRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_click: GrpcPromiseServiceInterface<ControllerPostClickRequest, dependency_1.IIdResponse> = (message: ControllerPostClickRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_click(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_click(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1268,11 +1268,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_swipe: GrpcPromiseServiceInterface<ControllerPostSwipeRequest, dependency_1.IdResponse> = (message: ControllerPostSwipeRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_swipe: GrpcPromiseServiceInterface<ControllerPostSwipeRequest, dependency_1.IIdResponse> = (message: ControllerPostSwipeRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_swipe(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_swipe(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1280,11 +1280,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_press_key: GrpcPromiseServiceInterface<ControllerPostKeyRequest, dependency_1.IdResponse> = (message: ControllerPostKeyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_press_key: GrpcPromiseServiceInterface<ControllerPostKeyRequest, dependency_1.IIdResponse> = (message: ControllerPostKeyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_press_key(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_press_key(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1292,11 +1292,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_touch_down: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_touch_down: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_touch_down(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_touch_down(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1304,11 +1304,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_touch_move: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_touch_move: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_touch_move(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_touch_move(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1316,11 +1316,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_touch_up: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_touch_up: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_touch_up(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_touch_up(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1328,11 +1328,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_screencap: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.IdResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_screencap: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.IIdResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_screencap(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_screencap(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -1340,7 +1340,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    status: GrpcPromiseServiceInterface<dependency_1.HandleIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
+    status: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1352,7 +1352,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    wait: GrpcPromiseServiceInterface<dependency_1.HandleIdRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    wait: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};

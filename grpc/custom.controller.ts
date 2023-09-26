@@ -8,80 +8,80 @@ import * as pb_1 from "google-protobuf";
 export class CustomControllerRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        callback?: dependency_1.Id;
+        id?: string;
     }) | ({
-        ctrl?: dependency_1.Id;
+        ctrl_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("callback" in data && data.callback != undefined) {
-                this.callback = data.callback;
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
             }
-            if ("ctrl" in data && data.ctrl != undefined) {
-                this.ctrl = data.ctrl;
+            if ("ctrl_id" in data && data.ctrl_id != undefined) {
+                this.ctrl_id = data.ctrl_id;
             }
         }
     }
-    get callback() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 1) as dependency_1.Id;
+    get id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set callback(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_callback() {
+    get has_id() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get ctrl() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 2) as dependency_1.Id;
+    get ctrl_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set ctrl(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    set ctrl_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
     }
-    get has_ctrl() {
+    get has_ctrl_id() {
         return pb_1.Message.getField(this, 2) != null;
     }
-    get _callback() {
+    get _id() {
         const cases: {
-            [index: number]: "none" | "callback";
+            [index: number]: "none" | "id";
         } = {
             0: "none",
-            1: "callback"
+            1: "id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _ctrl() {
+    get _ctrl_id() {
         const cases: {
-            [index: number]: "none" | "ctrl";
+            [index: number]: "none" | "ctrl_id";
         } = {
             0: "none",
-            2: "ctrl"
+            2: "ctrl_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        callback?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-        ctrl?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        id?: string;
+        ctrl_id?: string;
     }): CustomControllerRequest {
         const message = new CustomControllerRequest({});
-        if (data.callback != null) {
-            message.callback = dependency_1.Id.fromObject(data.callback);
+        if (data.id != null) {
+            message.id = data.id;
         }
-        if (data.ctrl != null) {
-            message.ctrl = dependency_1.Id.fromObject(data.ctrl);
+        if (data.ctrl_id != null) {
+            message.ctrl_id = data.ctrl_id;
         }
         return message;
     }
     toObject() {
         const data: {
-            callback?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-            ctrl?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            id?: string;
+            ctrl_id?: string;
         } = {};
-        if (this.callback != null) {
-            data.callback = this.callback.toObject();
+        if (this.id != null) {
+            data.id = this.id;
         }
-        if (this.ctrl != null) {
-            data.ctrl = this.ctrl.toObject();
+        if (this.ctrl_id != null) {
+            data.ctrl_id = this.ctrl_id;
         }
         return data;
     }
@@ -89,10 +89,10 @@ export class CustomControllerRequest extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_callback)
-            writer.writeMessage(1, this.callback, () => this.callback.serialize(writer));
-        if (this.has_ctrl)
-            writer.writeMessage(2, this.ctrl, () => this.ctrl.serialize(writer));
+        if (this.has_id)
+            writer.writeString(1, this.id);
+        if (this.has_ctrl_id)
+            writer.writeString(2, this.ctrl_id);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -103,10 +103,10 @@ export class CustomControllerRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.callback, () => message.callback = dependency_1.Id.deserialize(reader));
+                    message.id = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.ctrl, () => message.ctrl = dependency_1.Id.deserialize(reader));
+                    message.ctrl_id = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -388,7 +388,7 @@ export class CustomControllerResponse extends pb_1.Message {
         start?: never;
         stop?: never;
         resolution?: never;
-        image?: dependency_1.Handle;
+        image?: string;
         uuid?: never;
         set_option?: never;
     } | {
@@ -420,18 +420,18 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: CustomControllerSetOptionParam;
     }) | ({
-        ctrl?: dependency_1.Id;
+        ctrl_id?: string;
     }) | ({
-        id?: dependency_1.Id;
+        cmd_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("ctrl" in data && data.ctrl != undefined) {
-                this.ctrl = data.ctrl;
+            if ("ctrl_id" in data && data.ctrl_id != undefined) {
+                this.ctrl_id = data.ctrl_id;
             }
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
             }
             if ("connect" in data && data.connect != undefined) {
                 this.connect = data.connect;
@@ -474,22 +474,22 @@ export class CustomControllerResponse extends pb_1.Message {
             }
         }
     }
-    get ctrl() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 1) as dependency_1.Id;
+    get ctrl_id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set ctrl(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[1], value);
+    set ctrl_id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
-    get has_ctrl() {
+    get has_ctrl_id() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get id() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 2) as dependency_1.Id;
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set id(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[2], value);
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
     }
-    get has_id() {
+    get has_cmd_id() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get connect() {
@@ -583,10 +583,10 @@ export class CustomControllerResponse extends pb_1.Message {
         return pb_1.Message.getField(this, 110) != null;
     }
     get image() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 111) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 111, "") as string;
     }
-    set image(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 111, this.#one_of_decls[0], value);
+    set image(value: string) {
+        pb_1.Message.setOneofField(this, 111, this.#one_of_decls[0], value);
     }
     get has_image() {
         return pb_1.Message.getField(this, 111) != null;
@@ -630,27 +630,27 @@ export class CustomControllerResponse extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 200])];
     }
-    get _ctrl() {
+    get _ctrl_id() {
         const cases: {
-            [index: number]: "none" | "ctrl";
+            [index: number]: "none" | "ctrl_id";
         } = {
             0: "none",
-            1: "ctrl"
+            1: "ctrl_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _id() {
+    get _cmd_id() {
         const cases: {
-            [index: number]: "none" | "id";
+            [index: number]: "none" | "cmd_id";
         } = {
             0: "none",
-            2: "id"
+            2: "cmd_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        ctrl?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-        id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        ctrl_id?: string;
+        cmd_id?: string;
         connect?: boolean;
         click?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
         swipe?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
@@ -661,16 +661,16 @@ export class CustomControllerResponse extends pb_1.Message {
         start?: string;
         stop?: string;
         resolution?: boolean;
-        image?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        image?: string;
         uuid?: boolean;
         set_option?: ReturnType<typeof CustomControllerSetOptionParam.prototype.toObject>;
     }): CustomControllerResponse {
         const message = new CustomControllerResponse({});
-        if (data.ctrl != null) {
-            message.ctrl = dependency_1.Id.fromObject(data.ctrl);
+        if (data.ctrl_id != null) {
+            message.ctrl_id = data.ctrl_id;
         }
-        if (data.id != null) {
-            message.id = dependency_1.Id.fromObject(data.id);
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
         }
         if (data.connect != null) {
             message.connect = data.connect;
@@ -703,7 +703,7 @@ export class CustomControllerResponse extends pb_1.Message {
             message.resolution = data.resolution;
         }
         if (data.image != null) {
-            message.image = dependency_1.Handle.fromObject(data.image);
+            message.image = data.image;
         }
         if (data.uuid != null) {
             message.uuid = data.uuid;
@@ -715,8 +715,8 @@ export class CustomControllerResponse extends pb_1.Message {
     }
     toObject() {
         const data: {
-            ctrl?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-            id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            ctrl_id?: string;
+            cmd_id?: string;
             connect?: boolean;
             click?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
             swipe?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
@@ -727,15 +727,15 @@ export class CustomControllerResponse extends pb_1.Message {
             start?: string;
             stop?: string;
             resolution?: boolean;
-            image?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            image?: string;
             uuid?: boolean;
             set_option?: ReturnType<typeof CustomControllerSetOptionParam.prototype.toObject>;
         } = {};
-        if (this.ctrl != null) {
-            data.ctrl = this.ctrl.toObject();
+        if (this.ctrl_id != null) {
+            data.ctrl_id = this.ctrl_id;
         }
-        if (this.id != null) {
-            data.id = this.id.toObject();
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
         }
         if (this.connect != null) {
             data.connect = this.connect;
@@ -768,7 +768,7 @@ export class CustomControllerResponse extends pb_1.Message {
             data.resolution = this.resolution;
         }
         if (this.image != null) {
-            data.image = this.image.toObject();
+            data.image = this.image;
         }
         if (this.uuid != null) {
             data.uuid = this.uuid;
@@ -782,10 +782,10 @@ export class CustomControllerResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_ctrl)
-            writer.writeMessage(1, this.ctrl, () => this.ctrl.serialize(writer));
-        if (this.has_id)
-            writer.writeMessage(2, this.id, () => this.id.serialize(writer));
+        if (this.has_ctrl_id)
+            writer.writeString(1, this.ctrl_id);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
         if (this.has_connect)
             writer.writeBool(101, this.connect);
         if (this.has_click)
@@ -807,7 +807,7 @@ export class CustomControllerResponse extends pb_1.Message {
         if (this.has_resolution)
             writer.writeBool(110, this.resolution);
         if (this.has_image)
-            writer.writeMessage(111, this.image, () => this.image.serialize(writer));
+            writer.writeString(111, this.image);
         if (this.has_uuid)
             writer.writeBool(112, this.uuid);
         if (this.has_set_option)
@@ -822,10 +822,10 @@ export class CustomControllerResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.ctrl, () => message.ctrl = dependency_1.Id.deserialize(reader));
+                    message.ctrl_id = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.id, () => message.id = dependency_1.Id.deserialize(reader));
+                    message.cmd_id = reader.readString();
                     break;
                 case 101:
                     message.connect = reader.readBool();
@@ -858,7 +858,7 @@ export class CustomControllerResponse extends pb_1.Message {
                     message.resolution = reader.readBool();
                     break;
                 case 111:
-                    reader.readMessage(message.image, () => message.image = dependency_1.Handle.deserialize(reader));
+                    message.image = reader.readString();
                     break;
                 case 112:
                     message.uuid = reader.readBool();
@@ -887,9 +887,9 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
         resolution?: never;
         uuid?: string;
     }) | ({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
-        id?: dependency_1.Id;
+        cmd_id?: string;
     }) | ({
         ok?: boolean;
     })))) {
@@ -899,8 +899,8 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
             if ("handle" in data && data.handle != undefined) {
                 this.handle = data.handle;
             }
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
             }
             if ("ok" in data && data.ok != undefined) {
                 this.ok = data.ok;
@@ -914,21 +914,21 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[1], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get id() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 2) as dependency_1.Id;
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set id(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[2], value);
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
     }
-    get has_id() {
+    get has_cmd_id() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get ok() {
@@ -977,12 +977,12 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _id() {
+    get _cmd_id() {
         const cases: {
-            [index: number]: "none" | "id";
+            [index: number]: "none" | "cmd_id";
         } = {
             0: "none",
-            2: "id"
+            2: "cmd_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
@@ -996,18 +996,18 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [3])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-        id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        handle?: string;
+        cmd_id?: string;
         ok?: boolean;
         resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
         uuid?: string;
     }): SubmitCustomControllerRequest {
         const message = new SubmitCustomControllerRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
-        if (data.id != null) {
-            message.id = dependency_1.Id.fromObject(data.id);
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
         }
         if (data.ok != null) {
             message.ok = data.ok;
@@ -1022,17 +1022,17 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-            id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            handle?: string;
+            cmd_id?: string;
             ok?: boolean;
             resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
             uuid?: string;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
-        if (this.id != null) {
-            data.id = this.id.toObject();
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
         }
         if (this.ok != null) {
             data.ok = this.ok;
@@ -1050,9 +1050,9 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
-        if (this.has_id)
-            writer.writeMessage(2, this.id, () => this.id.serialize(writer));
+            writer.writeString(1, this.handle);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
         if (this.has_ok)
             writer.writeBool(3, this.ok);
         if (this.has_resolution)
@@ -1069,10 +1069,10 @@ export class SubmitCustomControllerRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.id, () => message.id = dependency_1.Id.deserialize(reader));
+                    message.cmd_id = reader.readString();
                     break;
                 case 3:
                     message.ok = reader.readBool();

@@ -8,11 +8,11 @@ import * as pb_1 from "google-protobuf";
 export class CustomActionRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
         name?: string;
     }) | ({
-        act?: dependency_1.Id;
+        act_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -23,16 +23,16 @@ export class CustomActionRequest extends pb_1.Message {
             if ("name" in data && data.name != undefined) {
                 this.name = data.name;
             }
-            if ("act" in data && data.act != undefined) {
-                this.act = data.act;
+            if ("act_id" in data && data.act_id != undefined) {
+                this.act_id = data.act_id;
             }
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -46,13 +46,13 @@ export class CustomActionRequest extends pb_1.Message {
     get has_name() {
         return pb_1.Message.getField(this, 2) != null;
     }
-    get act() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 3) as dependency_1.Id;
+    get act_id() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
     }
-    set act(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 3, this.#one_of_decls[2], value);
+    set act_id(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
     }
-    get has_act() {
+    get has_act_id() {
         return pb_1.Message.getField(this, 3) != null;
     }
     get _handle() {
@@ -73,46 +73,46 @@ export class CustomActionRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
-    get _act() {
+    get _act_id() {
         const cases: {
-            [index: number]: "none" | "act";
+            [index: number]: "none" | "act_id";
         } = {
             0: "none",
-            3: "act"
+            3: "act_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [3])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        handle?: string;
         name?: string;
-        act?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        act_id?: string;
     }): CustomActionRequest {
         const message = new CustomActionRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.name != null) {
             message.name = data.name;
         }
-        if (data.act != null) {
-            message.act = dependency_1.Id.fromObject(data.act);
+        if (data.act_id != null) {
+            message.act_id = data.act_id;
         }
         return message;
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            handle?: string;
             name?: string;
-            act?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            act_id?: string;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.name != null) {
             data.name = this.name;
         }
-        if (this.act != null) {
-            data.act = this.act.toObject();
+        if (this.act_id != null) {
+            data.act_id = this.act_id;
         }
         return data;
     }
@@ -121,11 +121,11 @@ export class CustomActionRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_name)
             writer.writeString(2, this.name);
-        if (this.has_act)
-            writer.writeMessage(3, this.act, () => this.act.serialize(writer));
+        if (this.has_act_id)
+            writer.writeString(3, this.act_id);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -136,13 +136,13 @@ export class CustomActionRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     message.name = reader.readString();
                     break;
                 case 3:
-                    reader.readMessage(message.act, () => message.act = dependency_1.Id.deserialize(reader));
+                    message.act_id = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -159,7 +159,7 @@ export class CustomActionRequest extends pb_1.Message {
 export class CustomActionRunParam extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
     constructor(data?: any[] | ({} & (({
-        context?: dependency_1.Handle;
+        context?: string;
     }) | ({
         task?: string;
     }) | ({
@@ -190,10 +190,10 @@ export class CustomActionRunParam extends pb_1.Message {
         }
     }
     get context() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set context(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set context(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_context() {
         return pb_1.Message.getField(this, 1) != null;
@@ -280,7 +280,7 @@ export class CustomActionRunParam extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [5])];
     }
     static fromObject(data: {
-        context?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        context?: string;
         task?: string;
         param?: string;
         box?: ReturnType<typeof dependency_1.Rect.prototype.toObject>;
@@ -288,7 +288,7 @@ export class CustomActionRunParam extends pb_1.Message {
     }): CustomActionRunParam {
         const message = new CustomActionRunParam({});
         if (data.context != null) {
-            message.context = dependency_1.Handle.fromObject(data.context);
+            message.context = data.context;
         }
         if (data.task != null) {
             message.task = data.task;
@@ -306,14 +306,14 @@ export class CustomActionRunParam extends pb_1.Message {
     }
     toObject() {
         const data: {
-            context?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            context?: string;
             task?: string;
             param?: string;
             box?: ReturnType<typeof dependency_1.Rect.prototype.toObject>;
             detail?: string;
         } = {};
         if (this.context != null) {
-            data.context = this.context.toObject();
+            data.context = this.context;
         }
         if (this.task != null) {
             data.task = this.task;
@@ -334,7 +334,7 @@ export class CustomActionRunParam extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_context)
-            writer.writeMessage(1, this.context, () => this.context.serialize(writer));
+            writer.writeString(1, this.context);
         if (this.has_task)
             writer.writeString(2, this.task);
         if (this.has_param)
@@ -353,7 +353,7 @@ export class CustomActionRunParam extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.context, () => message.context = dependency_1.Handle.deserialize(reader));
+                    message.context = reader.readString();
                     break;
                 case 2:
                     message.task = reader.readString();
@@ -388,18 +388,18 @@ export class CustomActionResponse extends pb_1.Message {
         run?: never;
         stop?: boolean;
     }) | ({
-        act?: dependency_1.Id;
+        act_id?: string;
     }) | ({
-        id?: dependency_1.Id;
+        cmd_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("act" in data && data.act != undefined) {
-                this.act = data.act;
+            if ("act_id" in data && data.act_id != undefined) {
+                this.act_id = data.act_id;
             }
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
             }
             if ("run" in data && data.run != undefined) {
                 this.run = data.run;
@@ -409,22 +409,22 @@ export class CustomActionResponse extends pb_1.Message {
             }
         }
     }
-    get act() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 1) as dependency_1.Id;
+    get act_id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set act(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[1], value);
+    set act_id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
-    get has_act() {
+    get has_act_id() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get id() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 2) as dependency_1.Id;
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set id(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[2], value);
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
     }
-    get has_id() {
+    get has_cmd_id() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get run() {
@@ -455,36 +455,36 @@ export class CustomActionResponse extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [101, 102])];
     }
-    get _act() {
+    get _act_id() {
         const cases: {
-            [index: number]: "none" | "act";
+            [index: number]: "none" | "act_id";
         } = {
             0: "none",
-            1: "act"
+            1: "act_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _id() {
+    get _cmd_id() {
         const cases: {
-            [index: number]: "none" | "id";
+            [index: number]: "none" | "cmd_id";
         } = {
             0: "none",
-            2: "id"
+            2: "cmd_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        act?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-        id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        act_id?: string;
+        cmd_id?: string;
         run?: ReturnType<typeof CustomActionRunParam.prototype.toObject>;
         stop?: boolean;
     }): CustomActionResponse {
         const message = new CustomActionResponse({});
-        if (data.act != null) {
-            message.act = dependency_1.Id.fromObject(data.act);
+        if (data.act_id != null) {
+            message.act_id = data.act_id;
         }
-        if (data.id != null) {
-            message.id = dependency_1.Id.fromObject(data.id);
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
         }
         if (data.run != null) {
             message.run = CustomActionRunParam.fromObject(data.run);
@@ -496,16 +496,16 @@ export class CustomActionResponse extends pb_1.Message {
     }
     toObject() {
         const data: {
-            act?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-            id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            act_id?: string;
+            cmd_id?: string;
             run?: ReturnType<typeof CustomActionRunParam.prototype.toObject>;
             stop?: boolean;
         } = {};
-        if (this.act != null) {
-            data.act = this.act.toObject();
+        if (this.act_id != null) {
+            data.act_id = this.act_id;
         }
-        if (this.id != null) {
-            data.id = this.id.toObject();
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
         }
         if (this.run != null) {
             data.run = this.run.toObject();
@@ -519,10 +519,10 @@ export class CustomActionResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_act)
-            writer.writeMessage(1, this.act, () => this.act.serialize(writer));
-        if (this.has_id)
-            writer.writeMessage(2, this.id, () => this.id.serialize(writer));
+        if (this.has_act_id)
+            writer.writeString(1, this.act_id);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
         if (this.has_run)
             writer.writeMessage(101, this.run, () => this.run.serialize(writer));
         if (this.has_stop)
@@ -537,10 +537,10 @@ export class CustomActionResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.act, () => message.act = dependency_1.Id.deserialize(reader));
+                    message.act_id = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.id, () => message.id = dependency_1.Id.deserialize(reader));
+                    message.cmd_id = reader.readString();
                     break;
                 case 101:
                     reader.readMessage(message.run, () => message.run = CustomActionRunParam.deserialize(reader));
@@ -563,9 +563,9 @@ export class CustomActionResponse extends pb_1.Message {
 export class SubmitCustomActionRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
-        id?: dependency_1.Id;
+        cmd_id?: string;
     }) | ({
         ok?: boolean;
     })))) {
@@ -575,8 +575,8 @@ export class SubmitCustomActionRequest extends pb_1.Message {
             if ("handle" in data && data.handle != undefined) {
                 this.handle = data.handle;
             }
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
             }
             if ("ok" in data && data.ok != undefined) {
                 this.ok = data.ok;
@@ -584,21 +584,21 @@ export class SubmitCustomActionRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get id() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 2) as dependency_1.Id;
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set id(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
     }
-    get has_id() {
+    get has_cmd_id() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get ok() {
@@ -619,12 +619,12 @@ export class SubmitCustomActionRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _id() {
+    get _cmd_id() {
         const cases: {
-            [index: number]: "none" | "id";
+            [index: number]: "none" | "cmd_id";
         } = {
             0: "none",
-            2: "id"
+            2: "cmd_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
@@ -638,16 +638,16 @@ export class SubmitCustomActionRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [3])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-        id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        handle?: string;
+        cmd_id?: string;
         ok?: boolean;
     }): SubmitCustomActionRequest {
         const message = new SubmitCustomActionRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
-        if (data.id != null) {
-            message.id = dependency_1.Id.fromObject(data.id);
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
         }
         if (data.ok != null) {
             message.ok = data.ok;
@@ -656,15 +656,15 @@ export class SubmitCustomActionRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-            id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            handle?: string;
+            cmd_id?: string;
             ok?: boolean;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
-        if (this.id != null) {
-            data.id = this.id.toObject();
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
         }
         if (this.ok != null) {
             data.ok = this.ok;
@@ -676,9 +676,9 @@ export class SubmitCustomActionRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
-        if (this.has_id)
-            writer.writeMessage(2, this.id, () => this.id.serialize(writer));
+            writer.writeString(1, this.handle);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
         if (this.has_ok)
             writer.writeBool(3, this.ok);
         if (!w)
@@ -691,10 +691,10 @@ export class SubmitCustomActionRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.id, () => message.id = dependency_1.Id.deserialize(reader));
+                    message.cmd_id = reader.readString();
                     break;
                 case 3:
                     message.ok = reader.readBool();

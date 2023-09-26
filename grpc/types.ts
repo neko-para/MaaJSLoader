@@ -4,164 +4,6 @@
  * source: types.proto
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as pb_1 from "google-protobuf";
-export class Id extends pb_1.Message {
-    #one_of_decls: number[][] = [[1]];
-    constructor(data?: any[] | ({} & (({
-        id?: number;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
-            }
-        }
-    }
-    get id() {
-        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
-    }
-    set id(value: number) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_id() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get _id() {
-        const cases: {
-            [index: number]: "none" | "id";
-        } = {
-            0: "none",
-            1: "id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    static fromObject(data: {
-        id?: number;
-    }): Id {
-        const message = new Id({});
-        if (data.id != null) {
-            message.id = data.id;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            id?: number;
-        } = {};
-        if (this.id != null) {
-            data.id = this.id;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_id)
-            writer.writeUint64(1, this.id);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Id {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Id();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.id = reader.readUint64();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): Id {
-        return Id.deserialize(bytes);
-    }
-}
-export class Handle extends pb_1.Message {
-    #one_of_decls: number[][] = [[1]];
-    constructor(data?: any[] | ({} & (({
-        handle?: number;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
-    }
-    set handle(value: number) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    static fromObject(data: {
-        handle?: number;
-    }): Handle {
-        const message = new Handle({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: number;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeUint64(1, this.handle);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Handle {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Handle();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readUint64();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): Handle {
-        return Handle.deserialize(bytes);
-    }
-}
 export class Point extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
@@ -1164,7 +1006,7 @@ export class EmptyRequest extends pb_1.Message {
 export class IdRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        id?: Id;
+        id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -1175,10 +1017,10 @@ export class IdRequest extends pb_1.Message {
         }
     }
     get id() {
-        return pb_1.Message.getWrapperField(this, Id, 1) as Id;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set id(value: Id) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_id() {
         return pb_1.Message.getField(this, 1) != null;
@@ -1193,20 +1035,20 @@ export class IdRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        id?: ReturnType<typeof Id.prototype.toObject>;
+        id?: string;
     }): IdRequest {
         const message = new IdRequest({});
         if (data.id != null) {
-            message.id = Id.fromObject(data.id);
+            message.id = data.id;
         }
         return message;
     }
     toObject() {
         const data: {
-            id?: ReturnType<typeof Id.prototype.toObject>;
+            id?: string;
         } = {};
         if (this.id != null) {
-            data.id = this.id.toObject();
+            data.id = this.id;
         }
         return data;
     }
@@ -1215,7 +1057,7 @@ export class IdRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_id)
-            writer.writeMessage(1, this.id, () => this.id.serialize(writer));
+            writer.writeString(1, this.id);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -1226,7 +1068,7 @@ export class IdRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.id, () => message.id = Id.deserialize(reader));
+                    message.id = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -1243,7 +1085,7 @@ export class IdRequest extends pb_1.Message {
 export class HandleRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        handle?: Handle;
+        handle?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -1254,10 +1096,10 @@ export class HandleRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, Handle, 1) as Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -1272,20 +1114,20 @@ export class HandleRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof Handle.prototype.toObject>;
+        handle?: string;
     }): HandleRequest {
         const message = new HandleRequest({});
         if (data.handle != null) {
-            message.handle = Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         return message;
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof Handle.prototype.toObject>;
+            handle?: string;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         return data;
     }
@@ -1294,7 +1136,7 @@ export class HandleRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -1305,7 +1147,7 @@ export class HandleRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -1401,7 +1243,7 @@ export class BufferRequest extends pb_1.Message {
 export class HandleBufferRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: Handle;
+        handle?: string;
     }) | ({
         buffer?: Uint8Array;
     })))) {
@@ -1417,10 +1259,10 @@ export class HandleBufferRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, Handle, 1) as Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -1453,12 +1295,12 @@ export class HandleBufferRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof Handle.prototype.toObject>;
+        handle?: string;
         buffer?: Uint8Array;
     }): HandleBufferRequest {
         const message = new HandleBufferRequest({});
         if (data.handle != null) {
-            message.handle = Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.buffer != null) {
             message.buffer = data.buffer;
@@ -1467,11 +1309,11 @@ export class HandleBufferRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof Handle.prototype.toObject>;
+            handle?: string;
             buffer?: Uint8Array;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.buffer != null) {
             data.buffer = this.buffer;
@@ -1483,7 +1325,7 @@ export class HandleBufferRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_buffer)
             writer.writeBytes(2, this.buffer);
         if (!w)
@@ -1496,7 +1338,7 @@ export class HandleBufferRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     message.buffer = reader.readBytes();
@@ -1516,7 +1358,7 @@ export class HandleBufferRequest extends pb_1.Message {
 export class HandleStringRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: Handle;
+        handle?: string;
     }) | ({
         str?: string;
     })))) {
@@ -1532,10 +1374,10 @@ export class HandleStringRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, Handle, 1) as Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -1568,12 +1410,12 @@ export class HandleStringRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof Handle.prototype.toObject>;
+        handle?: string;
         str?: string;
     }): HandleStringRequest {
         const message = new HandleStringRequest({});
         if (data.handle != null) {
-            message.handle = Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.str != null) {
             message.str = data.str;
@@ -1582,11 +1424,11 @@ export class HandleStringRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof Handle.prototype.toObject>;
+            handle?: string;
             str?: string;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.str != null) {
             data.str = this.str;
@@ -1598,7 +1440,7 @@ export class HandleStringRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_str)
             writer.writeString(2, this.str);
         if (!w)
@@ -1611,7 +1453,7 @@ export class HandleStringRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     message.str = reader.readString();
@@ -1631,9 +1473,9 @@ export class HandleStringRequest extends pb_1.Message {
 export class HandleIdRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
-        handle?: Handle;
+        handle?: string;
     }) | ({
-        id?: Id;
+        id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -1647,19 +1489,19 @@ export class HandleIdRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, Handle, 1) as Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
     get id() {
-        return pb_1.Message.getWrapperField(this, Id, 2) as Id;
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set id(value: Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    set id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
     }
     get has_id() {
         return pb_1.Message.getField(this, 2) != null;
@@ -1683,28 +1525,28 @@ export class HandleIdRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof Handle.prototype.toObject>;
-        id?: ReturnType<typeof Id.prototype.toObject>;
+        handle?: string;
+        id?: string;
     }): HandleIdRequest {
         const message = new HandleIdRequest({});
         if (data.handle != null) {
-            message.handle = Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.id != null) {
-            message.id = Id.fromObject(data.id);
+            message.id = data.id;
         }
         return message;
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof Handle.prototype.toObject>;
-            id?: ReturnType<typeof Id.prototype.toObject>;
+            handle?: string;
+            id?: string;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.id != null) {
-            data.id = this.id.toObject();
+            data.id = this.id;
         }
         return data;
     }
@@ -1713,9 +1555,9 @@ export class HandleIdRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_id)
-            writer.writeMessage(2, this.id, () => this.id.serialize(writer));
+            writer.writeString(2, this.id);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -1726,10 +1568,10 @@ export class HandleIdRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.id, () => message.id = Id.deserialize(reader));
+                    message.id = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -1741,6 +1583,121 @@ export class HandleIdRequest extends pb_1.Message {
     }
     static deserializeBinary(bytes: Uint8Array): HandleIdRequest {
         return HandleIdRequest.deserialize(bytes);
+    }
+}
+export class HandleIIdRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        id?: number;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, 0) as number;
+    }
+    set id(value: number) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_id() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _id() {
+        const cases: {
+            [index: number]: "none" | "id";
+        } = {
+            0: "none",
+            2: "id"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        id?: number;
+    }): HandleIIdRequest {
+        const message = new HandleIIdRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.id != null) {
+            message.id = data.id;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            id?: number;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.id != null) {
+            data.id = this.id;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_id)
+            writer.writeUint64(2, this.id);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): HandleIIdRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new HandleIIdRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.id = reader.readUint64();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): HandleIIdRequest {
+        return HandleIIdRequest.deserialize(bytes);
     }
 }
 export class EmptyResponse extends pb_1.Message {
@@ -1825,7 +1782,7 @@ export class EmptyResponse extends pb_1.Message {
 export class IdResponse extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        id?: Id;
+        id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -1836,10 +1793,10 @@ export class IdResponse extends pb_1.Message {
         }
     }
     get id() {
-        return pb_1.Message.getWrapperField(this, Id, 1) as Id;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set id(value: Id) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_id() {
         return pb_1.Message.getField(this, 1) != null;
@@ -1854,20 +1811,20 @@ export class IdResponse extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        id?: ReturnType<typeof Id.prototype.toObject>;
+        id?: string;
     }): IdResponse {
         const message = new IdResponse({});
         if (data.id != null) {
-            message.id = Id.fromObject(data.id);
+            message.id = data.id;
         }
         return message;
     }
     toObject() {
         const data: {
-            id?: ReturnType<typeof Id.prototype.toObject>;
+            id?: string;
         } = {};
         if (this.id != null) {
-            data.id = this.id.toObject();
+            data.id = this.id;
         }
         return data;
     }
@@ -1876,7 +1833,7 @@ export class IdResponse extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_id)
-            writer.writeMessage(1, this.id, () => this.id.serialize(writer));
+            writer.writeString(1, this.id);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -1887,7 +1844,7 @@ export class IdResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.id, () => message.id = Id.deserialize(reader));
+                    message.id = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -1901,52 +1858,52 @@ export class IdResponse extends pb_1.Message {
         return IdResponse.deserialize(bytes);
     }
 }
-export class BoolResponse extends pb_1.Message {
+export class IIdResponse extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        value?: boolean;
+        id?: number;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("value" in data && data.value != undefined) {
-                this.value = data.value;
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
             }
         }
     }
-    get value() {
-        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    get id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
     }
-    set value(value: boolean) {
+    set id(value: number) {
         pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_value() {
+    get has_id() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get _value() {
+    get _id() {
         const cases: {
-            [index: number]: "none" | "value";
+            [index: number]: "none" | "id";
         } = {
             0: "none",
-            1: "value"
+            1: "id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        value?: boolean;
-    }): BoolResponse {
-        const message = new BoolResponse({});
-        if (data.value != null) {
-            message.value = data.value;
+        id?: number;
+    }): IIdResponse {
+        const message = new IIdResponse({});
+        if (data.id != null) {
+            message.id = data.id;
         }
         return message;
     }
     toObject() {
         const data: {
-            value?: boolean;
+            id?: number;
         } = {};
-        if (this.value != null) {
-            data.value = this.value;
+        if (this.id != null) {
+            data.id = this.id;
         }
         return data;
     }
@@ -1954,8 +1911,87 @@ export class BoolResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_value)
-            writer.writeBool(1, this.value);
+        if (this.has_id)
+            writer.writeUint64(1, this.id);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): IIdResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new IIdResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.id = reader.readUint64();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): IIdResponse {
+        return IIdResponse.deserialize(bytes);
+    }
+}
+export class BoolResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [[1]];
+    constructor(data?: any[] | ({} & (({
+        bool?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("bool" in data && data.bool != undefined) {
+                this.bool = data.bool;
+            }
+        }
+    }
+    get bool() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    }
+    set bool(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_bool() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get _bool() {
+        const cases: {
+            [index: number]: "none" | "bool";
+        } = {
+            0: "none",
+            1: "bool"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        bool?: boolean;
+    }): BoolResponse {
+        const message = new BoolResponse({});
+        if (data.bool != null) {
+            message.bool = data.bool;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            bool?: boolean;
+        } = {};
+        if (this.bool != null) {
+            data.bool = this.bool;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_bool)
+            writer.writeBool(1, this.bool);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -1966,7 +2002,7 @@ export class BoolResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    message.value = reader.readBool();
+                    message.bool = reader.readBool();
                     break;
                 default: reader.skipField();
             }
@@ -1983,49 +2019,49 @@ export class BoolResponse extends pb_1.Message {
 export class StringResponse extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        value?: string;
+        str?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("value" in data && data.value != undefined) {
-                this.value = data.value;
+            if ("str" in data && data.str != undefined) {
+                this.str = data.str;
             }
         }
     }
-    get value() {
+    get str() {
         return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set value(value: string) {
+    set str(value: string) {
         pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_value() {
+    get has_str() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get _value() {
+    get _str() {
         const cases: {
-            [index: number]: "none" | "value";
+            [index: number]: "none" | "str";
         } = {
             0: "none",
-            1: "value"
+            1: "str"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        value?: string;
+        str?: string;
     }): StringResponse {
         const message = new StringResponse({});
-        if (data.value != null) {
-            message.value = data.value;
+        if (data.str != null) {
+            message.str = data.str;
         }
         return message;
     }
     toObject() {
         const data: {
-            value?: string;
+            str?: string;
         } = {};
-        if (this.value != null) {
-            data.value = this.value;
+        if (this.str != null) {
+            data.str = this.str;
         }
         return data;
     }
@@ -2033,8 +2069,8 @@ export class StringResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_value)
-            writer.writeString(1, this.value);
+        if (this.has_str)
+            writer.writeString(1, this.str);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -2045,7 +2081,7 @@ export class StringResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    message.value = reader.readString();
+                    message.str = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -2062,49 +2098,49 @@ export class StringResponse extends pb_1.Message {
 export class HandleResponse extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        value?: Handle;
+        handle?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("value" in data && data.value != undefined) {
-                this.value = data.value;
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
             }
         }
     }
-    get value() {
-        return pb_1.Message.getWrapperField(this, Handle, 1) as Handle;
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set value(value: Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_value() {
+    get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get _value() {
+    get _handle() {
         const cases: {
-            [index: number]: "none" | "value";
+            [index: number]: "none" | "handle";
         } = {
             0: "none",
-            1: "value"
+            1: "handle"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        value?: ReturnType<typeof Handle.prototype.toObject>;
+        handle?: string;
     }): HandleResponse {
         const message = new HandleResponse({});
-        if (data.value != null) {
-            message.value = Handle.fromObject(data.value);
+        if (data.handle != null) {
+            message.handle = data.handle;
         }
         return message;
     }
     toObject() {
         const data: {
-            value?: ReturnType<typeof Handle.prototype.toObject>;
+            handle?: string;
         } = {};
-        if (this.value != null) {
-            data.value = this.value.toObject();
+        if (this.handle != null) {
+            data.handle = this.handle;
         }
         return data;
     }
@@ -2112,8 +2148,8 @@ export class HandleResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_value)
-            writer.writeMessage(1, this.value, () => this.value.serialize(writer));
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -2124,7 +2160,7 @@ export class HandleResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.value, () => message.value = Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -2141,49 +2177,49 @@ export class HandleResponse extends pb_1.Message {
 export class BufferResponse extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        value?: Uint8Array;
+        buf?: Uint8Array;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("value" in data && data.value != undefined) {
-                this.value = data.value;
+            if ("buf" in data && data.buf != undefined) {
+                this.buf = data.buf;
             }
         }
     }
-    get value() {
+    get buf() {
         return pb_1.Message.getFieldWithDefault(this, 1, new Uint8Array(0)) as Uint8Array;
     }
-    set value(value: Uint8Array) {
+    set buf(value: Uint8Array) {
         pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_value() {
+    get has_buf() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get _value() {
+    get _buf() {
         const cases: {
-            [index: number]: "none" | "value";
+            [index: number]: "none" | "buf";
         } = {
             0: "none",
-            1: "value"
+            1: "buf"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        value?: Uint8Array;
+        buf?: Uint8Array;
     }): BufferResponse {
         const message = new BufferResponse({});
-        if (data.value != null) {
-            message.value = data.value;
+        if (data.buf != null) {
+            message.buf = data.buf;
         }
         return message;
     }
     toObject() {
         const data: {
-            value?: Uint8Array;
+            buf?: Uint8Array;
         } = {};
-        if (this.value != null) {
-            data.value = this.value;
+        if (this.buf != null) {
+            data.buf = this.buf;
         }
         return data;
     }
@@ -2191,8 +2227,8 @@ export class BufferResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_value)
-            writer.writeBytes(1, this.value);
+        if (this.has_buf)
+            writer.writeBytes(1, this.buf);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -2203,7 +2239,7 @@ export class BufferResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    message.value = reader.readBytes();
+                    message.buf = reader.readBytes();
                     break;
                 default: reader.skipField();
             }
@@ -2220,49 +2256,49 @@ export class BufferResponse extends pb_1.Message {
 export class StatusResponse extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
-        value?: number;
+        status?: number;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("value" in data && data.value != undefined) {
-                this.value = data.value;
+            if ("status" in data && data.status != undefined) {
+                this.status = data.status;
             }
         }
     }
-    get value() {
+    get status() {
         return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
     }
-    set value(value: number) {
+    set status(value: number) {
         pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_value() {
+    get has_status() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get _value() {
+    get _status() {
         const cases: {
-            [index: number]: "none" | "value";
+            [index: number]: "none" | "status";
         } = {
             0: "none",
-            1: "value"
+            1: "status"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        value?: number;
+        status?: number;
     }): StatusResponse {
         const message = new StatusResponse({});
-        if (data.value != null) {
-            message.value = data.value;
+        if (data.status != null) {
+            message.status = data.status;
         }
         return message;
     }
     toObject() {
         const data: {
-            value?: number;
+            status?: number;
         } = {};
-        if (this.value != null) {
-            data.value = this.value;
+        if (this.status != null) {
+            data.status = this.status;
         }
         return data;
     }
@@ -2270,8 +2306,8 @@ export class StatusResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_value)
-            writer.writeInt32(1, this.value);
+        if (this.has_status)
+            writer.writeInt32(1, this.status);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -2282,7 +2318,7 @@ export class StatusResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    message.value = reader.readInt32();
+                    message.status = reader.readInt32();
                     break;
                 default: reader.skipField();
             }

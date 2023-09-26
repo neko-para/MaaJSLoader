@@ -159,8 +159,8 @@ export abstract class UnimplementedUtilityService {
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
-        acquire_callback_id: {
-            path: "/maarpc.Utility/acquire_callback_id",
+        acquire_id: {
+            path: "/maarpc.Utility/acquire_id",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
@@ -185,24 +185,14 @@ export abstract class UnimplementedUtilityService {
             requestDeserialize: (bytes: Buffer) => dependency_1.IdRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
-        },
-        acquire_custom_controller_id: {
-            path: "/maarpc.Utility/acquire_custom_controller_id",
-            requestStream: false,
-            responseStream: false,
-            requestSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
         }
     };
     [method: string]: grpc_1.UntypedHandleCall;
     abstract version(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
     abstract set_global_option(call: grpc_1.ServerUnaryCall<SetGlobalOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract acquire_callback_id(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
+    abstract acquire_id(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
     abstract register_callback(call: grpc_1.ServerWritableStream<dependency_1.IdRequest, dependency_1.Callback>): void;
     abstract unregister_callback(call: grpc_1.ServerUnaryCall<dependency_1.IdRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract acquire_custom_controller_id(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
 }
 export class UtilityClient extends grpc_1.makeGenericClientConstructor(UnimplementedUtilityService.definition, "Utility", {}) {
     constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
@@ -232,11 +222,11 @@ export class UtilityClient extends grpc_1.makeGenericClientConstructor(Unimpleme
             resolve(response);
         }
     })); };
-    acquire_callback_id: GrpcPromiseServiceInterface<dependency_1.EmptyRequest, dependency_1.IdResponse> = (message: dependency_1.EmptyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    acquire_id: GrpcPromiseServiceInterface<dependency_1.EmptyRequest, dependency_1.IdResponse> = (message: dependency_1.EmptyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.acquire_callback_id(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.acquire_id(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
         if (error) {
             reject(error);
         }
@@ -252,18 +242,6 @@ export class UtilityClient extends grpc_1.makeGenericClientConstructor(Unimpleme
     } if (!options) {
         options = {};
     } return new Promise((resolve, reject) => super.unregister_callback(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
-        if (error) {
-            reject(error);
-        }
-        else {
-            resolve(response);
-        }
-    })); };
-    acquire_custom_controller_id: GrpcPromiseServiceInterface<dependency_1.EmptyRequest, dependency_1.IdResponse> = (message: dependency_1.EmptyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
-        metadata = new grpc_1.Metadata;
-    } if (!options) {
-        options = {};
-    } return new Promise((resolve, reject) => super.acquire_custom_controller_id(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
         if (error) {
             reject(error);
         }

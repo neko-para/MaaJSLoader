@@ -8,11 +8,11 @@ import * as pb_1 from "google-protobuf";
 export class CustomRecognizerRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3]];
     constructor(data?: any[] | ({} & (({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
         name?: string;
     }) | ({
-        reco?: dependency_1.Id;
+        reco_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -23,16 +23,16 @@ export class CustomRecognizerRequest extends pb_1.Message {
             if ("name" in data && data.name != undefined) {
                 this.name = data.name;
             }
-            if ("reco" in data && data.reco != undefined) {
-                this.reco = data.reco;
+            if ("reco_id" in data && data.reco_id != undefined) {
+                this.reco_id = data.reco_id;
             }
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
@@ -46,13 +46,13 @@ export class CustomRecognizerRequest extends pb_1.Message {
     get has_name() {
         return pb_1.Message.getField(this, 2) != null;
     }
-    get reco() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 3) as dependency_1.Id;
+    get reco_id() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
     }
-    set reco(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 3, this.#one_of_decls[2], value);
+    set reco_id(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
     }
-    get has_reco() {
+    get has_reco_id() {
         return pb_1.Message.getField(this, 3) != null;
     }
     get _handle() {
@@ -73,46 +73,46 @@ export class CustomRecognizerRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
-    get _reco() {
+    get _reco_id() {
         const cases: {
-            [index: number]: "none" | "reco";
+            [index: number]: "none" | "reco_id";
         } = {
             0: "none",
-            3: "reco"
+            3: "reco_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [3])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        handle?: string;
         name?: string;
-        reco?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        reco_id?: string;
     }): CustomRecognizerRequest {
         const message = new CustomRecognizerRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
         if (data.name != null) {
             message.name = data.name;
         }
-        if (data.reco != null) {
-            message.reco = dependency_1.Id.fromObject(data.reco);
+        if (data.reco_id != null) {
+            message.reco_id = data.reco_id;
         }
         return message;
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            handle?: string;
             name?: string;
-            reco?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            reco_id?: string;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
         if (this.name != null) {
             data.name = this.name;
         }
-        if (this.reco != null) {
-            data.reco = this.reco.toObject();
+        if (this.reco_id != null) {
+            data.reco_id = this.reco_id;
         }
         return data;
     }
@@ -121,11 +121,11 @@ export class CustomRecognizerRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
+            writer.writeString(1, this.handle);
         if (this.has_name)
             writer.writeString(2, this.name);
-        if (this.has_reco)
-            writer.writeMessage(3, this.reco, () => this.reco.serialize(writer));
+        if (this.has_reco_id)
+            writer.writeString(3, this.reco_id);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -136,13 +136,13 @@ export class CustomRecognizerRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     message.name = reader.readString();
                     break;
                 case 3:
-                    reader.readMessage(message.reco, () => message.reco = dependency_1.Id.deserialize(reader));
+                    message.reco_id = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -159,9 +159,9 @@ export class CustomRecognizerRequest extends pb_1.Message {
 export class CustomRecognizerAnalyzeParam extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3], [4]];
     constructor(data?: any[] | ({} & (({
-        context?: dependency_1.Handle;
+        context?: string;
     }) | ({
-        image?: dependency_1.Handle;
+        image_handle?: string;
     }) | ({
         task?: string;
     }) | ({
@@ -173,8 +173,8 @@ export class CustomRecognizerAnalyzeParam extends pb_1.Message {
             if ("context" in data && data.context != undefined) {
                 this.context = data.context;
             }
-            if ("image" in data && data.image != undefined) {
-                this.image = data.image;
+            if ("image_handle" in data && data.image_handle != undefined) {
+                this.image_handle = data.image_handle;
             }
             if ("task" in data && data.task != undefined) {
                 this.task = data.task;
@@ -185,21 +185,21 @@ export class CustomRecognizerAnalyzeParam extends pb_1.Message {
         }
     }
     get context() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set context(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set context(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
     get has_context() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get image() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 2) as dependency_1.Handle;
+    get image_handle() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set image(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    set image_handle(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
     }
-    get has_image() {
+    get has_image_handle() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get task() {
@@ -229,12 +229,12 @@ export class CustomRecognizerAnalyzeParam extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _image() {
+    get _image_handle() {
         const cases: {
-            [index: number]: "none" | "image";
+            [index: number]: "none" | "image_handle";
         } = {
             0: "none",
-            2: "image"
+            2: "image_handle"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
@@ -257,17 +257,17 @@ export class CustomRecognizerAnalyzeParam extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [4])];
     }
     static fromObject(data: {
-        context?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-        image?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+        context?: string;
+        image_handle?: string;
         task?: string;
         param?: string;
     }): CustomRecognizerAnalyzeParam {
         const message = new CustomRecognizerAnalyzeParam({});
         if (data.context != null) {
-            message.context = dependency_1.Handle.fromObject(data.context);
+            message.context = data.context;
         }
-        if (data.image != null) {
-            message.image = dependency_1.Handle.fromObject(data.image);
+        if (data.image_handle != null) {
+            message.image_handle = data.image_handle;
         }
         if (data.task != null) {
             message.task = data.task;
@@ -279,16 +279,16 @@ export class CustomRecognizerAnalyzeParam extends pb_1.Message {
     }
     toObject() {
         const data: {
-            context?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-            image?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
+            context?: string;
+            image_handle?: string;
             task?: string;
             param?: string;
         } = {};
         if (this.context != null) {
-            data.context = this.context.toObject();
+            data.context = this.context;
         }
-        if (this.image != null) {
-            data.image = this.image.toObject();
+        if (this.image_handle != null) {
+            data.image_handle = this.image_handle;
         }
         if (this.task != null) {
             data.task = this.task;
@@ -303,9 +303,9 @@ export class CustomRecognizerAnalyzeParam extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_context)
-            writer.writeMessage(1, this.context, () => this.context.serialize(writer));
-        if (this.has_image)
-            writer.writeMessage(2, this.image, () => this.image.serialize(writer));
+            writer.writeString(1, this.context);
+        if (this.has_image_handle)
+            writer.writeString(2, this.image_handle);
         if (this.has_task)
             writer.writeString(3, this.task);
         if (this.has_param)
@@ -320,10 +320,10 @@ export class CustomRecognizerAnalyzeParam extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.context, () => message.context = dependency_1.Handle.deserialize(reader));
+                    message.context = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.image, () => message.image = dependency_1.Handle.deserialize(reader));
+                    message.image_handle = reader.readString();
                     break;
                 case 3:
                     message.task = reader.readString();
@@ -348,40 +348,40 @@ export class CustomRecognizerResponse extends pb_1.Message {
     constructor(data?: any[] | ({} & (({
         analyze?: CustomRecognizerAnalyzeParam;
     }) | ({
-        reco?: dependency_1.Id;
+        reco_id?: string;
     }) | ({
-        id?: dependency_1.Id;
+        cmd_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("reco" in data && data.reco != undefined) {
-                this.reco = data.reco;
+            if ("reco_id" in data && data.reco_id != undefined) {
+                this.reco_id = data.reco_id;
             }
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
             }
             if ("analyze" in data && data.analyze != undefined) {
                 this.analyze = data.analyze;
             }
         }
     }
-    get reco() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 1) as dependency_1.Id;
+    get reco_id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set reco(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[1], value);
+    set reco_id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
-    get has_reco() {
+    get has_reco_id() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get id() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 2) as dependency_1.Id;
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set id(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[2], value);
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
     }
-    get has_id() {
+    get has_cmd_id() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get analyze() {
@@ -402,35 +402,35 @@ export class CustomRecognizerResponse extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [101])];
     }
-    get _reco() {
+    get _reco_id() {
         const cases: {
-            [index: number]: "none" | "reco";
+            [index: number]: "none" | "reco_id";
         } = {
             0: "none",
-            1: "reco"
+            1: "reco_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _id() {
+    get _cmd_id() {
         const cases: {
-            [index: number]: "none" | "id";
+            [index: number]: "none" | "cmd_id";
         } = {
             0: "none",
-            2: "id"
+            2: "cmd_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
-        reco?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-        id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        reco_id?: string;
+        cmd_id?: string;
         analyze?: ReturnType<typeof CustomRecognizerAnalyzeParam.prototype.toObject>;
     }): CustomRecognizerResponse {
         const message = new CustomRecognizerResponse({});
-        if (data.reco != null) {
-            message.reco = dependency_1.Id.fromObject(data.reco);
+        if (data.reco_id != null) {
+            message.reco_id = data.reco_id;
         }
-        if (data.id != null) {
-            message.id = dependency_1.Id.fromObject(data.id);
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
         }
         if (data.analyze != null) {
             message.analyze = CustomRecognizerAnalyzeParam.fromObject(data.analyze);
@@ -439,15 +439,15 @@ export class CustomRecognizerResponse extends pb_1.Message {
     }
     toObject() {
         const data: {
-            reco?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
-            id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            reco_id?: string;
+            cmd_id?: string;
             analyze?: ReturnType<typeof CustomRecognizerAnalyzeParam.prototype.toObject>;
         } = {};
-        if (this.reco != null) {
-            data.reco = this.reco.toObject();
+        if (this.reco_id != null) {
+            data.reco_id = this.reco_id;
         }
-        if (this.id != null) {
-            data.id = this.id.toObject();
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
         }
         if (this.analyze != null) {
             data.analyze = this.analyze.toObject();
@@ -458,10 +458,10 @@ export class CustomRecognizerResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_reco)
-            writer.writeMessage(1, this.reco, () => this.reco.serialize(writer));
-        if (this.has_id)
-            writer.writeMessage(2, this.id, () => this.id.serialize(writer));
+        if (this.has_reco_id)
+            writer.writeString(1, this.reco_id);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
         if (this.has_analyze)
             writer.writeMessage(101, this.analyze, () => this.analyze.serialize(writer));
         if (!w)
@@ -474,10 +474,10 @@ export class CustomRecognizerResponse extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.reco, () => message.reco = dependency_1.Id.deserialize(reader));
+                    message.reco_id = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.id, () => message.id = dependency_1.Id.deserialize(reader));
+                    message.cmd_id = reader.readString();
                     break;
                 case 101:
                     reader.readMessage(message.analyze, () => message.analyze = CustomRecognizerAnalyzeParam.deserialize(reader));
@@ -650,9 +650,9 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
     constructor(data?: any[] | ({} & (({
         analyze?: CustomRecognizerAnalyzeResult;
     }) | ({
-        handle?: dependency_1.Handle;
+        handle?: string;
     }) | ({
-        id?: dependency_1.Id;
+        cmd_id?: string;
     }) | ({
         ok?: boolean;
     })))) {
@@ -662,8 +662,8 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
             if ("handle" in data && data.handle != undefined) {
                 this.handle = data.handle;
             }
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
             }
             if ("ok" in data && data.ok != undefined) {
                 this.ok = data.ok;
@@ -674,21 +674,21 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
         }
     }
     get handle() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Handle, 1) as dependency_1.Handle;
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set handle(value: dependency_1.Handle) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[1], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get id() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Id, 2) as dependency_1.Id;
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set id(value: dependency_1.Id) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[2], value);
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
     }
-    get has_id() {
+    get has_cmd_id() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get ok() {
@@ -727,12 +727,12 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _id() {
+    get _cmd_id() {
         const cases: {
-            [index: number]: "none" | "id";
+            [index: number]: "none" | "cmd_id";
         } = {
             0: "none",
-            2: "id"
+            2: "cmd_id"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
@@ -746,17 +746,17 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [3])];
     }
     static fromObject(data: {
-        handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-        id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+        handle?: string;
+        cmd_id?: string;
         ok?: boolean;
         analyze?: ReturnType<typeof CustomRecognizerAnalyzeResult.prototype.toObject>;
     }): SubmitCustomRecognizerRequest {
         const message = new SubmitCustomRecognizerRequest({});
         if (data.handle != null) {
-            message.handle = dependency_1.Handle.fromObject(data.handle);
+            message.handle = data.handle;
         }
-        if (data.id != null) {
-            message.id = dependency_1.Id.fromObject(data.id);
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
         }
         if (data.ok != null) {
             message.ok = data.ok;
@@ -768,16 +768,16 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: ReturnType<typeof dependency_1.Handle.prototype.toObject>;
-            id?: ReturnType<typeof dependency_1.Id.prototype.toObject>;
+            handle?: string;
+            cmd_id?: string;
             ok?: boolean;
             analyze?: ReturnType<typeof CustomRecognizerAnalyzeResult.prototype.toObject>;
         } = {};
         if (this.handle != null) {
-            data.handle = this.handle.toObject();
+            data.handle = this.handle;
         }
-        if (this.id != null) {
-            data.id = this.id.toObject();
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
         }
         if (this.ok != null) {
             data.ok = this.ok;
@@ -792,9 +792,9 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
-            writer.writeMessage(1, this.handle, () => this.handle.serialize(writer));
-        if (this.has_id)
-            writer.writeMessage(2, this.id, () => this.id.serialize(writer));
+            writer.writeString(1, this.handle);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
         if (this.has_ok)
             writer.writeBool(3, this.ok);
         if (this.has_analyze)
@@ -809,10 +809,10 @@ export class SubmitCustomRecognizerRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.handle, () => message.handle = dependency_1.Handle.deserialize(reader));
+                    message.handle = reader.readString();
                     break;
                 case 2:
-                    reader.readMessage(message.id, () => message.id = dependency_1.Id.deserialize(reader));
+                    message.cmd_id = reader.readString();
                     break;
                 case 3:
                     message.ok = reader.readBool();

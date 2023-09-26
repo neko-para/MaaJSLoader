@@ -55,15 +55,15 @@ export abstract class UnimplementedResourceService {
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleStringRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.HandleStringRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         status: {
             path: "/maarpc.Resource/status",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleIdRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIdRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleIIdRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIIdRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.StatusResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.StatusResponse.deserialize(new Uint8Array(bytes))
         },
@@ -71,8 +71,8 @@ export abstract class UnimplementedResourceService {
             path: "/maarpc.Resource/wait",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleIdRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIdRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleIIdRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIIdRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.StatusResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.StatusResponse.deserialize(new Uint8Array(bytes))
         },
@@ -98,9 +98,9 @@ export abstract class UnimplementedResourceService {
     [method: string]: grpc_1.UntypedHandleCall;
     abstract create(call: grpc_1.ServerUnaryCall<dependency_1.IdRequest, dependency_1.HandleResponse>, callback: grpc_1.sendUnaryData<dependency_1.HandleResponse>): void;
     abstract destroy(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract post_path(call: grpc_1.ServerUnaryCall<dependency_1.HandleStringRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
-    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
+    abstract post_path(call: grpc_1.ServerUnaryCall<dependency_1.HandleStringRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
+    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
     abstract loaded(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
     abstract hash(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
 }
@@ -132,11 +132,11 @@ export class ResourceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    post_path: GrpcPromiseServiceInterface<dependency_1.HandleStringRequest, dependency_1.IdResponse> = (message: dependency_1.HandleStringRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_path: GrpcPromiseServiceInterface<dependency_1.HandleStringRequest, dependency_1.IIdResponse> = (message: dependency_1.HandleStringRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_path(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_path(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -144,7 +144,7 @@ export class ResourceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    status: GrpcPromiseServiceInterface<dependency_1.HandleIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
+    status: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -156,7 +156,7 @@ export class ResourceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    wait: GrpcPromiseServiceInterface<dependency_1.HandleIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
+    wait: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};

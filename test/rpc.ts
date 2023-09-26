@@ -7,10 +7,16 @@ async function main() {
   const utility = new maarpc.UtilityClient('0.0.0.0:8080', grpc.credentials.createInsecure())
   const resource = new maarpc.ResourceClient('0.0.0.0:8080', grpc.credentials.createInsecure())
 
-  console.log((await utility.version(new maarpc.EmptyRequest())).value)
-  const id = (await utility.acquire_callback_id(new maarpc.EmptyRequest())).id.id
+  utility.set_global_option(
+    new maarpc.SetGlobalOptionRequest({
+      logging: path.join(process.cwd(), 'debug')
+    })
+  )
+
+  console.log((await utility.version(new maarpc.EmptyRequest())).str)
+  const id = (await utility.acquire_id(new maarpc.EmptyRequest())).id
   console.log('callback id', id)
-  const stream = utility.register_callback(new maarpc.IdRequest({ id: new maarpc.Id({ id }) }))
+  const stream = utility.register_callback(new maarpc.IdRequest({ id }))
   stream.on('readable', () => {
     const cb = stream.read() as unknown as maarpc.Callback
     if (cb) {
@@ -19,28 +25,27 @@ async function main() {
       console.log(cb)
     }
   })
-  const handle = (await resource.create(new maarpc.IdRequest({ id: new maarpc.Id({ id }) }))).value
-    .handle
+  const handle = (await resource.create(new maarpc.IdRequest({ id }))).handle
   console.log('resource handle', handle)
   const tid = (
     await resource.post_path(
       new maarpc.HandleStringRequest({
-        handle: new maarpc.Handle({ handle }),
+        handle,
         str: path.join(process.cwd(), 'install/share/resource')
       })
     )
-  ).id.id
+  ).id
   console.log('resource post id', tid)
   await resource.wait(
-    new maarpc.HandleIdRequest({
-      handle: new maarpc.Handle({ handle }),
-      id: new maarpc.Id({ id: tid })
+    new maarpc.HandleIIdRequest({
+      handle,
+      id: tid
     })
   )
 
-  await resource.destroy(new maarpc.HandleRequest({ handle: new maarpc.Handle({ handle }) }))
+  await resource.destroy(new maarpc.HandleRequest({ handle }))
 
-  await utility.unregister_callback(new maarpc.IdRequest({ id: new maarpc.Id({ id }) }))
+  await utility.unregister_callback(new maarpc.IdRequest({ id }))
 
   console.log('resource destroy')
 
