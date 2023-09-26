@@ -5,121 +5,6 @@
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as dependency_1 from "./types";
 import * as pb_1 from "google-protobuf";
-export class CustomControllerRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        id?: string;
-    }) | ({
-        ctrl_id?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
-            }
-            if ("ctrl_id" in data && data.ctrl_id != undefined) {
-                this.ctrl_id = data.ctrl_id;
-            }
-        }
-    }
-    get id() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set id(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_id() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get ctrl_id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set ctrl_id(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_ctrl_id() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _id() {
-        const cases: {
-            [index: number]: "none" | "id";
-        } = {
-            0: "none",
-            1: "id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _ctrl_id() {
-        const cases: {
-            [index: number]: "none" | "ctrl_id";
-        } = {
-            0: "none",
-            2: "ctrl_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        id?: string;
-        ctrl_id?: string;
-    }): CustomControllerRequest {
-        const message = new CustomControllerRequest({});
-        if (data.id != null) {
-            message.id = data.id;
-        }
-        if (data.ctrl_id != null) {
-            message.ctrl_id = data.ctrl_id;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            id?: string;
-            ctrl_id?: string;
-        } = {};
-        if (this.id != null) {
-            data.id = this.id;
-        }
-        if (this.ctrl_id != null) {
-            data.ctrl_id = this.ctrl_id;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_id)
-            writer.writeString(1, this.id);
-        if (this.has_ctrl_id)
-            writer.writeString(2, this.ctrl_id);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.id = reader.readString();
-                    break;
-                case 2:
-                    message.ctrl_id = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): CustomControllerRequest {
-        return CustomControllerRequest.deserialize(bytes);
-    }
-}
 export class CustomControllerSetOptionParam extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
@@ -233,6 +118,447 @@ export class CustomControllerSetOptionParam extends pb_1.Message {
     }
     static deserializeBinary(bytes: Uint8Array): CustomControllerSetOptionParam {
         return CustomControllerSetOptionParam.deserialize(bytes);
+    }
+}
+export class CustomControllerInit extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        id?: string;
+    }) | ({
+        ctrl_id?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
+            }
+            if ("ctrl_id" in data && data.ctrl_id != undefined) {
+                this.ctrl_id = data.ctrl_id;
+            }
+        }
+    }
+    get id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_id() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get ctrl_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set ctrl_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_ctrl_id() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _id() {
+        const cases: {
+            [index: number]: "none" | "id";
+        } = {
+            0: "none",
+            1: "id"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _ctrl_id() {
+        const cases: {
+            [index: number]: "none" | "ctrl_id";
+        } = {
+            0: "none",
+            2: "ctrl_id"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        id?: string;
+        ctrl_id?: string;
+    }): CustomControllerInit {
+        const message = new CustomControllerInit({});
+        if (data.id != null) {
+            message.id = data.id;
+        }
+        if (data.ctrl_id != null) {
+            message.ctrl_id = data.ctrl_id;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            id?: string;
+            ctrl_id?: string;
+        } = {};
+        if (this.id != null) {
+            data.id = this.id;
+        }
+        if (this.ctrl_id != null) {
+            data.ctrl_id = this.ctrl_id;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_id)
+            writer.writeString(1, this.id);
+        if (this.has_ctrl_id)
+            writer.writeString(2, this.ctrl_id);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerInit {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerInit();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.id = reader.readString();
+                    break;
+                case 2:
+                    message.ctrl_id = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomControllerInit {
+        return CustomControllerInit.deserialize(bytes);
+    }
+}
+export class CustomControllerSubmit extends pb_1.Message {
+    #one_of_decls: number[][] = [[101, 102], [1], [2], [3]];
+    constructor(data?: any[] | ({} & (({
+        resolution?: dependency_1.Size;
+        uuid?: never;
+    } | {
+        resolution?: never;
+        uuid?: string;
+    }) | ({
+        handle?: string;
+    }) | ({
+        cmd_id?: string;
+    }) | ({
+        ok?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
+            }
+            if ("ok" in data && data.ok != undefined) {
+                this.ok = data.ok;
+            }
+            if ("resolution" in data && data.resolution != undefined) {
+                this.resolution = data.resolution;
+            }
+            if ("uuid" in data && data.uuid != undefined) {
+                this.uuid = data.uuid;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
+    }
+    get has_cmd_id() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get ok() {
+        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
+    }
+    set ok(value: boolean) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[3], value);
+    }
+    get has_ok() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get resolution() {
+        return pb_1.Message.getWrapperField(this, dependency_1.Size, 101) as dependency_1.Size;
+    }
+    set resolution(value: dependency_1.Size) {
+        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_resolution() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get uuid() {
+        return pb_1.Message.getFieldWithDefault(this, 102, "") as string;
+    }
+    set uuid(value: string) {
+        pb_1.Message.setOneofField(this, 102, this.#one_of_decls[0], value);
+    }
+    get has_uuid() {
+        return pb_1.Message.getField(this, 102) != null;
+    }
+    get result() {
+        const cases: {
+            [index: number]: "none" | "resolution" | "uuid";
+        } = {
+            0: "none",
+            101: "resolution",
+            102: "uuid"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101, 102])];
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _cmd_id() {
+        const cases: {
+            [index: number]: "none" | "cmd_id";
+        } = {
+            0: "none",
+            2: "cmd_id"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _ok() {
+        const cases: {
+            [index: number]: "none" | "ok";
+        } = {
+            0: "none",
+            3: "ok"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        cmd_id?: string;
+        ok?: boolean;
+        resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
+        uuid?: string;
+    }): CustomControllerSubmit {
+        const message = new CustomControllerSubmit({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
+        }
+        if (data.ok != null) {
+            message.ok = data.ok;
+        }
+        if (data.resolution != null) {
+            message.resolution = dependency_1.Size.fromObject(data.resolution);
+        }
+        if (data.uuid != null) {
+            message.uuid = data.uuid;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            cmd_id?: string;
+            ok?: boolean;
+            resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
+            uuid?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
+        }
+        if (this.ok != null) {
+            data.ok = this.ok;
+        }
+        if (this.resolution != null) {
+            data.resolution = this.resolution.toObject();
+        }
+        if (this.uuid != null) {
+            data.uuid = this.uuid;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
+        if (this.has_ok)
+            writer.writeBool(3, this.ok);
+        if (this.has_resolution)
+            writer.writeMessage(101, this.resolution, () => this.resolution.serialize(writer));
+        if (this.has_uuid)
+            writer.writeString(102, this.uuid);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerSubmit {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerSubmit();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.cmd_id = reader.readString();
+                    break;
+                case 3:
+                    message.ok = reader.readBool();
+                    break;
+                case 101:
+                    reader.readMessage(message.resolution, () => message.resolution = dependency_1.Size.deserialize(reader));
+                    break;
+                case 102:
+                    message.uuid = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomControllerSubmit {
+        return CustomControllerSubmit.deserialize(bytes);
+    }
+}
+export class CustomControllerRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1, 2]];
+    constructor(data?: any[] | ({} & (({
+        init?: CustomControllerInit;
+        submit?: never;
+    } | {
+        init?: never;
+        submit?: CustomControllerSubmit;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
+            }
+            if ("submit" in data && data.submit != undefined) {
+                this.submit = data.submit;
+            }
+        }
+    }
+    get init() {
+        return pb_1.Message.getWrapperField(this, CustomControllerInit, 1) as CustomControllerInit;
+    }
+    set init(value: CustomControllerInit) {
+        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_init() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get submit() {
+        return pb_1.Message.getWrapperField(this, CustomControllerSubmit, 2) as CustomControllerSubmit;
+    }
+    set submit(value: CustomControllerSubmit) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[0], value);
+    }
+    get has_submit() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get payload() {
+        const cases: {
+            [index: number]: "none" | "init" | "submit";
+        } = {
+            0: "none",
+            1: "init",
+            2: "submit"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1, 2])];
+    }
+    static fromObject(data: {
+        init?: ReturnType<typeof CustomControllerInit.prototype.toObject>;
+        submit?: ReturnType<typeof CustomControllerSubmit.prototype.toObject>;
+    }): CustomControllerRequest {
+        const message = new CustomControllerRequest({});
+        if (data.init != null) {
+            message.init = CustomControllerInit.fromObject(data.init);
+        }
+        if (data.submit != null) {
+            message.submit = CustomControllerSubmit.fromObject(data.submit);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            init?: ReturnType<typeof CustomControllerInit.prototype.toObject>;
+            submit?: ReturnType<typeof CustomControllerSubmit.prototype.toObject>;
+        } = {};
+        if (this.init != null) {
+            data.init = this.init.toObject();
+        }
+        if (this.submit != null) {
+            data.submit = this.submit.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_init)
+            writer.writeMessage(1, this.init, () => this.init.serialize(writer));
+        if (this.has_submit)
+            writer.writeMessage(2, this.submit, () => this.submit.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.init, () => message.init = CustomControllerInit.deserialize(reader));
+                    break;
+                case 2:
+                    reader.readMessage(message.submit, () => message.submit = CustomControllerSubmit.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomControllerRequest {
+        return CustomControllerRequest.deserialize(bytes);
     }
 }
 export class CustomControllerResponse extends pb_1.Message {
@@ -876,222 +1202,5 @@ export class CustomControllerResponse extends pb_1.Message {
     }
     static deserializeBinary(bytes: Uint8Array): CustomControllerResponse {
         return CustomControllerResponse.deserialize(bytes);
-    }
-}
-export class SubmitCustomControllerRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[101, 102], [1], [2], [3]];
-    constructor(data?: any[] | ({} & (({
-        resolution?: dependency_1.Size;
-        uuid?: never;
-    } | {
-        resolution?: never;
-        uuid?: string;
-    }) | ({
-        handle?: string;
-    }) | ({
-        cmd_id?: string;
-    }) | ({
-        ok?: boolean;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("cmd_id" in data && data.cmd_id != undefined) {
-                this.cmd_id = data.cmd_id;
-            }
-            if ("ok" in data && data.ok != undefined) {
-                this.ok = data.ok;
-            }
-            if ("resolution" in data && data.resolution != undefined) {
-                this.resolution = data.resolution;
-            }
-            if ("uuid" in data && data.uuid != undefined) {
-                this.uuid = data.uuid;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get cmd_id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set cmd_id(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
-    }
-    get has_cmd_id() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get ok() {
-        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
-    }
-    set ok(value: boolean) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[3], value);
-    }
-    get has_ok() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get resolution() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Size, 101) as dependency_1.Size;
-    }
-    set resolution(value: dependency_1.Size) {
-        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
-    }
-    get has_resolution() {
-        return pb_1.Message.getField(this, 101) != null;
-    }
-    get uuid() {
-        return pb_1.Message.getFieldWithDefault(this, 102, "") as string;
-    }
-    set uuid(value: string) {
-        pb_1.Message.setOneofField(this, 102, this.#one_of_decls[0], value);
-    }
-    get has_uuid() {
-        return pb_1.Message.getField(this, 102) != null;
-    }
-    get result() {
-        const cases: {
-            [index: number]: "none" | "resolution" | "uuid";
-        } = {
-            0: "none",
-            101: "resolution",
-            102: "uuid"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [101, 102])];
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _cmd_id() {
-        const cases: {
-            [index: number]: "none" | "cmd_id";
-        } = {
-            0: "none",
-            2: "cmd_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _ok() {
-        const cases: {
-            [index: number]: "none" | "ok";
-        } = {
-            0: "none",
-            3: "ok"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        cmd_id?: string;
-        ok?: boolean;
-        resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
-        uuid?: string;
-    }): SubmitCustomControllerRequest {
-        const message = new SubmitCustomControllerRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.cmd_id != null) {
-            message.cmd_id = data.cmd_id;
-        }
-        if (data.ok != null) {
-            message.ok = data.ok;
-        }
-        if (data.resolution != null) {
-            message.resolution = dependency_1.Size.fromObject(data.resolution);
-        }
-        if (data.uuid != null) {
-            message.uuid = data.uuid;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            cmd_id?: string;
-            ok?: boolean;
-            resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
-            uuid?: string;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.cmd_id != null) {
-            data.cmd_id = this.cmd_id;
-        }
-        if (this.ok != null) {
-            data.ok = this.ok;
-        }
-        if (this.resolution != null) {
-            data.resolution = this.resolution.toObject();
-        }
-        if (this.uuid != null) {
-            data.uuid = this.uuid;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_cmd_id)
-            writer.writeString(2, this.cmd_id);
-        if (this.has_ok)
-            writer.writeBool(3, this.ok);
-        if (this.has_resolution)
-            writer.writeMessage(101, this.resolution, () => this.resolution.serialize(writer));
-        if (this.has_uuid)
-            writer.writeString(102, this.uuid);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SubmitCustomControllerRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SubmitCustomControllerRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.cmd_id = reader.readString();
-                    break;
-                case 3:
-                    message.ok = reader.readBool();
-                    break;
-                case 101:
-                    reader.readMessage(message.resolution, () => message.resolution = dependency_1.Size.deserialize(reader));
-                    break;
-                case 102:
-                    message.uuid = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SubmitCustomControllerRequest {
-        return SubmitCustomControllerRequest.deserialize(bytes);
     }
 }

@@ -5,7 +5,7 @@
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as dependency_1 from "./types";
 import * as pb_1 from "google-protobuf";
-export class CustomActionRequest extends pb_1.Message {
+export class CustomActionInit extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3]];
     constructor(data?: any[] | ({} & (({
         handle?: string;
@@ -86,8 +86,8 @@ export class CustomActionRequest extends pb_1.Message {
         handle?: string;
         name?: string;
         act_id?: string;
-    }): CustomActionRequest {
-        const message = new CustomActionRequest({});
+    }): CustomActionInit {
+        const message = new CustomActionInit({});
         if (data.handle != null) {
             message.handle = data.handle;
         }
@@ -129,8 +129,8 @@ export class CustomActionRequest extends pb_1.Message {
         if (!w)
             return writer.getResultBuffer();
     }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionRequest();
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionInit {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionInit();
         while (reader.nextField()) {
             if (reader.isEndGroup())
                 break;
@@ -143,6 +143,266 @@ export class CustomActionRequest extends pb_1.Message {
                     break;
                 case 3:
                     message.act_id = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomActionInit {
+        return CustomActionInit.deserialize(bytes);
+    }
+}
+export class CustomActionSubmit extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        cmd_id?: string;
+    }) | ({
+        ok?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("cmd_id" in data && data.cmd_id != undefined) {
+                this.cmd_id = data.cmd_id;
+            }
+            if ("ok" in data && data.ok != undefined) {
+                this.ok = data.ok;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get cmd_id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set cmd_id(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_cmd_id() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get ok() {
+        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
+    }
+    set ok(value: boolean) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_ok() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _cmd_id() {
+        const cases: {
+            [index: number]: "none" | "cmd_id";
+        } = {
+            0: "none",
+            2: "cmd_id"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _ok() {
+        const cases: {
+            [index: number]: "none" | "ok";
+        } = {
+            0: "none",
+            3: "ok"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        cmd_id?: string;
+        ok?: boolean;
+    }): CustomActionSubmit {
+        const message = new CustomActionSubmit({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.cmd_id != null) {
+            message.cmd_id = data.cmd_id;
+        }
+        if (data.ok != null) {
+            message.ok = data.ok;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            cmd_id?: string;
+            ok?: boolean;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.cmd_id != null) {
+            data.cmd_id = this.cmd_id;
+        }
+        if (this.ok != null) {
+            data.ok = this.ok;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_cmd_id)
+            writer.writeString(2, this.cmd_id);
+        if (this.has_ok)
+            writer.writeBool(3, this.ok);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionSubmit {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionSubmit();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.cmd_id = reader.readString();
+                    break;
+                case 3:
+                    message.ok = reader.readBool();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomActionSubmit {
+        return CustomActionSubmit.deserialize(bytes);
+    }
+}
+export class CustomActionRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1, 2]];
+    constructor(data?: any[] | ({} & (({
+        init?: CustomActionInit;
+        submit?: never;
+    } | {
+        init?: never;
+        submit?: CustomActionSubmit;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
+            }
+            if ("submit" in data && data.submit != undefined) {
+                this.submit = data.submit;
+            }
+        }
+    }
+    get init() {
+        return pb_1.Message.getWrapperField(this, CustomActionInit, 1) as CustomActionInit;
+    }
+    set init(value: CustomActionInit) {
+        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_init() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get submit() {
+        return pb_1.Message.getWrapperField(this, CustomActionSubmit, 2) as CustomActionSubmit;
+    }
+    set submit(value: CustomActionSubmit) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[0], value);
+    }
+    get has_submit() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get payload() {
+        const cases: {
+            [index: number]: "none" | "init" | "submit";
+        } = {
+            0: "none",
+            1: "init",
+            2: "submit"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1, 2])];
+    }
+    static fromObject(data: {
+        init?: ReturnType<typeof CustomActionInit.prototype.toObject>;
+        submit?: ReturnType<typeof CustomActionSubmit.prototype.toObject>;
+    }): CustomActionRequest {
+        const message = new CustomActionRequest({});
+        if (data.init != null) {
+            message.init = CustomActionInit.fromObject(data.init);
+        }
+        if (data.submit != null) {
+            message.submit = CustomActionSubmit.fromObject(data.submit);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            init?: ReturnType<typeof CustomActionInit.prototype.toObject>;
+            submit?: ReturnType<typeof CustomActionSubmit.prototype.toObject>;
+        } = {};
+        if (this.init != null) {
+            data.init = this.init.toObject();
+        }
+        if (this.submit != null) {
+            data.submit = this.submit.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_init)
+            writer.writeMessage(1, this.init, () => this.init.serialize(writer));
+        if (this.has_submit)
+            writer.writeMessage(2, this.submit, () => this.submit.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.init, () => message.init = CustomActionInit.deserialize(reader));
+                    break;
+                case 2:
+                    reader.readMessage(message.submit, () => message.submit = CustomActionSubmit.deserialize(reader));
                     break;
                 default: reader.skipField();
             }
@@ -558,156 +818,5 @@ export class CustomActionResponse extends pb_1.Message {
     }
     static deserializeBinary(bytes: Uint8Array): CustomActionResponse {
         return CustomActionResponse.deserialize(bytes);
-    }
-}
-export class SubmitCustomActionRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        cmd_id?: string;
-    }) | ({
-        ok?: boolean;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("cmd_id" in data && data.cmd_id != undefined) {
-                this.cmd_id = data.cmd_id;
-            }
-            if ("ok" in data && data.ok != undefined) {
-                this.ok = data.ok;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get cmd_id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set cmd_id(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_cmd_id() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get ok() {
-        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
-    }
-    set ok(value: boolean) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_ok() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _cmd_id() {
-        const cases: {
-            [index: number]: "none" | "cmd_id";
-        } = {
-            0: "none",
-            2: "cmd_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _ok() {
-        const cases: {
-            [index: number]: "none" | "ok";
-        } = {
-            0: "none",
-            3: "ok"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        cmd_id?: string;
-        ok?: boolean;
-    }): SubmitCustomActionRequest {
-        const message = new SubmitCustomActionRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.cmd_id != null) {
-            message.cmd_id = data.cmd_id;
-        }
-        if (data.ok != null) {
-            message.ok = data.ok;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            cmd_id?: string;
-            ok?: boolean;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.cmd_id != null) {
-            data.cmd_id = this.cmd_id;
-        }
-        if (this.ok != null) {
-            data.ok = this.ok;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_cmd_id)
-            writer.writeString(2, this.cmd_id);
-        if (this.has_ok)
-            writer.writeBool(3, this.ok);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SubmitCustomActionRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SubmitCustomActionRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.cmd_id = reader.readString();
-                    break;
-                case 3:
-                    message.ok = reader.readBool();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SubmitCustomActionRequest {
-        return SubmitCustomActionRequest.deserialize(bytes);
     }
 }

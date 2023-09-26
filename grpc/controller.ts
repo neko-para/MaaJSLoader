@@ -231,7 +231,7 @@ export class AdbControllerRequest extends pb_1.Message {
     }
 }
 export class ControllerSetOptionRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1, 2, 3, 4]];
+    #one_of_decls: number[][] = [[101, 102, 103, 104], [1]];
     constructor(data?: any[] | ({} & (({
         long_side?: number;
         short_side?: never;
@@ -252,10 +252,15 @@ export class ControllerSetOptionRequest extends pb_1.Message {
         short_side?: never;
         def_package_entry?: never;
         def_package?: string;
+    }) | ({
+        handle?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
             if ("long_side" in data && data.long_side != undefined) {
                 this.long_side = data.long_side;
             }
@@ -270,61 +275,83 @@ export class ControllerSetOptionRequest extends pb_1.Message {
             }
         }
     }
-    get long_side() {
-        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set long_side(value: number) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
-    get has_long_side() {
+    get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
+    get long_side() {
+        return pb_1.Message.getFieldWithDefault(this, 101, 0) as number;
+    }
+    set long_side(value: number) {
+        pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_long_side() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
     get short_side() {
-        return pb_1.Message.getFieldWithDefault(this, 2, 0) as number;
+        return pb_1.Message.getFieldWithDefault(this, 102, 0) as number;
     }
     set short_side(value: number) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 102, this.#one_of_decls[0], value);
     }
     get has_short_side() {
-        return pb_1.Message.getField(this, 2) != null;
+        return pb_1.Message.getField(this, 102) != null;
     }
     get def_package_entry() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+        return pb_1.Message.getFieldWithDefault(this, 103, "") as string;
     }
     set def_package_entry(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 103, this.#one_of_decls[0], value);
     }
     get has_def_package_entry() {
-        return pb_1.Message.getField(this, 3) != null;
+        return pb_1.Message.getField(this, 103) != null;
     }
     get def_package() {
-        return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
+        return pb_1.Message.getFieldWithDefault(this, 104, "") as string;
     }
     set def_package(value: string) {
-        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 104, this.#one_of_decls[0], value);
     }
     get has_def_package() {
-        return pb_1.Message.getField(this, 4) != null;
+        return pb_1.Message.getField(this, 104) != null;
     }
     get option() {
         const cases: {
             [index: number]: "none" | "long_side" | "short_side" | "def_package_entry" | "def_package";
         } = {
             0: "none",
-            1: "long_side",
-            2: "short_side",
-            3: "def_package_entry",
-            4: "def_package"
+            101: "long_side",
+            102: "short_side",
+            103: "def_package_entry",
+            104: "def_package"
         };
-        return cases[pb_1.Message.computeOneofCase(this, [1, 2, 3, 4])];
+        return cases[pb_1.Message.computeOneofCase(this, [101, 102, 103, 104])];
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
+        handle?: string;
         long_side?: number;
         short_side?: number;
         def_package_entry?: string;
         def_package?: string;
     }): ControllerSetOptionRequest {
         const message = new ControllerSetOptionRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
         if (data.long_side != null) {
             message.long_side = data.long_side;
         }
@@ -341,11 +368,15 @@ export class ControllerSetOptionRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
+            handle?: string;
             long_side?: number;
             short_side?: number;
             def_package_entry?: string;
             def_package?: string;
         } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
         if (this.long_side != null) {
             data.long_side = this.long_side;
         }
@@ -364,14 +395,16 @@ export class ControllerSetOptionRequest extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
         if (this.has_long_side)
-            writer.writeInt32(1, this.long_side);
+            writer.writeInt32(101, this.long_side);
         if (this.has_short_side)
-            writer.writeInt32(2, this.short_side);
+            writer.writeInt32(102, this.short_side);
         if (this.has_def_package_entry)
-            writer.writeString(3, this.def_package_entry);
+            writer.writeString(103, this.def_package_entry);
         if (this.has_def_package)
-            writer.writeString(4, this.def_package);
+            writer.writeString(104, this.def_package);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -382,15 +415,18 @@ export class ControllerSetOptionRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 101:
                     message.long_side = reader.readInt32();
                     break;
-                case 2:
+                case 102:
                     message.short_side = reader.readInt32();
                     break;
-                case 3:
+                case 103:
                     message.def_package_entry = reader.readString();
                     break;
-                case 4:
+                case 104:
                     message.def_package = reader.readString();
                     break;
                 default: reader.skipField();
@@ -865,121 +901,6 @@ export class ControllerPostTouchRequest extends pb_1.Message {
         return ControllerPostTouchRequest.deserialize(bytes);
     }
 }
-export class ControllerGetImageRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        image_handle?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("image_handle" in data && data.image_handle != undefined) {
-                this.image_handle = data.image_handle;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get image_handle() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set image_handle(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_image_handle() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _image_handle() {
-        const cases: {
-            [index: number]: "none" | "image_handle";
-        } = {
-            0: "none",
-            2: "image_handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        image_handle?: string;
-    }): ControllerGetImageRequest {
-        const message = new ControllerGetImageRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.image_handle != null) {
-            message.image_handle = data.image_handle;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            image_handle?: string;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.image_handle != null) {
-            data.image_handle = this.image_handle;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_image_handle)
-            writer.writeString(2, this.image_handle);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerGetImageRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerGetImageRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.image_handle = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): ControllerGetImageRequest {
-        return ControllerGetImageRequest.deserialize(bytes);
-    }
-}
 interface GrpcUnaryServiceInterface<P, R> {
     (message: P, metadata: grpc_1.Metadata, options: grpc_1.CallOptions, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
     (message: P, metadata: grpc_1.Metadata, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
@@ -1026,21 +947,12 @@ export abstract class UnimplementedControllerService {
         },
         create_custom: {
             path: "/maarpc.Controller/create_custom",
-            requestStream: false,
+            requestStream: true,
             responseStream: true,
             requestSerialize: (message: dependency_2.CustomControllerRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_2.CustomControllerRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_2.CustomControllerResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_2.CustomControllerResponse.deserialize(new Uint8Array(bytes))
-        },
-        submit_custom_controller: {
-            path: "/maarpc.Controller/submit_custom_controller",
-            requestStream: false,
-            responseStream: false,
-            requestSerialize: (message: dependency_2.SubmitCustomControllerRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_2.SubmitCustomControllerRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
         set_option: {
             path: "/maarpc.Controller/set_option",
@@ -1138,8 +1050,8 @@ export abstract class UnimplementedControllerService {
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleIIdRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.HandleIIdRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.StatusResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.StatusResponse.deserialize(new Uint8Array(bytes))
         },
         connected: {
             path: "/maarpc.Controller/connected",
@@ -1154,8 +1066,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/image",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerGetImageRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerGetImageRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleHandleRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleHandleRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1172,8 +1084,7 @@ export abstract class UnimplementedControllerService {
     [method: string]: grpc_1.UntypedHandleCall;
     abstract create_adb(call: grpc_1.ServerUnaryCall<AdbControllerRequest, dependency_1.HandleResponse>, callback: grpc_1.sendUnaryData<dependency_1.HandleResponse>): void;
     abstract destroy(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract create_custom(call: grpc_1.ServerWritableStream<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse>): void;
-    abstract submit_custom_controller(call: grpc_1.ServerUnaryCall<dependency_2.SubmitCustomControllerRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract create_custom(call: grpc_1.ServerDuplexStream<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse>): void;
     abstract set_option(call: grpc_1.ServerUnaryCall<ControllerSetOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract post_connection(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
     abstract post_click(call: grpc_1.ServerUnaryCall<ControllerPostClickRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
@@ -1184,9 +1095,9 @@ export abstract class UnimplementedControllerService {
     abstract post_touch_up(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
     abstract post_screencap(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
     abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
-    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
     abstract connected(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
-    abstract image(call: grpc_1.ServerUnaryCall<ControllerGetImageRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract image(call: grpc_1.ServerUnaryCall<dependency_1.HandleHandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract uuid(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
 }
 export class ControllerClient extends grpc_1.makeGenericClientConstructor(UnimplementedControllerService.definition, "Controller", {}) {
@@ -1217,21 +1128,9 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    create_custom: GrpcStreamServiceInterface<dependency_2.CustomControllerRequest, dependency_2.CustomControllerRequest> = (message: dependency_2.CustomControllerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientReadableStream<dependency_2.CustomControllerRequest> => {
-        return super.create_custom(message, metadata, options);
+    create_custom: GrpcChunkServiceInterface<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse> = (metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientDuplexStream<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse> => {
+        return super.create_custom(metadata, options);
     };
-    submit_custom_controller: GrpcPromiseServiceInterface<dependency_2.SubmitCustomControllerRequest, dependency_1.EmptyResponse> = (message: dependency_2.SubmitCustomControllerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
-        metadata = new grpc_1.Metadata;
-    } if (!options) {
-        options = {};
-    } return new Promise((resolve, reject) => super.submit_custom_controller(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
-        if (error) {
-            reject(error);
-        }
-        else {
-            resolve(response);
-        }
-    })); };
     set_option: GrpcPromiseServiceInterface<ControllerSetOptionRequest, dependency_1.EmptyResponse> = (message: ControllerSetOptionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
@@ -1352,11 +1251,11 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    wait: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    wait: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.wait(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
+    } return new Promise((resolve, reject) => super.wait(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.StatusResponse) => {
         if (error) {
             reject(error);
         }
@@ -1376,7 +1275,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    image: GrpcPromiseServiceInterface<ControllerGetImageRequest, dependency_1.EmptyResponse> = (message: ControllerGetImageRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    image: GrpcPromiseServiceInterface<dependency_1.HandleHandleRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleHandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};

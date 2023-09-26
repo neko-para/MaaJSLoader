@@ -1355,6 +1355,121 @@ export class HandleBufferRequest extends pb_1.Message {
         return HandleBufferRequest.deserialize(bytes);
     }
 }
+export class HandleHandleRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        another_handle?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("another_handle" in data && data.another_handle != undefined) {
+                this.another_handle = data.another_handle;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get another_handle() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set another_handle(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_another_handle() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _another_handle() {
+        const cases: {
+            [index: number]: "none" | "another_handle";
+        } = {
+            0: "none",
+            2: "another_handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        another_handle?: string;
+    }): HandleHandleRequest {
+        const message = new HandleHandleRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.another_handle != null) {
+            message.another_handle = data.another_handle;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            another_handle?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.another_handle != null) {
+            data.another_handle = this.another_handle;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_another_handle)
+            writer.writeString(2, this.another_handle);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): HandleHandleRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new HandleHandleRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.another_handle = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): HandleHandleRequest {
+        return HandleHandleRequest.deserialize(bytes);
+    }
+}
 export class HandleStringRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({

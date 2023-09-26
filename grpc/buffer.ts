@@ -145,10 +145,10 @@ interface GrpcPromiseServiceInterface<P, R> {
     (message: P, metadata: grpc_1.Metadata, options?: grpc_1.CallOptions): Promise<R>;
     (message: P, options?: grpc_1.CallOptions): Promise<R>;
 }
-export abstract class UnimplementedBufferService {
+export abstract class UnimplementedImageService {
     static definition = {
         create: {
-            path: "/maarpc.Buffer/create",
+            path: "/maarpc.Image/create",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
@@ -157,7 +157,7 @@ export abstract class UnimplementedBufferService {
             responseDeserialize: (bytes: Buffer) => dependency_1.HandleResponse.deserialize(new Uint8Array(bytes))
         },
         destroy: {
-            path: "/maarpc.Buffer/destroy",
+            path: "/maarpc.Image/destroy",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
@@ -166,7 +166,7 @@ export abstract class UnimplementedBufferService {
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
         is_empty: {
-            path: "/maarpc.Buffer/is_empty",
+            path: "/maarpc.Image/is_empty",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
@@ -175,7 +175,7 @@ export abstract class UnimplementedBufferService {
             responseDeserialize: (bytes: Buffer) => dependency_1.BoolResponse.deserialize(new Uint8Array(bytes))
         },
         clear: {
-            path: "/maarpc.Buffer/clear",
+            path: "/maarpc.Image/clear",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
@@ -184,7 +184,7 @@ export abstract class UnimplementedBufferService {
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
         info: {
-            path: "/maarpc.Buffer/info",
+            path: "/maarpc.Image/info",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
@@ -193,7 +193,7 @@ export abstract class UnimplementedBufferService {
             responseDeserialize: (bytes: Buffer) => ImageInfoResponse.deserialize(new Uint8Array(bytes))
         },
         encoded: {
-            path: "/maarpc.Buffer/encoded",
+            path: "/maarpc.Image/encoded",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
@@ -202,13 +202,13 @@ export abstract class UnimplementedBufferService {
             responseDeserialize: (bytes: Buffer) => dependency_1.BufferResponse.deserialize(new Uint8Array(bytes))
         },
         set_encoded: {
-            path: "/maarpc.Buffer/set_encoded",
+            path: "/maarpc.Image/set_encoded",
             requestStream: false,
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleBufferRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.HandleBufferRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.BoolResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.BoolResponse.deserialize(new Uint8Array(bytes))
         }
     };
     [method: string]: grpc_1.UntypedHandleCall;
@@ -218,9 +218,9 @@ export abstract class UnimplementedBufferService {
     abstract clear(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract info(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, ImageInfoResponse>, callback: grpc_1.sendUnaryData<ImageInfoResponse>): void;
     abstract encoded(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BufferResponse>, callback: grpc_1.sendUnaryData<dependency_1.BufferResponse>): void;
-    abstract set_encoded(call: grpc_1.ServerUnaryCall<dependency_1.HandleBufferRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract set_encoded(call: grpc_1.ServerUnaryCall<dependency_1.HandleBufferRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
 }
-export class BufferClient extends grpc_1.makeGenericClientConstructor(UnimplementedBufferService.definition, "Buffer", {}) {
+export class ImageClient extends grpc_1.makeGenericClientConstructor(UnimplementedImageService.definition, "Image", {}) {
     constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
         super(address, credentials, options);
     }
@@ -296,11 +296,11 @@ export class BufferClient extends grpc_1.makeGenericClientConstructor(Unimplemen
             resolve(response);
         }
     })); };
-    set_encoded: GrpcPromiseServiceInterface<dependency_1.HandleBufferRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleBufferRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    set_encoded: GrpcPromiseServiceInterface<dependency_1.HandleBufferRequest, dependency_1.BoolResponse> = (message: dependency_1.HandleBufferRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.BoolResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.set_encoded(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
+    } return new Promise((resolve, reject) => super.set_encoded(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.BoolResponse) => {
         if (error) {
             reject(error);
         }

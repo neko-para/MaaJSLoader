@@ -164,7 +164,7 @@ export class InstanceSetTaskParamRequest extends pb_1.Message {
     constructor(data?: any[] | ({} & (({
         handle?: string;
     }) | ({
-        id?: string;
+        id?: number;
     }) | ({
         param?: string;
     })))) {
@@ -192,9 +192,9 @@ export class InstanceSetTaskParamRequest extends pb_1.Message {
         return pb_1.Message.getField(this, 1) != null;
     }
     get id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+        return pb_1.Message.getFieldWithDefault(this, 2, 0) as number;
     }
-    set id(value: string) {
+    set id(value: number) {
         pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
     }
     get has_id() {
@@ -238,7 +238,7 @@ export class InstanceSetTaskParamRequest extends pb_1.Message {
     }
     static fromObject(data: {
         handle?: string;
-        id?: string;
+        id?: number;
         param?: string;
     }): InstanceSetTaskParamRequest {
         const message = new InstanceSetTaskParamRequest({});
@@ -256,7 +256,7 @@ export class InstanceSetTaskParamRequest extends pb_1.Message {
     toObject() {
         const data: {
             handle?: string;
-            id?: string;
+            id?: number;
             param?: string;
         } = {};
         if (this.handle != null) {
@@ -277,7 +277,7 @@ export class InstanceSetTaskParamRequest extends pb_1.Message {
         if (this.has_handle)
             writer.writeString(1, this.handle);
         if (this.has_id)
-            writer.writeString(2, this.id);
+            writer.writeUint64(2, this.id);
         if (this.has_param)
             writer.writeString(3, this.param);
         if (!w)
@@ -293,7 +293,7 @@ export class InstanceSetTaskParamRequest extends pb_1.Message {
                     message.handle = reader.readString();
                     break;
                 case 2:
-                    message.id = reader.readString();
+                    message.id = reader.readUint64();
                     break;
                 case 3:
                     message.param = reader.readString();
@@ -356,21 +356,12 @@ export abstract class UnimplementedInstanceService {
         },
         register_custom_recognizer: {
             path: "/maarpc.Instance/register_custom_recognizer",
-            requestStream: false,
+            requestStream: true,
             responseStream: true,
             requestSerialize: (message: dependency_2.CustomRecognizerRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_2.CustomRecognizerRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_2.CustomRecognizerResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_2.CustomRecognizerResponse.deserialize(new Uint8Array(bytes))
-        },
-        submit_custom_recognizer: {
-            path: "/maarpc.Instance/submit_custom_recognizer",
-            requestStream: false,
-            responseStream: false,
-            requestSerialize: (message: dependency_2.SubmitCustomRecognizerRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_2.SubmitCustomRecognizerRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
         unregister_custom_recognizer: {
             path: "/maarpc.Instance/unregister_custom_recognizer",
@@ -392,21 +383,12 @@ export abstract class UnimplementedInstanceService {
         },
         register_custom_action: {
             path: "/maarpc.Instance/register_custom_action",
-            requestStream: false,
+            requestStream: true,
             responseStream: true,
             requestSerialize: (message: dependency_3.CustomActionRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_3.CustomActionRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_3.CustomActionResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_3.CustomActionResponse.deserialize(new Uint8Array(bytes))
-        },
-        submit_custom_action: {
-            path: "/maarpc.Instance/submit_custom_action",
-            requestStream: false,
-            responseStream: false,
-            requestSerialize: (message: dependency_3.SubmitCustomActionRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_3.SubmitCustomActionRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
         unregister_custom_action: {
             path: "/maarpc.Instance/unregister_custom_action",
@@ -430,8 +412,8 @@ export abstract class UnimplementedInstanceService {
             path: "/maarpc.Instance/bind_resource",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleHandleRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleHandleRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -439,8 +421,8 @@ export abstract class UnimplementedInstanceService {
             path: "/maarpc.Instance/bind_controller",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleHandleRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleHandleRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -459,8 +441,8 @@ export abstract class UnimplementedInstanceService {
             responseStream: false,
             requestSerialize: (message: InstancePostTaskRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => InstancePostTaskRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.IdResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.IdResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
         set_task_param: {
             path: "/maarpc.Instance/set_task_param",
@@ -475,8 +457,8 @@ export abstract class UnimplementedInstanceService {
             path: "/maarpc.Instance/status",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleIdRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIdRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.HandleIIdRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIIdRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.StatusResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.StatusResponse.deserialize(new Uint8Array(bytes))
         },
@@ -484,10 +466,10 @@ export abstract class UnimplementedInstanceService {
             path: "/maarpc.Instance/wait",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: dependency_1.HandleIdRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIdRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
+            requestSerialize: (message: dependency_1.HandleIIdRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleIIdRequest.deserialize(new Uint8Array(bytes)),
+            responseSerialize: (message: dependency_1.StatusResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.StatusResponse.deserialize(new Uint8Array(bytes))
         },
         all_finished: {
             path: "/maarpc.Instance/all_finished",
@@ -529,21 +511,19 @@ export abstract class UnimplementedInstanceService {
     [method: string]: grpc_1.UntypedHandleCall;
     abstract create(call: grpc_1.ServerUnaryCall<dependency_1.IdRequest, dependency_1.HandleResponse>, callback: grpc_1.sendUnaryData<dependency_1.HandleResponse>): void;
     abstract destroy(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract register_custom_recognizer(call: grpc_1.ServerWritableStream<dependency_2.CustomRecognizerRequest, dependency_2.CustomRecognizerResponse>): void;
-    abstract submit_custom_recognizer(call: grpc_1.ServerUnaryCall<dependency_2.SubmitCustomRecognizerRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract register_custom_recognizer(call: grpc_1.ServerDuplexStream<dependency_2.CustomRecognizerRequest, dependency_2.CustomRecognizerResponse>): void;
     abstract unregister_custom_recognizer(call: grpc_1.ServerUnaryCall<dependency_1.HandleStringRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract clear_custom_recognizer(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract register_custom_action(call: grpc_1.ServerWritableStream<dependency_3.CustomActionRequest, dependency_3.CustomActionResponse>): void;
-    abstract submit_custom_action(call: grpc_1.ServerUnaryCall<dependency_3.SubmitCustomActionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract register_custom_action(call: grpc_1.ServerDuplexStream<dependency_3.CustomActionRequest, dependency_3.CustomActionResponse>): void;
     abstract unregister_custom_action(call: grpc_1.ServerUnaryCall<dependency_1.HandleStringRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract clear_custom_action(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract bind_resource(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract bind_controller(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract bind_resource(call: grpc_1.ServerUnaryCall<dependency_1.HandleHandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract bind_controller(call: grpc_1.ServerUnaryCall<dependency_1.HandleHandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract inited(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
-    abstract post_task(call: grpc_1.ServerUnaryCall<InstancePostTaskRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
+    abstract post_task(call: grpc_1.ServerUnaryCall<InstancePostTaskRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
     abstract set_task_param(call: grpc_1.ServerUnaryCall<InstanceSetTaskParamRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
-    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIdRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
+    abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
     abstract all_finished(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
     abstract stop(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract resource(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.HandleRequest>, callback: grpc_1.sendUnaryData<dependency_1.HandleRequest>): void;
@@ -577,21 +557,9 @@ export class InstanceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    register_custom_recognizer: GrpcStreamServiceInterface<dependency_2.CustomRecognizerRequest, dependency_2.CustomRecognizerRequest> = (message: dependency_2.CustomRecognizerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientReadableStream<dependency_2.CustomRecognizerRequest> => {
-        return super.register_custom_recognizer(message, metadata, options);
+    register_custom_recognizer: GrpcChunkServiceInterface<dependency_2.CustomRecognizerRequest, dependency_2.CustomRecognizerResponse> = (metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientDuplexStream<dependency_2.CustomRecognizerRequest, dependency_2.CustomRecognizerResponse> => {
+        return super.register_custom_recognizer(metadata, options);
     };
-    submit_custom_recognizer: GrpcPromiseServiceInterface<dependency_2.SubmitCustomRecognizerRequest, dependency_1.EmptyResponse> = (message: dependency_2.SubmitCustomRecognizerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
-        metadata = new grpc_1.Metadata;
-    } if (!options) {
-        options = {};
-    } return new Promise((resolve, reject) => super.submit_custom_recognizer(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
-        if (error) {
-            reject(error);
-        }
-        else {
-            resolve(response);
-        }
-    })); };
     unregister_custom_recognizer: GrpcPromiseServiceInterface<dependency_1.HandleStringRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleStringRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
@@ -616,21 +584,9 @@ export class InstanceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    register_custom_action: GrpcStreamServiceInterface<dependency_3.CustomActionRequest, dependency_3.CustomActionRequest> = (message: dependency_3.CustomActionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientReadableStream<dependency_3.CustomActionRequest> => {
-        return super.register_custom_action(message, metadata, options);
+    register_custom_action: GrpcChunkServiceInterface<dependency_3.CustomActionRequest, dependency_3.CustomActionResponse> = (metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientDuplexStream<dependency_3.CustomActionRequest, dependency_3.CustomActionResponse> => {
+        return super.register_custom_action(metadata, options);
     };
-    submit_custom_action: GrpcPromiseServiceInterface<dependency_3.SubmitCustomActionRequest, dependency_1.EmptyResponse> = (message: dependency_3.SubmitCustomActionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
-        metadata = new grpc_1.Metadata;
-    } if (!options) {
-        options = {};
-    } return new Promise((resolve, reject) => super.submit_custom_action(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
-        if (error) {
-            reject(error);
-        }
-        else {
-            resolve(response);
-        }
-    })); };
     unregister_custom_action: GrpcPromiseServiceInterface<dependency_1.HandleStringRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleStringRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
@@ -655,7 +611,7 @@ export class InstanceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    bind_resource: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    bind_resource: GrpcPromiseServiceInterface<dependency_1.HandleHandleRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleHandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -667,7 +623,7 @@ export class InstanceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    bind_controller: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    bind_controller: GrpcPromiseServiceInterface<dependency_1.HandleHandleRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleHandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -691,11 +647,11 @@ export class InstanceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    post_task: GrpcPromiseServiceInterface<InstancePostTaskRequest, dependency_1.IdResponse> = (message: InstancePostTaskRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IdResponse> => { if (!metadata) {
+    post_task: GrpcPromiseServiceInterface<InstancePostTaskRequest, dependency_1.IIdResponse> = (message: InstancePostTaskRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.post_task(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IdResponse) => {
+    } return new Promise((resolve, reject) => super.post_task(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.IIdResponse) => {
         if (error) {
             reject(error);
         }
@@ -715,7 +671,7 @@ export class InstanceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    status: GrpcPromiseServiceInterface<dependency_1.HandleIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
+    status: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -727,11 +683,11 @@ export class InstanceClient extends grpc_1.makeGenericClientConstructor(Unimplem
             resolve(response);
         }
     })); };
-    wait: GrpcPromiseServiceInterface<dependency_1.HandleIdRequest, dependency_1.EmptyResponse> = (message: dependency_1.HandleIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    wait: GrpcPromiseServiceInterface<dependency_1.HandleIIdRequest, dependency_1.StatusResponse> = (message: dependency_1.HandleIIdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StatusResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.wait(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
+    } return new Promise((resolve, reject) => super.wait(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.StatusResponse) => {
         if (error) {
             reject(error);
         }

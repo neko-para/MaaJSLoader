@@ -160,7 +160,7 @@ export class SyncContextRunTaskRequest extends pb_1.Message {
 export class SyncContextRunRecognizerRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2], [3], [4]];
     constructor(data?: any[] | ({} & (({
-        ctx_handle?: string;
+        handle?: string;
     }) | ({
         task?: string;
     }) | ({
@@ -171,8 +171,8 @@ export class SyncContextRunRecognizerRequest extends pb_1.Message {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("ctx_handle" in data && data.ctx_handle != undefined) {
-                this.ctx_handle = data.ctx_handle;
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
             }
             if ("task" in data && data.task != undefined) {
                 this.task = data.task;
@@ -185,13 +185,13 @@ export class SyncContextRunRecognizerRequest extends pb_1.Message {
             }
         }
     }
-    get ctx_handle() {
+    get handle() {
         return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set ctx_handle(value: string) {
+    set handle(value: string) {
         pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_ctx_handle() {
+    get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
     get task() {
@@ -221,12 +221,12 @@ export class SyncContextRunRecognizerRequest extends pb_1.Message {
     get has_image_handle() {
         return pb_1.Message.getField(this, 4) != null;
     }
-    get _ctx_handle() {
+    get _handle() {
         const cases: {
-            [index: number]: "none" | "ctx_handle";
+            [index: number]: "none" | "handle";
         } = {
             0: "none",
-            1: "ctx_handle"
+            1: "handle"
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
@@ -258,14 +258,14 @@ export class SyncContextRunRecognizerRequest extends pb_1.Message {
         return cases[pb_1.Message.computeOneofCase(this, [4])];
     }
     static fromObject(data: {
-        ctx_handle?: string;
+        handle?: string;
         task?: string;
         param?: string;
         image_handle?: string;
     }): SyncContextRunRecognizerRequest {
         const message = new SyncContextRunRecognizerRequest({});
-        if (data.ctx_handle != null) {
-            message.ctx_handle = data.ctx_handle;
+        if (data.handle != null) {
+            message.handle = data.handle;
         }
         if (data.task != null) {
             message.task = data.task;
@@ -280,13 +280,13 @@ export class SyncContextRunRecognizerRequest extends pb_1.Message {
     }
     toObject() {
         const data: {
-            ctx_handle?: string;
+            handle?: string;
             task?: string;
             param?: string;
             image_handle?: string;
         } = {};
-        if (this.ctx_handle != null) {
-            data.ctx_handle = this.ctx_handle;
+        if (this.handle != null) {
+            data.handle = this.handle;
         }
         if (this.task != null) {
             data.task = this.task;
@@ -303,8 +303,8 @@ export class SyncContextRunRecognizerRequest extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_ctx_handle)
-            writer.writeString(1, this.ctx_handle);
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
         if (this.has_task)
             writer.writeString(2, this.task);
         if (this.has_param)
@@ -321,7 +321,7 @@ export class SyncContextRunRecognizerRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    message.ctx_handle = reader.readString();
+                    message.handle = reader.readString();
                     break;
                 case 2:
                     message.task = reader.readString();
@@ -1183,7 +1183,7 @@ export class SyncContextScreencapRequest extends pb_1.Message {
     constructor(data?: any[] | ({} & (({
         handle?: string;
     }) | ({
-        image?: string;
+        image_handle?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -1191,8 +1191,8 @@ export class SyncContextScreencapRequest extends pb_1.Message {
             if ("handle" in data && data.handle != undefined) {
                 this.handle = data.handle;
             }
-            if ("image" in data && data.image != undefined) {
-                this.image = data.image;
+            if ("image_handle" in data && data.image_handle != undefined) {
+                this.image_handle = data.image_handle;
             }
         }
     }
@@ -1205,13 +1205,13 @@ export class SyncContextScreencapRequest extends pb_1.Message {
     get has_handle() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get image() {
+    get image_handle() {
         return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-    set image(value: string) {
+    set image_handle(value: string) {
         pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
     }
-    get has_image() {
+    get has_image_handle() {
         return pb_1.Message.getField(this, 2) != null;
     }
     get _handle() {
@@ -1223,38 +1223,38 @@ export class SyncContextScreencapRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
-    get _image() {
+    get _image_handle() {
         const cases: {
-            [index: number]: "none" | "image";
+            [index: number]: "none" | "image_handle";
         } = {
             0: "none",
-            2: "image"
+            2: "image_handle"
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
     static fromObject(data: {
         handle?: string;
-        image?: string;
+        image_handle?: string;
     }): SyncContextScreencapRequest {
         const message = new SyncContextScreencapRequest({});
         if (data.handle != null) {
             message.handle = data.handle;
         }
-        if (data.image != null) {
-            message.image = data.image;
+        if (data.image_handle != null) {
+            message.image_handle = data.image_handle;
         }
         return message;
     }
     toObject() {
         const data: {
             handle?: string;
-            image?: string;
+            image_handle?: string;
         } = {};
         if (this.handle != null) {
             data.handle = this.handle;
         }
-        if (this.image != null) {
-            data.image = this.image;
+        if (this.image_handle != null) {
+            data.image_handle = this.image_handle;
         }
         return data;
     }
@@ -1264,8 +1264,8 @@ export class SyncContextScreencapRequest extends pb_1.Message {
         const writer = w || new pb_1.BinaryWriter();
         if (this.has_handle)
             writer.writeString(1, this.handle);
-        if (this.has_image)
-            writer.writeString(2, this.image);
+        if (this.has_image_handle)
+            writer.writeString(2, this.image_handle);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -1279,7 +1279,7 @@ export class SyncContextScreencapRequest extends pb_1.Message {
                     message.handle = reader.readString();
                     break;
                 case 2:
-                    message.image = reader.readString();
+                    message.image_handle = reader.readString();
                     break;
                 default: reader.skipField();
             }
