@@ -2,90 +2,45 @@ import * as grpc from '@grpc/grpc-js'
 import fs from 'fs/promises'
 import path from 'path'
 
-import * as maarpc from '../src/rpc/gen'
+import { setupClient } from '../src/rpc/wrappper/base'
 import { AdbConfig } from './config'
 
 async function main() {
-  const c = grpc.credentials.createInsecure()
-  const image = new maarpc.ImageClient('0.0.0.0:8080', c)
-  const utility = new maarpc.UtilityClient('0.0.0.0:8080', c)
-  const resource = new maarpc.ResourceClient('0.0.0.0:8080', c)
-  const controller = new maarpc.ControllerClient('0.0.0.0:8080', c)
+  const ctx = setupClient('0.0.0.0:8080')
 
-  utility.set_global_option(
-    new maarpc.SetGlobalOptionRequest({
-      logging: path.join(process.cwd(), 'debug')
-    })
-  )
+  await ctx.utility.set_logging(path.join(process.cwd(), 'debug'))
 
-  const id = (await utility.acquire_id(new maarpc.EmptyRequest())).id
-  console.log('callback id', id)
-  const stream = utility.register_callback(new maarpc.IdRequest({ id }))
-  stream.on('readable', () => {
-    const cb = stream.read() as unknown as maarpc.Callback
-    if (cb) {
-      console.log(cb.msg, cb.detail)
-    } else {
-      console.log(cb)
-    }
+  const cbId = await ctx.utility.acquire_id()
+
+  ctx.utility.register_callback(cbId, (msg, detail) => {
+    console.log(msg, detail)
   })
-  const handle = (
-    await controller.create_adb(
-      new maarpc.AdbControllerRequest({
-        id,
-        adb_path: 'adb',
-        adb_serial: '127.0.0.1:62001',
-        adb_type: 1 + (1 << 8) + (4 << 16),
-        adb_config: AdbConfig
-      })
-    )
-  ).handle
-  console.log('controller handle', handle)
-  const tcid = (
-    await controller.post_connection(
-      new maarpc.HandleRequest({
-        handle
-      })
-    )
-  ).id
-  console.log('controller connect id', tcid)
-  await controller.wait(
-    new maarpc.HandleIIdRequest({
-      handle,
-      id: tcid
-    })
+
+  const hCtrl = await ctx.controller.createAdb(
+    cbId,
+    'adb',
+    '127.0.0.1:62001',
+    1 + (1 << 8) + (4 << 16),
+    AdbConfig
   )
 
-  const tsid = (await controller.post_screencap(new maarpc.HandleRequest({ handle }))).id
-  console.log('controller screencap id', tcid)
-  await controller.wait(
-    new maarpc.HandleIIdRequest({
-      handle,
-      id: tsid
-    })
-  )
+  console.log('controller handle', hCtrl)
 
-  const himg = (await image.create(new maarpc.EmptyRequest())).handle
-  await controller.image(
-    new maarpc.HandleHandleRequest({
-      handle,
-      another_handle: himg
-    })
-  )
+  await ctx.controller.wait(hCtrl, await ctx.controller.post_connection(hCtrl))
+  await ctx.controller.wait(hCtrl, await ctx.controller.post_screencap(hCtrl))
 
-  const buf = (await image.encoded(new maarpc.HandleRequest({ handle: himg }))).buf
+  const hImg = await ctx.image.create()
+
+  await ctx.controller.image(hCtrl, hImg)
+
+  const buf = await ctx.image.encoded(hImg)
   fs.writeFile('1.png', buf)
 
-  await image.destroy(new maarpc.HandleRequest({ handle: himg }))
-
-  await controller.destroy(new maarpc.HandleRequest({ handle }))
-
-  await utility.unregister_callback(new maarpc.IdRequest({ id }))
+  await ctx.image.destroy(hImg)
+  await ctx.controller.destroy(hCtrl)
+  await ctx.utility.unregister_callback(cbId)
 
   console.log('controller destroy')
-
-  resource.close()
-  utility.close()
 }
 
 main()
