@@ -2,6 +2,7 @@ import * as grpc from '@grpc/grpc-js'
 import fs from 'fs/promises'
 import path from 'path'
 
+import * as maarpc from '../src/rpc/gen'
 import { setupClient } from '../src/rpc/wrappper/base'
 import { AdbConfig } from './config'
 
@@ -15,6 +16,18 @@ async function main() {
   ctx.utility.register_callback(cbId, (msg, detail) => {
     console.log(msg, detail)
   })
+
+  const c = await ctx.controller.createCustom(cbId, (req, res) => {
+    console.log(req.command)
+    if (req.command === 'resolution') {
+      res.resolution = new maarpc.Size({ width: 1080, height: 720 })
+    }
+    return true
+  })
+
+  await ctx.controller.wait(c, await ctx.controller.post_connection(c))
+
+  await ctx.controller.destroy(c)
 
   const hCtrl = await ctx.controller.createAdb(
     cbId,

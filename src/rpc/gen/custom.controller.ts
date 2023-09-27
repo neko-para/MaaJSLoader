@@ -123,7 +123,7 @@ export class CustomControllerSetOptionParam extends pb_1.Message {
 export class CustomControllerRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[101, 201, 202], [1]];
     constructor(data?: any[] | ({} & (({
-        init?: boolean;
+        init?: string;
         resolution?: never;
         uuid?: never;
     } | {
@@ -164,9 +164,9 @@ export class CustomControllerRequest extends pb_1.Message {
         return pb_1.Message.getField(this, 1) != null;
     }
     get init() {
-        return pb_1.Message.getFieldWithDefault(this, 101, false) as boolean;
+        return pb_1.Message.getFieldWithDefault(this, 101, "") as string;
     }
-    set init(value: boolean) {
+    set init(value: string) {
         pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
     }
     get has_init() {
@@ -212,7 +212,7 @@ export class CustomControllerRequest extends pb_1.Message {
     }
     static fromObject(data: {
         ok?: boolean;
-        init?: boolean;
+        init?: string;
         resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
         uuid?: string;
     }): CustomControllerRequest {
@@ -234,7 +234,7 @@ export class CustomControllerRequest extends pb_1.Message {
     toObject() {
         const data: {
             ok?: boolean;
-            init?: boolean;
+            init?: string;
             resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
             uuid?: string;
         } = {};
@@ -259,7 +259,7 @@ export class CustomControllerRequest extends pb_1.Message {
         if (this.has_ok)
             writer.writeBool(1, this.ok);
         if (this.has_init)
-            writer.writeBool(101, this.init);
+            writer.writeString(101, this.init);
         if (this.has_resolution)
             writer.writeMessage(201, this.resolution, () => this.resolution.serialize(writer));
         if (this.has_uuid)
@@ -277,7 +277,7 @@ export class CustomControllerRequest extends pb_1.Message {
                     message.ok = reader.readBool();
                     break;
                 case 101:
-                    message.init = reader.readBool();
+                    message.init = reader.readString();
                     break;
                 case 201:
                     reader.readMessage(message.resolution, () => message.resolution = dependency_1.Size.deserialize(reader));

@@ -1,4 +1,5 @@
 import * as grpc from '@grpc/grpc-js'
+import { promisify } from 'util'
 
 import * as maarpc from '../../gen'
 import { ImageHandle } from './buffer'
@@ -25,6 +26,34 @@ export class ControllerClient {
         new maarpc.AdbControllerRequest({ id, adb_path, adb_serial, adb_type, adb_config })
       )
     ).handle as ControllerHandle
+  }
+
+  async createCustom(
+    id: string,
+    ctrl: (req: maarpc.CustomControllerResponse, res: maarpc.CustomControllerRequest) => boolean
+  ) {
+    const stream = this._client.create_custom()
+    await new Promise(resolve =>
+      stream.write(new maarpc.CustomControllerRequest({ init: id }), resolve)
+    )
+
+    const handle = await new Promise<ControllerHandle>(resolve => {
+      stream.once('readable', () => {
+        resolve(stream.read().init as ControllerHandle)
+      })
+    })
+
+    stream.on('readable', () => {
+      const res = stream.read()
+      if (!res) {
+        return
+      }
+      const req = new maarpc.CustomControllerRequest()
+      req.ok = ctrl(res, req)
+      stream.write(req)
+    })
+
+    return handle
   }
 
   async destroy(handle: ControllerHandle) {
