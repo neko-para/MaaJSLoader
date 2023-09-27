@@ -120,147 +120,31 @@ export class CustomControllerSetOptionParam extends pb_1.Message {
         return CustomControllerSetOptionParam.deserialize(bytes);
     }
 }
-export class CustomControllerInit extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
+export class CustomControllerRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[101, 201, 202], [1]];
     constructor(data?: any[] | ({} & (({
-        id?: string;
-    }) | ({
-        ctrl_id?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
-            }
-            if ("ctrl_id" in data && data.ctrl_id != undefined) {
-                this.ctrl_id = data.ctrl_id;
-            }
-        }
-    }
-    get id() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set id(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_id() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get ctrl_id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set ctrl_id(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_ctrl_id() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _id() {
-        const cases: {
-            [index: number]: "none" | "id";
-        } = {
-            0: "none",
-            1: "id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _ctrl_id() {
-        const cases: {
-            [index: number]: "none" | "ctrl_id";
-        } = {
-            0: "none",
-            2: "ctrl_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        id?: string;
-        ctrl_id?: string;
-    }): CustomControllerInit {
-        const message = new CustomControllerInit({});
-        if (data.id != null) {
-            message.id = data.id;
-        }
-        if (data.ctrl_id != null) {
-            message.ctrl_id = data.ctrl_id;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            id?: string;
-            ctrl_id?: string;
-        } = {};
-        if (this.id != null) {
-            data.id = this.id;
-        }
-        if (this.ctrl_id != null) {
-            data.ctrl_id = this.ctrl_id;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_id)
-            writer.writeString(1, this.id);
-        if (this.has_ctrl_id)
-            writer.writeString(2, this.ctrl_id);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerInit {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerInit();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.id = reader.readString();
-                    break;
-                case 2:
-                    message.ctrl_id = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): CustomControllerInit {
-        return CustomControllerInit.deserialize(bytes);
-    }
-}
-export class CustomControllerSubmit extends pb_1.Message {
-    #one_of_decls: number[][] = [[101, 102], [1], [2], [3]];
-    constructor(data?: any[] | ({} & (({
+        init?: boolean;
+        resolution?: never;
+        uuid?: never;
+    } | {
+        init?: never;
         resolution?: dependency_1.Size;
         uuid?: never;
     } | {
+        init?: never;
         resolution?: never;
         uuid?: string;
-    }) | ({
-        handle?: string;
-    }) | ({
-        cmd_id?: string;
     }) | ({
         ok?: boolean;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("cmd_id" in data && data.cmd_id != undefined) {
-                this.cmd_id = data.cmd_id;
-            }
             if ("ok" in data && data.ok != undefined) {
                 this.ok = data.ok;
+            }
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
             }
             if ("resolution" in data && data.resolution != undefined) {
                 this.resolution = data.resolution;
@@ -270,104 +154,74 @@ export class CustomControllerSubmit extends pb_1.Message {
             }
         }
     }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get cmd_id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set cmd_id(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
-    }
-    get has_cmd_id() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
     get ok() {
-        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
     }
     set ok(value: boolean) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[3], value);
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
     get has_ok() {
-        return pb_1.Message.getField(this, 3) != null;
+        return pb_1.Message.getField(this, 1) != null;
     }
-    get resolution() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Size, 101) as dependency_1.Size;
+    get init() {
+        return pb_1.Message.getFieldWithDefault(this, 101, false) as boolean;
     }
-    set resolution(value: dependency_1.Size) {
-        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
+    set init(value: boolean) {
+        pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
     }
-    get has_resolution() {
+    get has_init() {
         return pb_1.Message.getField(this, 101) != null;
     }
+    get resolution() {
+        return pb_1.Message.getWrapperField(this, dependency_1.Size, 201) as dependency_1.Size;
+    }
+    set resolution(value: dependency_1.Size) {
+        pb_1.Message.setOneofWrapperField(this, 201, this.#one_of_decls[0], value);
+    }
+    get has_resolution() {
+        return pb_1.Message.getField(this, 201) != null;
+    }
     get uuid() {
-        return pb_1.Message.getFieldWithDefault(this, 102, "") as string;
+        return pb_1.Message.getFieldWithDefault(this, 202, "") as string;
     }
     set uuid(value: string) {
-        pb_1.Message.setOneofField(this, 102, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 202, this.#one_of_decls[0], value);
     }
     get has_uuid() {
-        return pb_1.Message.getField(this, 102) != null;
+        return pb_1.Message.getField(this, 202) != null;
     }
     get result() {
         const cases: {
-            [index: number]: "none" | "resolution" | "uuid";
+            [index: number]: "none" | "init" | "resolution" | "uuid";
         } = {
             0: "none",
-            101: "resolution",
-            102: "uuid"
+            101: "init",
+            201: "resolution",
+            202: "uuid"
         };
-        return cases[pb_1.Message.computeOneofCase(this, [101, 102])];
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _cmd_id() {
-        const cases: {
-            [index: number]: "none" | "cmd_id";
-        } = {
-            0: "none",
-            2: "cmd_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
+        return cases[pb_1.Message.computeOneofCase(this, [101, 201, 202])];
     }
     get _ok() {
         const cases: {
             [index: number]: "none" | "ok";
         } = {
             0: "none",
-            3: "ok"
+            1: "ok"
         };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
-        handle?: string;
-        cmd_id?: string;
         ok?: boolean;
+        init?: boolean;
         resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
         uuid?: string;
-    }): CustomControllerSubmit {
-        const message = new CustomControllerSubmit({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.cmd_id != null) {
-            message.cmd_id = data.cmd_id;
-        }
+    }): CustomControllerRequest {
+        const message = new CustomControllerRequest({});
         if (data.ok != null) {
             message.ok = data.ok;
+        }
+        if (data.init != null) {
+            message.init = data.init;
         }
         if (data.resolution != null) {
             message.resolution = dependency_1.Size.fromObject(data.resolution);
@@ -379,20 +233,16 @@ export class CustomControllerSubmit extends pb_1.Message {
     }
     toObject() {
         const data: {
-            handle?: string;
-            cmd_id?: string;
             ok?: boolean;
+            init?: boolean;
             resolution?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
             uuid?: string;
         } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.cmd_id != null) {
-            data.cmd_id = this.cmd_id;
-        }
         if (this.ok != null) {
             data.ok = this.ok;
+        }
+        if (this.init != null) {
+            data.init = this.init;
         }
         if (this.resolution != null) {
             data.resolution = this.resolution.toObject();
@@ -406,134 +256,14 @@ export class CustomControllerSubmit extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_cmd_id)
-            writer.writeString(2, this.cmd_id);
         if (this.has_ok)
-            writer.writeBool(3, this.ok);
-        if (this.has_resolution)
-            writer.writeMessage(101, this.resolution, () => this.resolution.serialize(writer));
-        if (this.has_uuid)
-            writer.writeString(102, this.uuid);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerSubmit {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerSubmit();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.cmd_id = reader.readString();
-                    break;
-                case 3:
-                    message.ok = reader.readBool();
-                    break;
-                case 101:
-                    reader.readMessage(message.resolution, () => message.resolution = dependency_1.Size.deserialize(reader));
-                    break;
-                case 102:
-                    message.uuid = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): CustomControllerSubmit {
-        return CustomControllerSubmit.deserialize(bytes);
-    }
-}
-export class CustomControllerRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1, 2]];
-    constructor(data?: any[] | ({} & (({
-        init?: CustomControllerInit;
-        submit?: never;
-    } | {
-        init?: never;
-        submit?: CustomControllerSubmit;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("init" in data && data.init != undefined) {
-                this.init = data.init;
-            }
-            if ("submit" in data && data.submit != undefined) {
-                this.submit = data.submit;
-            }
-        }
-    }
-    get init() {
-        return pb_1.Message.getWrapperField(this, CustomControllerInit, 1) as CustomControllerInit;
-    }
-    set init(value: CustomControllerInit) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_init() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get submit() {
-        return pb_1.Message.getWrapperField(this, CustomControllerSubmit, 2) as CustomControllerSubmit;
-    }
-    set submit(value: CustomControllerSubmit) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[0], value);
-    }
-    get has_submit() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get payload() {
-        const cases: {
-            [index: number]: "none" | "init" | "submit";
-        } = {
-            0: "none",
-            1: "init",
-            2: "submit"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1, 2])];
-    }
-    static fromObject(data: {
-        init?: ReturnType<typeof CustomControllerInit.prototype.toObject>;
-        submit?: ReturnType<typeof CustomControllerSubmit.prototype.toObject>;
-    }): CustomControllerRequest {
-        const message = new CustomControllerRequest({});
-        if (data.init != null) {
-            message.init = CustomControllerInit.fromObject(data.init);
-        }
-        if (data.submit != null) {
-            message.submit = CustomControllerSubmit.fromObject(data.submit);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            init?: ReturnType<typeof CustomControllerInit.prototype.toObject>;
-            submit?: ReturnType<typeof CustomControllerSubmit.prototype.toObject>;
-        } = {};
-        if (this.init != null) {
-            data.init = this.init.toObject();
-        }
-        if (this.submit != null) {
-            data.submit = this.submit.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
+            writer.writeBool(1, this.ok);
         if (this.has_init)
-            writer.writeMessage(1, this.init, () => this.init.serialize(writer));
-        if (this.has_submit)
-            writer.writeMessage(2, this.submit, () => this.submit.serialize(writer));
+            writer.writeBool(101, this.init);
+        if (this.has_resolution)
+            writer.writeMessage(201, this.resolution, () => this.resolution.serialize(writer));
+        if (this.has_uuid)
+            writer.writeString(202, this.uuid);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -544,10 +274,16 @@ export class CustomControllerRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.init, () => message.init = CustomControllerInit.deserialize(reader));
+                    message.ok = reader.readBool();
                     break;
-                case 2:
-                    reader.readMessage(message.submit, () => message.submit = CustomControllerSubmit.deserialize(reader));
+                case 101:
+                    message.init = reader.readBool();
+                    break;
+                case 201:
+                    reader.readMessage(message.resolution, () => message.resolution = dependency_1.Size.deserialize(reader));
+                    break;
+                case 202:
+                    message.uuid = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -562,8 +298,24 @@ export class CustomControllerRequest extends pb_1.Message {
     }
 }
 export class CustomControllerResponse extends pb_1.Message {
-    #one_of_decls: number[][] = [[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 200], [1], [2]];
+    #one_of_decls: number[][] = [[101, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213]];
     constructor(data?: any[] | ({} & (({
+        init?: string;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
         connect?: boolean;
         click?: never;
         swipe?: never;
@@ -578,6 +330,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: dependency_1.ClickParam;
         swipe?: never;
@@ -592,6 +345,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: dependency_1.SwipeParam;
@@ -606,6 +360,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -620,6 +375,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -634,6 +390,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -648,6 +405,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -662,6 +420,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -676,6 +435,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -690,6 +450,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -704,6 +465,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -718,6 +480,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: never;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -732,6 +495,7 @@ export class CustomControllerResponse extends pb_1.Message {
         uuid?: boolean;
         set_option?: never;
     } | {
+        init?: never;
         connect?: never;
         click?: never;
         swipe?: never;
@@ -745,19 +509,12 @@ export class CustomControllerResponse extends pb_1.Message {
         image?: never;
         uuid?: never;
         set_option?: CustomControllerSetOptionParam;
-    }) | ({
-        ctrl_id?: string;
-    }) | ({
-        cmd_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("ctrl_id" in data && data.ctrl_id != undefined) {
-                this.ctrl_id = data.ctrl_id;
-            }
-            if ("cmd_id" in data && data.cmd_id != undefined) {
-                this.cmd_id = data.cmd_id;
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
             }
             if ("connect" in data && data.connect != undefined) {
                 this.connect = data.connect;
@@ -800,183 +557,156 @@ export class CustomControllerResponse extends pb_1.Message {
             }
         }
     }
-    get ctrl_id() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    get init() {
+        return pb_1.Message.getFieldWithDefault(this, 101, "") as string;
     }
-    set ctrl_id(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
-    }
-    get has_ctrl_id() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get cmd_id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set cmd_id(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
-    }
-    get has_cmd_id() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get connect() {
-        return pb_1.Message.getFieldWithDefault(this, 101, false) as boolean;
-    }
-    set connect(value: boolean) {
+    set init(value: string) {
         pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
     }
-    get has_connect() {
+    get has_init() {
         return pb_1.Message.getField(this, 101) != null;
     }
+    get connect() {
+        return pb_1.Message.getFieldWithDefault(this, 201, false) as boolean;
+    }
+    set connect(value: boolean) {
+        pb_1.Message.setOneofField(this, 201, this.#one_of_decls[0], value);
+    }
+    get has_connect() {
+        return pb_1.Message.getField(this, 201) != null;
+    }
     get click() {
-        return pb_1.Message.getWrapperField(this, dependency_1.ClickParam, 102) as dependency_1.ClickParam;
+        return pb_1.Message.getWrapperField(this, dependency_1.ClickParam, 202) as dependency_1.ClickParam;
     }
     set click(value: dependency_1.ClickParam) {
-        pb_1.Message.setOneofWrapperField(this, 102, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofWrapperField(this, 202, this.#one_of_decls[0], value);
     }
     get has_click() {
-        return pb_1.Message.getField(this, 102) != null;
+        return pb_1.Message.getField(this, 202) != null;
     }
     get swipe() {
-        return pb_1.Message.getWrapperField(this, dependency_1.SwipeParam, 103) as dependency_1.SwipeParam;
+        return pb_1.Message.getWrapperField(this, dependency_1.SwipeParam, 203) as dependency_1.SwipeParam;
     }
     set swipe(value: dependency_1.SwipeParam) {
-        pb_1.Message.setOneofWrapperField(this, 103, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofWrapperField(this, 203, this.#one_of_decls[0], value);
     }
     get has_swipe() {
-        return pb_1.Message.getField(this, 103) != null;
+        return pb_1.Message.getField(this, 203) != null;
     }
     get key() {
-        return pb_1.Message.getWrapperField(this, dependency_1.KeyParam, 104) as dependency_1.KeyParam;
+        return pb_1.Message.getWrapperField(this, dependency_1.KeyParam, 204) as dependency_1.KeyParam;
     }
     set key(value: dependency_1.KeyParam) {
-        pb_1.Message.setOneofWrapperField(this, 104, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofWrapperField(this, 204, this.#one_of_decls[0], value);
     }
     get has_key() {
-        return pb_1.Message.getField(this, 104) != null;
+        return pb_1.Message.getField(this, 204) != null;
     }
     get touch_down() {
-        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 105) as dependency_1.TouchParam;
+        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 205) as dependency_1.TouchParam;
     }
     set touch_down(value: dependency_1.TouchParam) {
-        pb_1.Message.setOneofWrapperField(this, 105, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofWrapperField(this, 205, this.#one_of_decls[0], value);
     }
     get has_touch_down() {
-        return pb_1.Message.getField(this, 105) != null;
+        return pb_1.Message.getField(this, 205) != null;
     }
     get touch_move() {
-        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 106) as dependency_1.TouchParam;
+        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 206) as dependency_1.TouchParam;
     }
     set touch_move(value: dependency_1.TouchParam) {
-        pb_1.Message.setOneofWrapperField(this, 106, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofWrapperField(this, 206, this.#one_of_decls[0], value);
     }
     get has_touch_move() {
-        return pb_1.Message.getField(this, 106) != null;
+        return pb_1.Message.getField(this, 206) != null;
     }
     get touch_up() {
-        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 107) as dependency_1.TouchParam;
+        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 207) as dependency_1.TouchParam;
     }
     set touch_up(value: dependency_1.TouchParam) {
-        pb_1.Message.setOneofWrapperField(this, 107, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofWrapperField(this, 207, this.#one_of_decls[0], value);
     }
     get has_touch_up() {
-        return pb_1.Message.getField(this, 107) != null;
+        return pb_1.Message.getField(this, 207) != null;
     }
     get start() {
-        return pb_1.Message.getFieldWithDefault(this, 108, "") as string;
+        return pb_1.Message.getFieldWithDefault(this, 208, "") as string;
     }
     set start(value: string) {
-        pb_1.Message.setOneofField(this, 108, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 208, this.#one_of_decls[0], value);
     }
     get has_start() {
-        return pb_1.Message.getField(this, 108) != null;
+        return pb_1.Message.getField(this, 208) != null;
     }
     get stop() {
-        return pb_1.Message.getFieldWithDefault(this, 109, "") as string;
+        return pb_1.Message.getFieldWithDefault(this, 209, "") as string;
     }
     set stop(value: string) {
-        pb_1.Message.setOneofField(this, 109, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 209, this.#one_of_decls[0], value);
     }
     get has_stop() {
-        return pb_1.Message.getField(this, 109) != null;
+        return pb_1.Message.getField(this, 209) != null;
     }
     get resolution() {
-        return pb_1.Message.getFieldWithDefault(this, 110, false) as boolean;
+        return pb_1.Message.getFieldWithDefault(this, 210, false) as boolean;
     }
     set resolution(value: boolean) {
-        pb_1.Message.setOneofField(this, 110, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 210, this.#one_of_decls[0], value);
     }
     get has_resolution() {
-        return pb_1.Message.getField(this, 110) != null;
+        return pb_1.Message.getField(this, 210) != null;
     }
     get image() {
-        return pb_1.Message.getFieldWithDefault(this, 111, "") as string;
+        return pb_1.Message.getFieldWithDefault(this, 211, "") as string;
     }
     set image(value: string) {
-        pb_1.Message.setOneofField(this, 111, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 211, this.#one_of_decls[0], value);
     }
     get has_image() {
-        return pb_1.Message.getField(this, 111) != null;
+        return pb_1.Message.getField(this, 211) != null;
     }
     get uuid() {
-        return pb_1.Message.getFieldWithDefault(this, 112, false) as boolean;
+        return pb_1.Message.getFieldWithDefault(this, 212, false) as boolean;
     }
     set uuid(value: boolean) {
-        pb_1.Message.setOneofField(this, 112, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofField(this, 212, this.#one_of_decls[0], value);
     }
     get has_uuid() {
-        return pb_1.Message.getField(this, 112) != null;
+        return pb_1.Message.getField(this, 212) != null;
     }
     get set_option() {
-        return pb_1.Message.getWrapperField(this, CustomControllerSetOptionParam, 200) as CustomControllerSetOptionParam;
+        return pb_1.Message.getWrapperField(this, CustomControllerSetOptionParam, 213) as CustomControllerSetOptionParam;
     }
     set set_option(value: CustomControllerSetOptionParam) {
-        pb_1.Message.setOneofWrapperField(this, 200, this.#one_of_decls[0], value);
+        pb_1.Message.setOneofWrapperField(this, 213, this.#one_of_decls[0], value);
     }
     get has_set_option() {
-        return pb_1.Message.getField(this, 200) != null;
+        return pb_1.Message.getField(this, 213) != null;
     }
     get command() {
         const cases: {
-            [index: number]: "none" | "connect" | "click" | "swipe" | "key" | "touch_down" | "touch_move" | "touch_up" | "start" | "stop" | "resolution" | "image" | "uuid" | "set_option";
+            [index: number]: "none" | "init" | "connect" | "click" | "swipe" | "key" | "touch_down" | "touch_move" | "touch_up" | "start" | "stop" | "resolution" | "image" | "uuid" | "set_option";
         } = {
             0: "none",
-            101: "connect",
-            102: "click",
-            103: "swipe",
-            104: "key",
-            105: "touch_down",
-            106: "touch_move",
-            107: "touch_up",
-            108: "start",
-            109: "stop",
-            110: "resolution",
-            111: "image",
-            112: "uuid",
-            200: "set_option"
+            101: "init",
+            201: "connect",
+            202: "click",
+            203: "swipe",
+            204: "key",
+            205: "touch_down",
+            206: "touch_move",
+            207: "touch_up",
+            208: "start",
+            209: "stop",
+            210: "resolution",
+            211: "image",
+            212: "uuid",
+            213: "set_option"
         };
-        return cases[pb_1.Message.computeOneofCase(this, [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 200])];
-    }
-    get _ctrl_id() {
-        const cases: {
-            [index: number]: "none" | "ctrl_id";
-        } = {
-            0: "none",
-            1: "ctrl_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _cmd_id() {
-        const cases: {
-            [index: number]: "none" | "cmd_id";
-        } = {
-            0: "none",
-            2: "cmd_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
+        return cases[pb_1.Message.computeOneofCase(this, [101, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213])];
     }
     static fromObject(data: {
-        ctrl_id?: string;
-        cmd_id?: string;
+        init?: string;
         connect?: boolean;
         click?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
         swipe?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
@@ -992,11 +722,8 @@ export class CustomControllerResponse extends pb_1.Message {
         set_option?: ReturnType<typeof CustomControllerSetOptionParam.prototype.toObject>;
     }): CustomControllerResponse {
         const message = new CustomControllerResponse({});
-        if (data.ctrl_id != null) {
-            message.ctrl_id = data.ctrl_id;
-        }
-        if (data.cmd_id != null) {
-            message.cmd_id = data.cmd_id;
+        if (data.init != null) {
+            message.init = data.init;
         }
         if (data.connect != null) {
             message.connect = data.connect;
@@ -1041,8 +768,7 @@ export class CustomControllerResponse extends pb_1.Message {
     }
     toObject() {
         const data: {
-            ctrl_id?: string;
-            cmd_id?: string;
+            init?: string;
             connect?: boolean;
             click?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
             swipe?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
@@ -1057,11 +783,8 @@ export class CustomControllerResponse extends pb_1.Message {
             uuid?: boolean;
             set_option?: ReturnType<typeof CustomControllerSetOptionParam.prototype.toObject>;
         } = {};
-        if (this.ctrl_id != null) {
-            data.ctrl_id = this.ctrl_id;
-        }
-        if (this.cmd_id != null) {
-            data.cmd_id = this.cmd_id;
+        if (this.init != null) {
+            data.init = this.init;
         }
         if (this.connect != null) {
             data.connect = this.connect;
@@ -1108,36 +831,34 @@ export class CustomControllerResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_ctrl_id)
-            writer.writeString(1, this.ctrl_id);
-        if (this.has_cmd_id)
-            writer.writeString(2, this.cmd_id);
+        if (this.has_init)
+            writer.writeString(101, this.init);
         if (this.has_connect)
-            writer.writeBool(101, this.connect);
+            writer.writeBool(201, this.connect);
         if (this.has_click)
-            writer.writeMessage(102, this.click, () => this.click.serialize(writer));
+            writer.writeMessage(202, this.click, () => this.click.serialize(writer));
         if (this.has_swipe)
-            writer.writeMessage(103, this.swipe, () => this.swipe.serialize(writer));
+            writer.writeMessage(203, this.swipe, () => this.swipe.serialize(writer));
         if (this.has_key)
-            writer.writeMessage(104, this.key, () => this.key.serialize(writer));
+            writer.writeMessage(204, this.key, () => this.key.serialize(writer));
         if (this.has_touch_down)
-            writer.writeMessage(105, this.touch_down, () => this.touch_down.serialize(writer));
+            writer.writeMessage(205, this.touch_down, () => this.touch_down.serialize(writer));
         if (this.has_touch_move)
-            writer.writeMessage(106, this.touch_move, () => this.touch_move.serialize(writer));
+            writer.writeMessage(206, this.touch_move, () => this.touch_move.serialize(writer));
         if (this.has_touch_up)
-            writer.writeMessage(107, this.touch_up, () => this.touch_up.serialize(writer));
+            writer.writeMessage(207, this.touch_up, () => this.touch_up.serialize(writer));
         if (this.has_start)
-            writer.writeString(108, this.start);
+            writer.writeString(208, this.start);
         if (this.has_stop)
-            writer.writeString(109, this.stop);
+            writer.writeString(209, this.stop);
         if (this.has_resolution)
-            writer.writeBool(110, this.resolution);
+            writer.writeBool(210, this.resolution);
         if (this.has_image)
-            writer.writeString(111, this.image);
+            writer.writeString(211, this.image);
         if (this.has_uuid)
-            writer.writeBool(112, this.uuid);
+            writer.writeBool(212, this.uuid);
         if (this.has_set_option)
-            writer.writeMessage(200, this.set_option, () => this.set_option.serialize(writer));
+            writer.writeMessage(213, this.set_option, () => this.set_option.serialize(writer));
         if (!w)
             return writer.getResultBuffer();
     }
@@ -1147,49 +868,46 @@ export class CustomControllerResponse extends pb_1.Message {
             if (reader.isEndGroup())
                 break;
             switch (reader.getFieldNumber()) {
-                case 1:
-                    message.ctrl_id = reader.readString();
-                    break;
-                case 2:
-                    message.cmd_id = reader.readString();
-                    break;
                 case 101:
+                    message.init = reader.readString();
+                    break;
+                case 201:
                     message.connect = reader.readBool();
                     break;
-                case 102:
+                case 202:
                     reader.readMessage(message.click, () => message.click = dependency_1.ClickParam.deserialize(reader));
                     break;
-                case 103:
+                case 203:
                     reader.readMessage(message.swipe, () => message.swipe = dependency_1.SwipeParam.deserialize(reader));
                     break;
-                case 104:
+                case 204:
                     reader.readMessage(message.key, () => message.key = dependency_1.KeyParam.deserialize(reader));
                     break;
-                case 105:
+                case 205:
                     reader.readMessage(message.touch_down, () => message.touch_down = dependency_1.TouchParam.deserialize(reader));
                     break;
-                case 106:
+                case 206:
                     reader.readMessage(message.touch_move, () => message.touch_move = dependency_1.TouchParam.deserialize(reader));
                     break;
-                case 107:
+                case 207:
                     reader.readMessage(message.touch_up, () => message.touch_up = dependency_1.TouchParam.deserialize(reader));
                     break;
-                case 108:
+                case 208:
                     message.start = reader.readString();
                     break;
-                case 109:
+                case 209:
                     message.stop = reader.readString();
                     break;
-                case 110:
+                case 210:
                     message.resolution = reader.readBool();
                     break;
-                case 111:
+                case 211:
                     message.image = reader.readString();
                     break;
-                case 112:
+                case 212:
                     message.uuid = reader.readBool();
                     break;
-                case 200:
+                case 213:
                     reader.readMessage(message.set_option, () => message.set_option = CustomControllerSetOptionParam.deserialize(reader));
                     break;
                 default: reader.skipField();

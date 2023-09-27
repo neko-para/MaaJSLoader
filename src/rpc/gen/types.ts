@@ -1240,6 +1240,85 @@ export class BufferRequest extends pb_1.Message {
         return BufferRequest.deserialize(bytes);
     }
 }
+export class StringRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1]];
+    constructor(data?: any[] | ({} & (({
+        str?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("str" in data && data.str != undefined) {
+                this.str = data.str;
+            }
+        }
+    }
+    get str() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set str(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_str() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get _str() {
+        const cases: {
+            [index: number]: "none" | "str";
+        } = {
+            0: "none",
+            1: "str"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        str?: string;
+    }): StringRequest {
+        const message = new StringRequest({});
+        if (data.str != null) {
+            message.str = data.str;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            str?: string;
+        } = {};
+        if (this.str != null) {
+            data.str = this.str;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_str)
+            writer.writeString(1, this.str);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): StringRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new StringRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.str = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): StringRequest {
+        return StringRequest.deserialize(bytes);
+    }
+}
 export class HandleBufferRequest extends pb_1.Message {
     #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
@@ -1815,6 +1894,121 @@ export class HandleIIdRequest extends pb_1.Message {
         return HandleIIdRequest.deserialize(bytes);
     }
 }
+export class KeyValueRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        key?: string;
+    }) | ({
+        value?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("key" in data && data.key != undefined) {
+                this.key = data.key;
+            }
+            if ("value" in data && data.value != undefined) {
+                this.value = data.value;
+            }
+        }
+    }
+    get key() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set key(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_key() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get value() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set value(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_value() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _key() {
+        const cases: {
+            [index: number]: "none" | "key";
+        } = {
+            0: "none",
+            1: "key"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _value() {
+        const cases: {
+            [index: number]: "none" | "value";
+        } = {
+            0: "none",
+            2: "value"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        key?: string;
+        value?: string;
+    }): KeyValueRequest {
+        const message = new KeyValueRequest({});
+        if (data.key != null) {
+            message.key = data.key;
+        }
+        if (data.value != null) {
+            message.value = data.value;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            key?: string;
+            value?: string;
+        } = {};
+        if (this.key != null) {
+            data.key = this.key;
+        }
+        if (this.value != null) {
+            data.value = this.value;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_key)
+            writer.writeString(1, this.key);
+        if (this.has_value)
+            writer.writeString(2, this.value);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): KeyValueRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new KeyValueRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.key = reader.readString();
+                    break;
+                case 2:
+                    message.value = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): KeyValueRequest {
+        return KeyValueRequest.deserialize(bytes);
+    }
+}
 export class EmptyResponse extends pb_1.Message {
     #one_of_decls: number[][] = [[1]];
     constructor(data?: any[] | ({} & (({
@@ -2050,6 +2244,85 @@ export class IIdResponse extends pb_1.Message {
     }
     static deserializeBinary(bytes: Uint8Array): IIdResponse {
         return IIdResponse.deserialize(bytes);
+    }
+}
+export class SizeResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [[1]];
+    constructor(data?: any[] | ({} & (({
+        size?: number;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("size" in data && data.size != undefined) {
+                this.size = data.size;
+            }
+        }
+    }
+    get size() {
+        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
+    }
+    set size(value: number) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_size() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get _size() {
+        const cases: {
+            [index: number]: "none" | "size";
+        } = {
+            0: "none",
+            1: "size"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        size?: number;
+    }): SizeResponse {
+        const message = new SizeResponse({});
+        if (data.size != null) {
+            message.size = data.size;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            size?: number;
+        } = {};
+        if (this.size != null) {
+            data.size = this.size;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_size)
+            writer.writeUint64(1, this.size);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SizeResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SizeResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.size = reader.readUint64();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SizeResponse {
+        return SizeResponse.deserialize(bytes);
     }
 }
 export class BoolResponse extends pb_1.Message {

@@ -2,7 +2,7 @@ import * as grpc from '@grpc/grpc-js'
 import fs from 'fs/promises'
 import path from 'path'
 
-import * as maarpc from '../grpc'
+import * as maarpc from '../src/rpc/gen'
 import { AdbConfig } from './config'
 
 async function main() {
@@ -67,9 +67,9 @@ async function main() {
 
   const himg = (await image.create(new maarpc.EmptyRequest())).handle
   await controller.image(
-    new maarpc.ControllerGetImageRequest({
+    new maarpc.HandleHandleRequest({
       handle,
-      image_handle: himg
+      another_handle: himg
     })
   )
 
