@@ -1,12 +1,7 @@
-// export * from './buffer'
-// export * from './controller'
-// export * from './device'
-// export * from './instance'
-// export * from './resource'
-// export * from './utility'
 import * as grpc from '@grpc/grpc-js'
 
 import {
+  ConfigClient,
   ControllerClient,
   DeviceClient,
   ImageClient,
@@ -23,6 +18,7 @@ export function setupClient(address: string, cred = grpc.credentials.createInsec
     resource: new ResourceClient(new maarpc.ResourceClient(address, cred)),
     controller: new ControllerClient(new maarpc.ControllerClient(address, cred)),
     instance: new InstanceClient(new maarpc.InstanceClient(address, cred)),
-    device: new DeviceClient(new maarpc.DeviceClient(address, cred))
+    device: new DeviceClient(new maarpc.DeviceClient(address, cred)),
+    config: new ConfigClient(new maarpc.ConfigClient(address, cred))
   }
 }

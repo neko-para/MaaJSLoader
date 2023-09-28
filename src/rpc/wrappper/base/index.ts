@@ -1,4 +1,5 @@
 export * from './buffer'
+export * from './config'
 export * from './controller'
 export * from './device'
 export * from './instance'

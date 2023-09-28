@@ -48,41 +48,11 @@ export abstract class UnimplementedConfigService {
             requestDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
-        },
-        get_custom: {
-            path: "/maarpc.Config/get_custom",
-            requestStream: false,
-            responseStream: false,
-            requestSerialize: (message: dependency_1.StringRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.StringRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.StringResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.StringResponse.deserialize(new Uint8Array(bytes))
-        },
-        set_custom: {
-            path: "/maarpc.Config/set_custom",
-            requestStream: false,
-            responseStream: false,
-            requestSerialize: (message: dependency_1.KeyValueRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.KeyValueRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
-        },
-        config_size: {
-            path: "/maarpc.Config/config_size",
-            requestStream: false,
-            responseStream: false,
-            requestSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_1.SizeResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_1.SizeResponse.deserialize(new Uint8Array(bytes))
         }
     };
     [method: string]: grpc_1.UntypedHandleCall;
     abstract init(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract uninit(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract get_custom(call: grpc_1.ServerUnaryCall<dependency_1.StringRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
-    abstract set_custom(call: grpc_1.ServerUnaryCall<dependency_1.KeyValueRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract config_size(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.SizeResponse>, callback: grpc_1.sendUnaryData<dependency_1.SizeResponse>): void;
 }
 export class ConfigClient extends grpc_1.makeGenericClientConstructor(UnimplementedConfigService.definition, "Config", {}) {
     constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
@@ -105,42 +75,6 @@ export class ConfigClient extends grpc_1.makeGenericClientConstructor(Unimplemen
     } if (!options) {
         options = {};
     } return new Promise((resolve, reject) => super.uninit(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
-        if (error) {
-            reject(error);
-        }
-        else {
-            resolve(response);
-        }
-    })); };
-    get_custom: GrpcPromiseServiceInterface<dependency_1.StringRequest, dependency_1.StringResponse> = (message: dependency_1.StringRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StringResponse> => { if (!metadata) {
-        metadata = new grpc_1.Metadata;
-    } if (!options) {
-        options = {};
-    } return new Promise((resolve, reject) => super.get_custom(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.StringResponse) => {
-        if (error) {
-            reject(error);
-        }
-        else {
-            resolve(response);
-        }
-    })); };
-    set_custom: GrpcPromiseServiceInterface<dependency_1.KeyValueRequest, dependency_1.EmptyResponse> = (message: dependency_1.KeyValueRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
-        metadata = new grpc_1.Metadata;
-    } if (!options) {
-        options = {};
-    } return new Promise((resolve, reject) => super.set_custom(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.EmptyResponse) => {
-        if (error) {
-            reject(error);
-        }
-        else {
-            resolve(response);
-        }
-    })); };
-    config_size: GrpcPromiseServiceInterface<dependency_1.EmptyRequest, dependency_1.SizeResponse> = (message: dependency_1.EmptyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.SizeResponse> => { if (!metadata) {
-        metadata = new grpc_1.Metadata;
-    } if (!options) {
-        options = {};
-    } return new Promise((resolve, reject) => super.config_size(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.SizeResponse) => {
         if (error) {
             reject(error);
         }
