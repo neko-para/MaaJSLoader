@@ -6,13 +6,11 @@
 import * as dependency_1 from "./types";
 import * as pb_1 from "google-protobuf";
 export class CustomActionInit extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3]];
+    #one_of_decls: number[][] = [[1], [2]];
     constructor(data?: any[] | ({} & (({
         handle?: string;
     }) | ({
         name?: string;
-    }) | ({
-        act_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -22,9 +20,6 @@ export class CustomActionInit extends pb_1.Message {
             }
             if ("name" in data && data.name != undefined) {
                 this.name = data.name;
-            }
-            if ("act_id" in data && data.act_id != undefined) {
-                this.act_id = data.act_id;
             }
         }
     }
@@ -46,15 +41,6 @@ export class CustomActionInit extends pb_1.Message {
     get has_name() {
         return pb_1.Message.getField(this, 2) != null;
     }
-    get act_id() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
-    }
-    set act_id(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_act_id() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
     get _handle() {
         const cases: {
             [index: number]: "none" | "handle";
@@ -73,19 +59,9 @@ export class CustomActionInit extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [2])];
     }
-    get _act_id() {
-        const cases: {
-            [index: number]: "none" | "act_id";
-        } = {
-            0: "none",
-            3: "act_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
     static fromObject(data: {
         handle?: string;
         name?: string;
-        act_id?: string;
     }): CustomActionInit {
         const message = new CustomActionInit({});
         if (data.handle != null) {
@@ -94,25 +70,18 @@ export class CustomActionInit extends pb_1.Message {
         if (data.name != null) {
             message.name = data.name;
         }
-        if (data.act_id != null) {
-            message.act_id = data.act_id;
-        }
         return message;
     }
     toObject() {
         const data: {
             handle?: string;
             name?: string;
-            act_id?: string;
         } = {};
         if (this.handle != null) {
             data.handle = this.handle;
         }
         if (this.name != null) {
             data.name = this.name;
-        }
-        if (this.act_id != null) {
-            data.act_id = this.act_id;
         }
         return data;
     }
@@ -124,8 +93,6 @@ export class CustomActionInit extends pb_1.Message {
             writer.writeString(1, this.handle);
         if (this.has_name)
             writer.writeString(2, this.name);
-        if (this.has_act_id)
-            writer.writeString(3, this.act_id);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -140,9 +107,6 @@ export class CustomActionInit extends pb_1.Message {
                     break;
                 case 2:
                     message.name = reader.readString();
-                    break;
-                case 3:
-                    message.act_id = reader.readString();
                     break;
                 default: reader.skipField();
             }
@@ -308,76 +272,82 @@ export class CustomActionSubmit extends pb_1.Message {
     }
 }
 export class CustomActionRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1, 2]];
+    #one_of_decls: number[][] = [[101], [1]];
     constructor(data?: any[] | ({} & (({
         init?: CustomActionInit;
-        submit?: never;
-    } | {
-        init?: never;
-        submit?: CustomActionSubmit;
+    }) | ({
+        ok?: boolean;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
+            if ("ok" in data && data.ok != undefined) {
+                this.ok = data.ok;
+            }
             if ("init" in data && data.init != undefined) {
                 this.init = data.init;
             }
-            if ("submit" in data && data.submit != undefined) {
-                this.submit = data.submit;
-            }
         }
     }
-    get init() {
-        return pb_1.Message.getWrapperField(this, CustomActionInit, 1) as CustomActionInit;
+    get ok() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
     }
-    set init(value: CustomActionInit) {
-        pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+    set ok(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
     }
-    get has_init() {
+    get has_ok() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get submit() {
-        return pb_1.Message.getWrapperField(this, CustomActionSubmit, 2) as CustomActionSubmit;
+    get init() {
+        return pb_1.Message.getWrapperField(this, CustomActionInit, 101) as CustomActionInit;
     }
-    set submit(value: CustomActionSubmit) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[0], value);
+    set init(value: CustomActionInit) {
+        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
     }
-    get has_submit() {
-        return pb_1.Message.getField(this, 2) != null;
+    get has_init() {
+        return pb_1.Message.getField(this, 101) != null;
     }
-    get payload() {
+    get result() {
         const cases: {
-            [index: number]: "none" | "init" | "submit";
+            [index: number]: "none" | "init";
         } = {
             0: "none",
-            1: "init",
-            2: "submit"
+            101: "init"
         };
-        return cases[pb_1.Message.computeOneofCase(this, [1, 2])];
+        return cases[pb_1.Message.computeOneofCase(this, [101])];
+    }
+    get _ok() {
+        const cases: {
+            [index: number]: "none" | "ok";
+        } = {
+            0: "none",
+            1: "ok"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
     }
     static fromObject(data: {
+        ok?: boolean;
         init?: ReturnType<typeof CustomActionInit.prototype.toObject>;
-        submit?: ReturnType<typeof CustomActionSubmit.prototype.toObject>;
     }): CustomActionRequest {
         const message = new CustomActionRequest({});
+        if (data.ok != null) {
+            message.ok = data.ok;
+        }
         if (data.init != null) {
             message.init = CustomActionInit.fromObject(data.init);
-        }
-        if (data.submit != null) {
-            message.submit = CustomActionSubmit.fromObject(data.submit);
         }
         return message;
     }
     toObject() {
         const data: {
+            ok?: boolean;
             init?: ReturnType<typeof CustomActionInit.prototype.toObject>;
-            submit?: ReturnType<typeof CustomActionSubmit.prototype.toObject>;
         } = {};
+        if (this.ok != null) {
+            data.ok = this.ok;
+        }
         if (this.init != null) {
             data.init = this.init.toObject();
-        }
-        if (this.submit != null) {
-            data.submit = this.submit.toObject();
         }
         return data;
     }
@@ -385,10 +355,10 @@ export class CustomActionRequest extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
+        if (this.has_ok)
+            writer.writeBool(1, this.ok);
         if (this.has_init)
-            writer.writeMessage(1, this.init, () => this.init.serialize(writer));
-        if (this.has_submit)
-            writer.writeMessage(2, this.submit, () => this.submit.serialize(writer));
+            writer.writeMessage(101, this.init, () => this.init.serialize(writer));
         if (!w)
             return writer.getResultBuffer();
     }
@@ -399,10 +369,10 @@ export class CustomActionRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    reader.readMessage(message.init, () => message.init = CustomActionInit.deserialize(reader));
+                    message.ok = reader.readBool();
                     break;
-                case 2:
-                    reader.readMessage(message.submit, () => message.submit = CustomActionSubmit.deserialize(reader));
+                case 101:
+                    reader.readMessage(message.init, () => message.init = CustomActionInit.deserialize(reader));
                     break;
                 default: reader.skipField();
             }
@@ -640,27 +610,17 @@ export class CustomActionRunParam extends pb_1.Message {
     }
 }
 export class CustomActionResponse extends pb_1.Message {
-    #one_of_decls: number[][] = [[101, 102], [1], [2]];
+    #one_of_decls: number[][] = [[101, 102]];
     constructor(data?: any[] | ({} & (({
         run?: CustomActionRunParam;
         stop?: never;
     } | {
         run?: never;
         stop?: boolean;
-    }) | ({
-        act_id?: string;
-    }) | ({
-        cmd_id?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("act_id" in data && data.act_id != undefined) {
-                this.act_id = data.act_id;
-            }
-            if ("cmd_id" in data && data.cmd_id != undefined) {
-                this.cmd_id = data.cmd_id;
-            }
             if ("run" in data && data.run != undefined) {
                 this.run = data.run;
             }
@@ -668,24 +628,6 @@ export class CustomActionResponse extends pb_1.Message {
                 this.stop = data.stop;
             }
         }
-    }
-    get act_id() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set act_id(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
-    }
-    get has_act_id() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get cmd_id() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set cmd_id(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[2], value);
-    }
-    get has_cmd_id() {
-        return pb_1.Message.getField(this, 2) != null;
     }
     get run() {
         return pb_1.Message.getWrapperField(this, CustomActionRunParam, 101) as CustomActionRunParam;
@@ -715,37 +657,11 @@ export class CustomActionResponse extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [101, 102])];
     }
-    get _act_id() {
-        const cases: {
-            [index: number]: "none" | "act_id";
-        } = {
-            0: "none",
-            1: "act_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _cmd_id() {
-        const cases: {
-            [index: number]: "none" | "cmd_id";
-        } = {
-            0: "none",
-            2: "cmd_id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
     static fromObject(data: {
-        act_id?: string;
-        cmd_id?: string;
         run?: ReturnType<typeof CustomActionRunParam.prototype.toObject>;
         stop?: boolean;
     }): CustomActionResponse {
         const message = new CustomActionResponse({});
-        if (data.act_id != null) {
-            message.act_id = data.act_id;
-        }
-        if (data.cmd_id != null) {
-            message.cmd_id = data.cmd_id;
-        }
         if (data.run != null) {
             message.run = CustomActionRunParam.fromObject(data.run);
         }
@@ -756,17 +672,9 @@ export class CustomActionResponse extends pb_1.Message {
     }
     toObject() {
         const data: {
-            act_id?: string;
-            cmd_id?: string;
             run?: ReturnType<typeof CustomActionRunParam.prototype.toObject>;
             stop?: boolean;
         } = {};
-        if (this.act_id != null) {
-            data.act_id = this.act_id;
-        }
-        if (this.cmd_id != null) {
-            data.cmd_id = this.cmd_id;
-        }
         if (this.run != null) {
             data.run = this.run.toObject();
         }
@@ -779,10 +687,6 @@ export class CustomActionResponse extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_act_id)
-            writer.writeString(1, this.act_id);
-        if (this.has_cmd_id)
-            writer.writeString(2, this.cmd_id);
         if (this.has_run)
             writer.writeMessage(101, this.run, () => this.run.serialize(writer));
         if (this.has_stop)
@@ -796,12 +700,6 @@ export class CustomActionResponse extends pb_1.Message {
             if (reader.isEndGroup())
                 break;
             switch (reader.getFieldNumber()) {
-                case 1:
-                    message.act_id = reader.readString();
-                    break;
-                case 2:
-                    message.cmd_id = reader.readString();
-                    break;
                 case 101:
                     reader.readMessage(message.run, () => message.run = CustomActionRunParam.deserialize(reader));
                     break;

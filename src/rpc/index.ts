@@ -1,1 +1,1 @@
-import * as maarpc from './gen'
+export * from './wrappper'

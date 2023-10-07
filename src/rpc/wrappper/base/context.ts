@@ -11,6 +11,8 @@ import {
 } from '.'
 import * as maarpc from '../../gen'
 
+export type Context = ReturnType<typeof setupClient>
+
 export function setupClient(address: string, cred = grpc.credentials.createInsecure()) {
   return {
     utility: new UtilityClient(new maarpc.UtilityClient(address, cred)),
