@@ -204,7 +204,7 @@ export class Controller {
         })()
       },
       async wait() {
-        await context.controller.wait(this.controller.handle, await id)
+        return await context.controller.wait(this.controller.handle, await id)
       }
     }
   }

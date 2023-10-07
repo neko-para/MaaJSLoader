@@ -33,7 +33,7 @@ export class Resource {
         })()
       },
       async wait() {
-        await context.resource.wait(this.resource.handle, await id)
+        return await context.resource.wait(this.resource.handle, await id)
       }
     }
   }
