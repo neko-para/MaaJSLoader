@@ -1,59 +1,50 @@
-import * as grpc from '@grpc/grpc-js'
 import fs from 'fs/promises'
 import path from 'path'
 
-import * as maarpc from '../src/rpc/gen'
-import { setupClient } from '../src/rpc/wrappper/base'
-import { AdbConfig } from './config'
+import * as maa from '../src/rpc'
+
+class CC extends maa.CustomControllerBase {
+  resolution(reso: [number, number]): boolean | Promise<boolean> {
+    reso[0] = 1080
+    reso[1] = 720
+    return true
+  }
+
+  uuid(u: [string]): boolean | Promise<boolean> {
+    u[0] = '114514'
+    return true
+  }
+}
 
 async function main() {
-  const ctx = setupClient('0.0.0.0:8080')
+  maa.init('0.0.0.0:8080')
 
-  await ctx.utility.set_logging(path.join(process.cwd(), 'debug'))
+  await maa.set_logging(path.join(process.cwd(), 'debug'))
 
-  const cbId = await ctx.utility.acquire_id()
-
-  ctx.utility.register_callback(cbId, (msg, detail) => {
+  const cb: maa.Callback = (msg, detail) => {
     console.log(msg, detail)
+  }
+
+  const cctrl = await maa.Controller.initCustom(cb, new CC())
+  await cctrl.post_connection().wait()
+  await cctrl.destroy()
+
+  const ctrl = await maa.Controller.initAdb(cb, {
+    serial: '127.0.0.1:62001'
   })
 
-  const c = await ctx.controller.createCustom(cbId, (req, res) => {
-    console.log(req.command)
-    if (req.command === 'resolution') {
-      res.resolution = new maarpc.Size({ width: 1080, height: 720 })
-    }
-    return true
-  })
+  await ctrl.post_connection().wait()
+  await ctrl.post_screencap().wait()
 
-  await ctx.controller.wait(c, await ctx.controller.post_connection(c))
+  const img = await maa.Image.init()
 
-  await ctx.controller.destroy(c)
+  await ctrl.image(img)
 
-  const hCtrl = await ctx.controller.createAdb(
-    cbId,
-    'adb',
-    '127.0.0.1:62001',
-    1 + (1 << 8) + (4 << 16),
-    AdbConfig
-  )
+  const buf = await img.encoded
+  await fs.writeFile('1.png', buf)
 
-  console.log('controller handle', hCtrl)
-
-  await ctx.controller.wait(hCtrl, await ctx.controller.post_connection(hCtrl))
-  await ctx.controller.wait(hCtrl, await ctx.controller.post_screencap(hCtrl))
-
-  const hImg = await ctx.image.create()
-
-  await ctx.controller.image(hCtrl, hImg)
-
-  const buf = await ctx.image.encoded(hImg)
-  fs.writeFile('1.png', buf)
-
-  await ctx.image.destroy(hImg)
-  await ctx.controller.destroy(hCtrl)
-  await ctx.utility.unregister_callback(cbId)
-
-  console.log('controller destroy')
+  await img.destroy()
+  await ctrl.destroy()
 }
 
 main()

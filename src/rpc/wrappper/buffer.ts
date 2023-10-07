@@ -4,8 +4,17 @@ import { ImageHandle } from './base'
 export class Image {
   handle!: ImageHandle
 
-  static init() {
-    return new Image().create()
+  static init(): Promise<Image>
+  static init(from: ImageHandle): Image
+
+  static init(from?: ImageHandle) {
+    const image = new Image()
+    if (from) {
+      image.handle = from
+      return image
+    } else {
+      return image.create()
+    }
   }
 
   async create() {

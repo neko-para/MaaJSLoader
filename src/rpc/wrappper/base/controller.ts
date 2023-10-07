@@ -30,7 +30,10 @@ export class ControllerClient {
 
   async createCustom(
     id: string,
-    ctrl: (req: maarpc.CustomControllerResponse, res: maarpc.CustomControllerRequest) => boolean
+    ctrl: (
+      req: maarpc.CustomControllerResponse,
+      res: maarpc.CustomControllerRequest
+    ) => boolean | Promise<boolean>
   ) {
     const stream = this._client.create_custom()
     await new Promise(resolve =>
@@ -43,13 +46,13 @@ export class ControllerClient {
       })
     })
 
-    stream.on('readable', () => {
+    stream.on('readable', async () => {
       const res = stream.read()
       if (!res) {
         return
       }
       const req = new maarpc.CustomControllerRequest()
-      req.ok = ctrl(res, req)
+      req.ok = await ctrl(res, req)
       stream.write(req)
     })
 

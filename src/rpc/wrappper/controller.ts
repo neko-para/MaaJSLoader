@@ -1,6 +1,7 @@
 import { context } from '.'
+import * as maarpc from '../gen'
 import { AdbConfig } from './adb'
-import { ControllerActionId, ControllerHandle } from './base'
+import { ControllerActionId, ControllerHandle, ImageHandle } from './base'
 import { Image } from './buffer'
 import { Callback } from './types'
 
@@ -18,12 +19,153 @@ const defAdbCfg: Required<AdbControllerConfig> = {
   config: AdbConfig
 }
 
+export class CustomControllerBase {
+  process(req: maarpc.CustomControllerResponse, res: maarpc.CustomControllerRequest) {
+    switch (req.command) {
+      case 'connect':
+        return this.connect()
+      case 'click':
+        return this.click(req.click.point.x, req.click.point.y)
+      case 'swipe':
+        return this.swipe(
+          req.swipe.from.x,
+          req.swipe.from.y,
+          req.swipe.to.x,
+          req.swipe.to.y,
+          req.swipe.duration
+        )
+      case 'key':
+        return this.key(req.key.key)
+      case 'touch_down':
+        return this.touch_down(
+          req.touch_down.contact,
+          req.touch_down.pos.x,
+          req.touch_down.pos.y,
+          req.touch_down.pressure
+        )
+      case 'touch_move':
+        return this.touch_move(
+          req.touch_down.contact,
+          req.touch_down.pos.x,
+          req.touch_down.pos.y,
+          req.touch_down.pressure
+        )
+      case 'touch_up':
+        return this.touch_up(req.touch_down.contact)
+      case 'start':
+        return this.start(req.start)
+      case 'stop':
+        return this.start(req.stop)
+      case 'resolution': {
+        const r: [number, number] = [0, 0]
+        const ret = this.resolution(r)
+        if (typeof ret === 'boolean') {
+          res.resolution = new maarpc.Size({ width: r[0], height: r[1] })
+          return ret
+        } else {
+          return ret.then(v => {
+            res.resolution = new maarpc.Size({ width: r[0], height: r[1] })
+            return v
+          })
+        }
+      }
+      case 'image':
+        return this.image(Image.init(req.image as ImageHandle))
+      case 'uuid': {
+        const u: [string] = ['']
+        const ret = this.uuid(u)
+        if (typeof ret === 'boolean') {
+          res.uuid = u[0]
+          return ret
+        } else {
+          return ret.then(v => {
+            res.uuid = u[0]
+            return v
+          })
+        }
+      }
+      case 'set_option':
+        return this.set_option(req.set_option.key, req.set_option.value)
+      default:
+        return false
+    }
+  }
+
+  connect(): boolean | Promise<boolean> {
+    return false
+  }
+
+  click(x: number, y: number): boolean | Promise<boolean> {
+    return false
+  }
+
+  swipe(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    duration: number
+  ): boolean | Promise<boolean> {
+    return false
+  }
+
+  key(key: number): boolean | Promise<boolean> {
+    return false
+  }
+
+  touch_down(contact: number, x: number, y: number, pressure: number): boolean | Promise<boolean> {
+    return false
+  }
+
+  touch_move(contact: number, x: number, y: number, pressure: number): boolean | Promise<boolean> {
+    return false
+  }
+
+  touch_up(contact: number): boolean | Promise<boolean> {
+    return false
+  }
+
+  start(pkg: string): boolean | Promise<boolean> {
+    return false
+  }
+
+  stop(pkg: string): boolean | Promise<boolean> {
+    return false
+  }
+
+  resolution(reso: [number, number]): boolean | Promise<boolean> {
+    return false
+  }
+
+  image(img: Image): boolean | Promise<boolean> {
+    return false
+  }
+
+  uuid(u: [string]): boolean | Promise<boolean> {
+    return false
+  }
+
+  set_option(key: number, value: string): boolean | Promise<boolean> {
+    return false
+  }
+}
+
 export class Controller {
   cbId!: string
   handle!: ControllerHandle
 
+  static init(from: ControllerHandle) {
+    const ctrl = new Controller()
+    ctrl.handle = from
+    return ctrl
+  }
+
   static initAdb(cb: Callback, cfg?: AdbControllerConfig) {
     return new Controller().createAdb(cb, cfg)
+  }
+
+  static initCustom(cb: Callback, ctrl: CustomControllerBase) {
+    return new Controller().createCustom(cb, ctrl)
   }
 
   async createAdb(cb: Callback, cfg?: AdbControllerConfig) {
@@ -34,6 +176,15 @@ export class Controller {
     this.cbId = await context.utility.acquire_id()
     context.utility.register_callback(this.cbId, cb)
     this.handle = await context.controller.createAdb(this.cbId, c.path, c.serial, c.type, c.config)
+    return this
+  }
+
+  async createCustom(cb: Callback, ctrl: CustomControllerBase) {
+    this.cbId = await context.utility.acquire_id()
+    context.utility.register_callback(this.cbId, cb)
+    this.handle = await context.controller.createCustom(this.cbId, (req, res) => {
+      return ctrl.process(req, res)
+    })
     return this
   }
 
