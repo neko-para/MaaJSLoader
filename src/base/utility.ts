@@ -1,6 +1,6 @@
 import * as grpc from '@grpc/grpc-js'
 
-import * as maarpc from '../../gen'
+import * as maarpc from '../gen'
 
 export class UtilityClient {
   _client: maarpc.UtilityClient

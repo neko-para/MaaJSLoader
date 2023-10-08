@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-import * as maa from '../src/rpc'
+import * as maa from '..'
 
 class CC extends maa.CustomControllerBase {
   resolution(reso: [number, number]): boolean | Promise<boolean> {

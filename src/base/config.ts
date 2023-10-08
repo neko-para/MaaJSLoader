@@ -1,4 +1,4 @@
-import * as maarpc from '../../gen'
+import * as maarpc from '../gen'
 
 export class ConfigClient {
   _client: maarpc.ConfigClient

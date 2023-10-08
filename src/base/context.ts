@@ -9,7 +9,7 @@ import {
   ResourceClient,
   UtilityClient
 } from '.'
-import * as maarpc from '../../gen'
+import * as maarpc from '../gen'
 
 export type Context = ReturnType<typeof setupClient>
 

@@ -1,4 +1,4 @@
-import * as maarpc from '../../gen'
+import * as maarpc from '../gen'
 import { ControllerHandle } from './controller'
 import { ResourceHandle } from './resource'
 

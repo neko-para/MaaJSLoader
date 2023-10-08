@@ -1,5 +1,5 @@
 import { context } from '.'
-import { ImageHandle } from './base'
+import { ImageHandle } from '../base'
 
 export class Image {
   handle!: ImageHandle

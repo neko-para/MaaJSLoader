@@ -1,4 +1,4 @@
-import * as maarpc from '../../gen'
+import * as maarpc from '../gen'
 
 export type ImageHandle = string & { __brand: 'ImageHandle' }
 

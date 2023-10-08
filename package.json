@@ -9,13 +9,9 @@
     "@types/node": "^18.17.1",
     "typescript": "^5.1.6"
   },
-  "directories": {
-    "test": "test"
-  },
   "dependencies": {
     "@grpc/grpc-js": "^1.9.3",
-    "google-protobuf": "^3.21.2",
-    "koffi": "^2.6.0"
+    "google-protobuf": "^3.21.2"
   },
   "author": "nekosu",
   "license": "AGPL"

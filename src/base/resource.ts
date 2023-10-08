@@ -1,4 +1,4 @@
-import * as maarpc from '../../gen'
+import * as maarpc from '../gen'
 
 export type ResourceHandle = string & { __brand: 'ResourceHandle' }
 export type ResourceActionId = number & { __brand: 'ResourceActionId' }

@@ -1,6 +1,6 @@
 import * as grpc from '@grpc/grpc-js'
 
-import { Context, setupClient } from './base'
+import { Context, setupClient } from '../base'
 
 export let context: Context
 

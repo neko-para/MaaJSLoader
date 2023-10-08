@@ -1,5 +1,5 @@
 import { context } from '.'
-import { ResourceActionId, ResourceHandle } from './base'
+import { ResourceActionId, ResourceHandle } from '../base'
 import { Callback } from './types'
 
 export class Resource {
