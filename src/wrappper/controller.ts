@@ -70,7 +70,7 @@ export class CustomControllerBase {
         }
       }
       case 'image':
-        return this.image(Image.init(req.image as ImageHandle))
+        return this.image(Image.init_from(req.image as ImageHandle))
       case 'uuid': {
         const u: [string] = ['']
         const ret = this.uuid(u)
@@ -154,7 +154,7 @@ export class Controller {
   cbId!: string
   handle!: ControllerHandle
 
-  static init(from: ControllerHandle) {
+  static init_from(from: ControllerHandle) {
     const ctrl = new Controller()
     ctrl.handle = from
     return ctrl

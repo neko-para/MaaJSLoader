@@ -20,6 +20,8 @@ export async function deinit() {
 
 export * from './buffer'
 export * from './controller'
+export * from './device'
+export * from './instance'
 export * from './resource'
 export * from './types'
 export * from './utility'

@@ -6,6 +6,12 @@ export class Resource {
   cbId!: string
   handle!: ResourceHandle
 
+  static init_from(from: ResourceHandle) {
+    const res = new Resource()
+    res.handle = from
+    return res
+  }
+
   static init(cb: Callback) {
     return new Resource().create(cb)
   }
