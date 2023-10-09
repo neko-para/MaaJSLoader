@@ -33,8 +33,9 @@ export async function waitClientReady(ctx: ReturnType<typeof setupClient>) {
       Object.entries(ctx).map(
         ([, c]) =>
           new Promise<void>((resolve, reject) => {
-            c._client.waitForReady(2000, err => {
+            c._client.waitForReady(Date.now() + 2000, err => {
               if (err) {
+                console.log(err)
                 reject(err)
               } else {
                 resolve()
