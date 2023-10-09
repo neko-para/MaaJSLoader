@@ -1,11 +1,12 @@
 import * as grpc from '@grpc/grpc-js'
 
-import { Context, setupClient } from '../base'
+import { Context, setupClient, waitClientReady } from '../base'
 
 export let context: Context
 
-export function init(address: string, cred = grpc.credentials.createInsecure()) {
+export async function init(address: string, cred = grpc.credentials.createInsecure()) {
   context = setupClient(address, cred)
+  return await waitClientReady(context)
 }
 
 export async function deinit() {

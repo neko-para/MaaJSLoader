@@ -26,3 +26,28 @@ export function setupClient(address: string, cred = grpc.credentials.createInsec
     config: new ConfigClient(new maarpc.ConfigClient(address, cred))
   }
 }
+
+export async function waitClientReady(ctx: ReturnType<typeof setupClient>) {
+  try {
+    await Promise.all(
+      Object.entries(ctx).map(
+        ([, c]) =>
+          new Promise<void>((resolve, reject) => {
+            c._client.waitForReady(2000, err => {
+              if (err) {
+                reject(err)
+              } else {
+                resolve()
+              }
+            })
+          })
+      )
+    )
+    return true
+  } catch (_) {
+    Object.entries(ctx).forEach(([, c]) => {
+      c._client.close()
+    })
+    return false
+  }
+}
