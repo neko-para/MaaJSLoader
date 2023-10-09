@@ -7,6 +7,7 @@ import {
   ImageClient,
   InstanceClient,
   ResourceClient,
+  SyncCtxClient,
   UtilityClient
 } from '.'
 import * as maarpc from '../gen'
@@ -20,6 +21,7 @@ export function setupClient(address: string, cred = grpc.credentials.createInsec
     resource: new ResourceClient(new maarpc.ResourceClient(address, cred)),
     controller: new ControllerClient(new maarpc.ControllerClient(address, cred)),
     instance: new InstanceClient(new maarpc.InstanceClient(address, cred)),
+    syncctx: new SyncCtxClient(new maarpc.SyncContextClient(address, cred)),
     device: new DeviceClient(new maarpc.DeviceClient(address, cred)),
     config: new ConfigClient(new maarpc.ConfigClient(address, cred))
   }
