@@ -20,6 +20,84 @@ export class InstanceClient {
     await this._client.destroy(new maarpc.HandleRequest({ handle }))
   }
 
+  async register_custom_recognizer(
+    handle: InstanceHandle,
+    name: string,
+    reco: (
+      req: maarpc.CustomRecognizerResponse,
+      res: maarpc.CustomRecognizerRequest
+    ) => boolean | Promise<boolean>
+  ) {
+    const stream = this._client.register_custom_recognizer()
+    await new Promise(resolve => {
+      stream.write(
+        new maarpc.CustomRecognizerRequest({
+          init: new maarpc.CustomRecognizerInit({ handle, name })
+        }),
+        resolve
+      )
+    })
+    stream.on('readable', async () => {
+      const res = stream.read()
+      if (!res) {
+        return
+      }
+      const req = new maarpc.CustomRecognizerRequest()
+      req.ok = await reco(res, req)
+      stream.write(req)
+    })
+    return stream
+  }
+
+  async unregister_custom_recognizer(handle: InstanceHandle, name: string) {
+    await this._client.unregister_custom_recognizer(
+      new maarpc.HandleStringRequest({ handle, str: name })
+    )
+  }
+
+  async clear_custom_recognizer(handle: InstanceHandle) {
+    await this._client.clear_custom_recognizer(new maarpc.HandleRequest({ handle }))
+  }
+
+  async register_custom_action(
+    handle: InstanceHandle,
+    name: string,
+    reco: (
+      req: maarpc.CustomActionResponse,
+      res: maarpc.CustomActionRequest
+    ) => boolean | Promise<boolean>
+  ) {
+    const stream = this._client.register_custom_action()
+    await new Promise(resolve => {
+      stream.write(
+        new maarpc.CustomActionRequest({
+          init: new maarpc.CustomActionInit({ handle, name })
+        }),
+        resolve
+      )
+    })
+    stream.on('readable', async () => {
+      const res = stream.read()
+      if (!res) {
+        return
+      }
+      const req = new maarpc.CustomActionRequest()
+      req.ok = await reco(res, req)
+      stream.write(req)
+    })
+    return stream
+  }
+
+  async unregister_custom_action(handle: InstanceHandle, name: string) {
+    await this._client.unregister_custom_action(
+      new maarpc.HandleStringRequest({ handle, str: name })
+    )
+  }
+
+  async clear_custom_action(handle: InstanceHandle) {
+    await this._client.clear_custom_action(new maarpc.HandleRequest({ handle }))
+  }
+
   async bind_resource(handle: InstanceHandle, res_handle: ResourceHandle) {
     await this._client.bind_resource(
       new maarpc.HandleHandleRequest({ handle, another_handle: res_handle })
