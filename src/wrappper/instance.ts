@@ -1,6 +1,98 @@
-import { Controller, Resource, context } from '.'
-import { InstanceActionId, InstanceHandle } from '../base'
+import { Controller, Image, Resource, SyncCtx, context } from '.'
+import { ImageHandle, InstanceActionId, InstanceHandle, SyncCtxHandle } from '../base'
+import { Rect, toJsRect, toPbRect } from '../base/utils'
+import * as maarpc from '../gen'
 import { Callback } from './types'
+
+export type AnalyzeOutput = {
+  match: boolean
+  box: { x: number; y: number; width: number; height: number }
+  detail: string
+}
+
+export class CustomRecognizerBase {
+  process(req: maarpc.CustomRecognizerResponse, res: maarpc.CustomRecognizerRequest) {
+    switch (req.command) {
+      case 'analyze': {
+        const out: AnalyzeOutput = {
+          match: false,
+          box: { x: 0, y: 0, width: 0, height: 0 },
+          detail: ''
+        }
+        const ret = this.analyze(
+          SyncCtx.init_from(req.analyze.context as SyncCtxHandle),
+          Image.init_from(req.analyze.image_handle as ImageHandle),
+          req.analyze.task,
+          req.analyze.param,
+          out
+        )
+        if (typeof ret === 'boolean') {
+          res.analyze = new maarpc.CustomRecognizerAnalyzeResult({
+            match: out.match,
+            box: toPbRect(out.box),
+            detail: out.detail
+          })
+          return ret
+        } else {
+          return ret.then(v => {
+            res.analyze = new maarpc.CustomRecognizerAnalyzeResult({
+              match: out.match,
+              box: toPbRect(out.box),
+              detail: out.detail
+            })
+            return v
+          })
+        }
+      }
+      default:
+        return false
+    }
+  }
+
+  analyze(
+    ctx: SyncCtx,
+    image: Image,
+    task: string,
+    param: string,
+    out: AnalyzeOutput
+  ): boolean | Promise<boolean> {
+    return false
+  }
+}
+
+export class CustomActionBase {
+  process(req: maarpc.CustomActionResponse, res: maarpc.CustomActionRequest) {
+    switch (req.command) {
+      case 'run': {
+        return this.run(
+          SyncCtx.init_from(req.run.context as SyncCtxHandle),
+          req.run.task,
+          req.run.param,
+          toJsRect(req.run.box),
+          req.run.detail
+        )
+      }
+      case 'stop':
+        return this.stop()
+      default:
+        return false
+    }
+  }
+
+  run(
+    ctx: SyncCtx,
+    task: string,
+    param: string,
+    box: Rect,
+    detail: string
+  ): boolean | Promise<boolean> {
+    return false
+  }
+
+  stop(): boolean | Promise<boolean> {
+    return false
+  }
+}
 
 export class Instance {
   cbId!: string
@@ -26,6 +118,34 @@ export class Instance {
   async destroy() {
     await context.instance.destroy(this.handle)
     await context.utility.unregister_callback(this.cbId)
+  }
+
+  async register_custom_recognizer(name: string, reco: CustomRecognizerBase) {
+    await context.instance.register_custom_recognizer(this.handle, name, (req, res) => {
+      return reco.process(req, res)
+    })
+  }
+
+  async unregister_custom_recognizer(name: string) {
+    await context.instance.unregister_custom_recognizer(this.handle, name)
+  }
+
+  async clear_custom_recognizer() {
+    await context.instance.clear_custom_recognizer(this.handle)
+  }
+
+  async register_custom_action(name: string, reco: CustomActionBase) {
+    await context.instance.register_custom_action(this.handle, name, (req, res) => {
+      return reco.process(req, res)
+    })
+  }
+
+  async unregister_custom_action(name: string) {
+    await context.instance.unregister_custom_action(this.handle, name)
+  }
+
+  async clear_custom_action() {
+    await context.instance.clear_custom_action(this.handle)
   }
 
   private wrap(id: Promise<InstanceActionId>) {

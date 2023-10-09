@@ -1,5 +1,6 @@
 import { ImageHandle } from '.'
 import * as maarpc from '../gen'
+import { toJsRect, toPbRect } from './utils'
 
 export type SyncCtxHandle = string & { __brand: 'SyncCtxHandle' }
 
@@ -31,12 +32,7 @@ export class SyncCtxClient {
     )
     return {
       match: resp.match,
-      box: {
-        x: resp.box.xy.x,
-        y: resp.box.xy.y,
-        width: resp.box.wh.width,
-        height: resp.box.wh.height
-      },
+      box: toJsRect(resp.box),
       detail: resp.detail
     }
   }
@@ -56,10 +52,7 @@ export class SyncCtxClient {
         handle,
         task,
         param,
-        box: new maarpc.Rect({
-          xy: new maarpc.Point({ x: box.x, y: box.y }),
-          wh: new maarpc.Size({ width: box.width, height: box.height })
-        }),
+        box: toPbRect(box),
         detail
       })
     )
