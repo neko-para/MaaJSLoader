@@ -12,6 +12,14 @@ export interface AdbControllerConfig {
   config?: string
 }
 
+export type ResolutionOutput = {
+  resolution: [width: number, height: number]
+}
+
+export type UuidOutput = {
+  uuid: string
+}
+
 const defAdbCfg: Required<AdbControllerConfig> = {
   path: 'adb' + (process.platform === 'win32' ? '.exe' : ''),
   serial: '127.0.0.1:5555',
@@ -57,14 +65,19 @@ export class CustomControllerBase {
       case 'stop':
         return this.start(req.stop)
       case 'resolution': {
-        const r: [number, number] = [0, 0]
-        const ret = this.resolution(r)
+        const out: ResolutionOutput = {
+          resolution: [0, 0]
+        }
+        const ret = this.resolution(out)
         if (typeof ret === 'boolean') {
-          res.resolution = new maarpc.Size({ width: r[0], height: r[1] })
+          res.resolution = new maarpc.Size({ width: out.resolution[0], height: out.resolution[1] })
           return ret
         } else {
           return ret.then(v => {
-            res.resolution = new maarpc.Size({ width: r[0], height: r[1] })
+            res.resolution = new maarpc.Size({
+              width: out.resolution[0],
+              height: out.resolution[1]
+            })
             return v
           })
         }
@@ -72,14 +85,16 @@ export class CustomControllerBase {
       case 'image':
         return this.image(Image.init_from(req.image as ImageHandle))
       case 'uuid': {
-        const u: [string] = ['']
-        const ret = this.uuid(u)
+        const out: UuidOutput = {
+          uuid: ''
+        }
+        const ret = this.uuid(out)
         if (typeof ret === 'boolean') {
-          res.uuid = u[0]
+          res.uuid = out.uuid
           return ret
         } else {
           return ret.then(v => {
-            res.uuid = u[0]
+            res.uuid = out.uuid
             return v
           })
         }
@@ -133,7 +148,7 @@ export class CustomControllerBase {
     return false
   }
 
-  resolution(reso: [number, number]): boolean | Promise<boolean> {
+  resolution(out: ResolutionOutput): boolean | Promise<boolean> {
     return false
   }
 
@@ -141,7 +156,7 @@ export class CustomControllerBase {
     return false
   }
 
-  uuid(u: [string]): boolean | Promise<boolean> {
+  uuid(u: UuidOutput): boolean | Promise<boolean> {
     return false
   }
 
