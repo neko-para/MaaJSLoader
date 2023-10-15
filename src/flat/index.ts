@@ -2,10 +2,19 @@ import { Context } from '../base'
 
 export type FlatContext = Exclude<Awaited<ReturnType<typeof setupFlatContext>>, null>
 
-export function FlatToStream(ctx: FlatContext) {
+export function FlatToStream(
+  ctx: FlatContext,
+  emit: (id: string, msg: string, detail: string) => void
+) {
   return async (cmd: string, args: any[]): Promise<any> => {
-    // @ts-ignore
-    return await ctx[cmd](...args)
+    if (cmd === 'utility.register_callback') {
+      ctx['utility.register_callback'](args[0], (msg, detail) => {
+        emit(args[0], msg, detail)
+      })
+    } else {
+      // @ts-ignore
+      return await ctx[cmd](...args)
+    }
   }
 }
 
