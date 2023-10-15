@@ -27,7 +27,7 @@ export function setupClient(address: string, cred = grpc.credentials.createInsec
   }
 }
 
-export async function waitClientReady(ctx: ReturnType<typeof setupClient>) {
+export async function waitClientReady(ctx: Context) {
   try {
     await Promise.all(
       Object.entries(ctx).map(
@@ -51,4 +51,14 @@ export async function waitClientReady(ctx: ReturnType<typeof setupClient>) {
     })
     return false
   }
+}
+
+export async function destroyContext(context: Context) {
+  context.config._client.close()
+  context.device._client.close()
+  context.instance._client.close()
+  context.controller._client.close()
+  context.resource._client.close()
+  context.image._client.close()
+  context.utility._client.close()
 }

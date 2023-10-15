@@ -1,7 +1,8 @@
 {
   "name": "@maa/loader",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "src/node.ts",
+  "browser": "src/index.ts",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@tsconfig/node18": "^18.2.0",

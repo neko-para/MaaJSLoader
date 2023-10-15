@@ -11,7 +11,7 @@ export class ControllerClient {
     this._client = c
   }
 
-  async createAdb(
+  async create_adb(
     id: string,
     adb_path: string,
     adb_serial: string,
@@ -25,7 +25,7 @@ export class ControllerClient {
     ).handle as ControllerHandle
   }
 
-  async createCustom(
+  async create_custom(
     id: string,
     ctrl: (
       req: maarpc.CustomControllerResponse,

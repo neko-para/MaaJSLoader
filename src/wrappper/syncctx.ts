@@ -1,3 +1,5 @@
+/*
+
 import { Image, Instance, context } from '.'
 import { SyncCtxClient, SyncCtxHandle } from '../base'
 
@@ -61,3 +63,5 @@ export class SyncCtx {
     return await context.syncctx.task_result(this.handle, ...args)
   }
 }
+
+*/

@@ -3,21 +3,23 @@ import path from 'path'
 
 import * as maa from '..'
 
-class CC extends maa.CustomControllerBase {
-  resolution(reso: [number, number]): boolean | Promise<boolean> {
-    reso[0] = 1080
-    reso[1] = 720
-    return true
-  }
+// class CC extends maa.CustomControllerBase {
+//   resolution(reso: [number, number]): boolean | Promise<boolean> {
+//     reso[0] = 1080
+//     reso[1] = 720
+//     return true
+//   }
 
-  uuid(u: [string]): boolean | Promise<boolean> {
-    u[0] = '114514'
-    return true
-  }
-}
+//   uuid(u: [string]): boolean | Promise<boolean> {
+//     u[0] = '114514'
+//     return true
+//   }
+// }
 
 async function main() {
   maa.init('0.0.0.0:8080')
+
+  console.log(await maa.version())
 
   await maa.set_logging(path.join(process.cwd(), 'debug'))
 
@@ -25,9 +27,9 @@ async function main() {
     console.log(msg, detail)
   }
 
-  const cctrl = await maa.Controller.initCustom(cb, new CC())
-  await cctrl.post_connection().wait()
-  await cctrl.destroy()
+  // const cctrl = await maa.Controller.initCustom(cb, new CC())
+  // await cctrl.post_connection().wait()
+  // await cctrl.destroy()
 
   const ctrl = await maa.Controller.initAdb(cb, {
     serial: '127.0.0.1:62001'
