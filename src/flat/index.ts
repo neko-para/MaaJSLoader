@@ -18,17 +18,40 @@ export function FlatToStream(
   }
 }
 
-export function StreamToFlat(to: (cmd: string, args: any[]) => Promise<any>): FlatContext {
-  return new Proxy(
-    {},
-    {
-      get(_, cmd: string) {
-        return (...args: any[]) => {
-          return to(cmd, args)
+export function StreamToFlat(
+  to: (cmd: string, args: any[]) => Promise<any>
+): [FlatContext, (id: string, msg: string, detail: string) => void] {
+  const cbs: Record<string, (msg: string, detail: string) => void> = {}
+  const recv = (id: string, msg: string, detail: string) => {
+    cbs[id]?.(msg, detail)
+  }
+  return [
+    new Proxy(
+      {},
+      {
+        get(_, cmd: string) {
+          if (cmd === 'utility.register_callback') {
+            return (id: string, cb: (msg: string, detail: string) => void) => {
+              cbs[id] = cb
+              return to(cmd, [id])
+            }
+          } else if (cmd === 'utility.unregister_callback') {
+            return (id: string) => {
+              if (id in cbs) {
+                delete cbs[id]
+              }
+              return to(cmd, [id])
+            }
+          } else {
+            return (...args: any[]) => {
+              return to(cmd, args)
+            }
+          }
         }
       }
-    }
-  ) as FlatContext
+    ) as FlatContext,
+    recv
+  ]
 }
 
 export function setupFlatContext(ctx: Context) {
