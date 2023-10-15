@@ -1,6 +1,3 @@
-import * as grpc from '@grpc/grpc-js'
-import { promisify } from 'util'
-
 import * as maarpc from '../gen'
 import { ImageHandle } from './buffer'
 
