@@ -21,7 +21,7 @@ export type UuidOutput = {
 }
 
 const defAdbCfg: Required<AdbControllerConfig> = {
-  path: 'adb' + (process.platform === 'win32' ? '.exe' : ''),
+  path: 'adb',
   serial: '127.0.0.1:5555',
   type: 1 + (1 << 8) + (4 << 16), // Preset Adb + Encoded
   config: AdbConfig
