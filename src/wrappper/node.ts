@@ -18,5 +18,7 @@ export async function init(address: string, cred = grpc.credentials.createInsecu
 }
 
 export async function deinit() {
-  destroyContext(rawContext)
+  if (rawContext) {
+    destroyContext(rawContext)
+  }
 }
