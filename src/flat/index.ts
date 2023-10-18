@@ -8,7 +8,7 @@ export function FlatToStream(
 ) {
   return async (cmd: string, args: any[]): Promise<any> => {
     if (cmd === 'utility.register_callback') {
-      ctx['utility.register_callback'](args[0], (msg, detail) => {
+      await ctx['utility.register_callback'](args[0], (msg, detail) => {
         emit(args[0], msg, detail)
       })
     } else {
@@ -82,6 +82,10 @@ export function setupFlatContext(ctx: Context) {
     // custom controller
     'controller.create_adb': ctx.controller.create_adb.bind(ctx.controller),
     'controller.destroy': ctx.controller.destroy.bind(ctx.controller),
+    'controller.set_long_side': ctx.controller.set_long_side.bind(ctx.controller),
+    'controller.set_short_side': ctx.controller.set_short_side.bind(ctx.controller),
+    'controller.set_package_entry': ctx.controller.set_package_entry.bind(ctx.controller),
+    'controller.set_package': ctx.controller.set_package.bind(ctx.controller),
     'controller.post_connection': ctx.controller.post_connection.bind(ctx.controller),
     'controller.post_click': ctx.controller.post_click.bind(ctx.controller),
     'controller.post_swipe': ctx.controller.post_swipe.bind(ctx.controller),

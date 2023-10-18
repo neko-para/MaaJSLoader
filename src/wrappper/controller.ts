@@ -214,6 +214,22 @@ export class Controller {
     await context['utility.unregister_callback'](this.cbId)
   }
 
+  async set_long_side(l: number) {
+    await context['controller.set_long_side'](this.handle, l)
+  }
+
+  async set_short_side(l: number) {
+    await context['controller.set_short_side'](this.handle, l)
+  }
+
+  async set_package_entry(e: string) {
+    await context['controller.set_package_entry'](this.handle, e)
+  }
+
+  async set_package(e: string) {
+    await context['controller.set_package'](this.handle, e)
+  }
+
   private wrap(id: Promise<ControllerActionId>) {
     return {
       controller: this,

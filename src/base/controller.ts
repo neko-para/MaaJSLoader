@@ -60,6 +60,43 @@ export class ControllerClient {
     await this._client.destroy(new maarpc.HandleRequest({ handle }))
   }
 
+  async set_long_side(handle: ControllerHandle, len: number) {
+    // https://github.com/thesayyn/protoc-gen-ts/issues/235
+    await this._client.set_option(
+      maarpc.ControllerSetOptionRequest.fromObject({
+        handle,
+        long_side: len
+      })
+    )
+  }
+
+  async set_short_side(handle: ControllerHandle, len: number) {
+    await this._client.set_option(
+      maarpc.ControllerSetOptionRequest.fromObject({
+        handle,
+        short_side: len
+      })
+    )
+  }
+
+  async set_package_entry(handle: ControllerHandle, entry: string) {
+    await this._client.set_option(
+      maarpc.ControllerSetOptionRequest.fromObject({
+        handle,
+        def_package_entry: entry
+      })
+    )
+  }
+
+  async set_package(handle: ControllerHandle, pkg: string) {
+    await this._client.set_option(
+      maarpc.ControllerSetOptionRequest.fromObject({
+        handle,
+        def_package: pkg
+      })
+    )
+  }
+
   async post_connection(handle: ControllerHandle) {
     return (await this._client.post_connection(new maarpc.HandleRequest({ handle })))
       .id as ControllerActionId
