@@ -189,7 +189,7 @@ export class Controller {
       ...(cfg ?? {})
     }
     this.cbId = await context['utility.acquire_id']()
-    context['utility.register_callback'](this.cbId, cb)
+    await context['utility.register_callback'](this.cbId, cb)
     this.handle = await context['controller.create_adb'](
       this.cbId,
       c.path,

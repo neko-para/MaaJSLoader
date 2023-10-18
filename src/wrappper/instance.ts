@@ -110,7 +110,7 @@ export class Instance {
 
   async create(cb: Callback) {
     this.cbId = await context['utility.acquire_id']()
-    context['utility.register_callback'](this.cbId, cb)
+    await context['utility.register_callback'](this.cbId, cb)
     this.handle = await context['instance.create'](this.cbId)
     return this
   }

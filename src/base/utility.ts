@@ -25,16 +25,22 @@ export class UtilityClient {
     return (await this._client.acquire_id(new maarpc.EmptyRequest())).id
   }
 
-  register_callback(id: string, cb: (msg: string, detail: string) => void) {
+  async register_callback(id: string, cb: (msg: string, detail: string) => void) {
     const stream = this._client.register_callback(
       new maarpc.IdRequest({ id })
     ) as unknown as grpc.ClientReadableStream<maarpc.Callback>
-    stream.on('readable', () => {
-      const res = stream.read()
-      if (!res) {
-        return
-      }
-      cb(res.msg, res.detail)
+    await new Promise<void>(resolve => {
+      stream.on('readable', () => {
+        const res = stream.read()
+        if (!res) {
+          return
+        }
+        if (res.msg === 'Rpc.Inited') {
+          resolve()
+        } else {
+          cb(res.msg, res.detail)
+        }
+      })
     })
     return stream
   }
