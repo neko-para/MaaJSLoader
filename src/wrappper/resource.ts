@@ -5,20 +5,27 @@ import { Callback } from './types'
 export class Resource {
   cbId!: string
   handle!: ResourceHandle
+  onCallback: (msg: string, detail: string) => void = () => {}
 
-  static init_from(from: ResourceHandle) {
+  static async init_from(from: ResourceHandle, cb: string) {
     const res = new Resource()
+    res.cbId = cb
     res.handle = from
+    await context['utility.register_callback'](cb, (msg, detail) => {
+      res.onCallback(msg, detail)
+    })
     return res
   }
 
-  static init(cb: Callback) {
-    return new Resource().create(cb)
+  static init() {
+    return new Resource().create()
   }
 
-  async create(cb: Callback) {
+  async create() {
     this.cbId = await context['utility.acquire_id']()
-    await context['utility.register_callback'](this.cbId, cb)
+    await context['utility.register_callback'](this.cbId, (msg, detail) => {
+      this.onCallback(msg, detail)
+    })
     this.handle = await context['resource.create'](this.cbId)
     return this
   }

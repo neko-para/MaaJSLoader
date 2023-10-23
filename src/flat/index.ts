@@ -6,11 +6,21 @@ export function FlatToStream(
   ctx: FlatContext,
   emit: (id: string, msg: string, detail: string) => void
 ) {
+  const cbs: Set<string> = new Set
   return async (cmd: string, args: any[]): Promise<any> => {
     if (cmd === 'utility.register_callback') {
-      await ctx['utility.register_callback'](args[0], (msg, detail) => {
-        emit(args[0], msg, detail)
-      })
+      if (cbs.has(args[0])) {
+        return
+      } else {
+        cbs.add(args[0])
+        await ctx['utility.register_callback'](args[0], (msg, detail) => {
+          emit(args[0], msg, detail)
+        })
+      }
+    } else if (cmd === 'utility.unregister_callback') {
+      cbs.delete(args[0])
+      // @ts-ignore
+      return await ctx[cmd](...args)
     } else {
       // @ts-ignore
       return await ctx[cmd](...args)
@@ -21,9 +31,11 @@ export function FlatToStream(
 export function StreamToFlat(
   to: (cmd: string, args: any[]) => Promise<any>
 ): [FlatContext, (id: string, msg: string, detail: string) => void] {
-  const cbs: Record<string, (msg: string, detail: string) => void> = {}
+  const cbs: Record<string, ((msg: string, detail: string) => void)[]> = {}
   const recv = (id: string, msg: string, detail: string) => {
-    cbs[id]?.(msg, detail)
+    for (const cb of cbs[id] ?? []) {
+      cb(msg, detail)
+    }
   }
   return [
     new Proxy(
@@ -32,7 +44,7 @@ export function StreamToFlat(
         get(_, cmd: string) {
           if (cmd === 'utility.register_callback') {
             return (id: string, cb: (msg: string, detail: string) => void) => {
-              cbs[id] = cb
+              cbs[id] = cbs[id] ? [...cbs[id], cb] : [cb]
               return to(cmd, [id])
             }
           } else if (cmd === 'utility.unregister_callback') {

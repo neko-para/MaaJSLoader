@@ -97,20 +97,26 @@ export class CustomActionBase {
 export class Instance {
   cbId!: string
   handle!: InstanceHandle
+  onCallback: (msg: string, detail: string) => void = () => {}
 
-  static init_from(from: InstanceHandle) {
+  static async init_from(from: InstanceHandle, cb: string) {
     const inst = new Instance()
     inst.handle = from
+    await context['utility.register_callback'](cb, (msg, detail) => {
+      inst.onCallback(msg, detail)
+    })
     return inst
   }
 
-  static init(cb: Callback) {
-    return new Instance().create(cb)
+  static init() {
+    return new Instance().create()
   }
 
-  async create(cb: Callback) {
+  async create() {
     this.cbId = await context['utility.acquire_id']()
-    await context['utility.register_callback'](this.cbId, cb)
+    await context['utility.register_callback'](this.cbId, (msg, detail) => {
+      this.onCallback(msg, detail)
+    })
     this.handle = await context['instance.create'](this.cbId)
     return this
   }
@@ -196,14 +202,10 @@ export class Instance {
   }
 
   get resource() {
-    return (async () => {
-      return Resource.init_from(await context['instance.resource'](this.handle))
-    })()
+    return context['instance.resource'](this.handle)
   }
 
   get controller() {
-    return (async () => {
-      return Controller.init_from(await context['instance.controller'](this.handle))
-    })()
+    return context['instance.controller'](this.handle)
   }
 }

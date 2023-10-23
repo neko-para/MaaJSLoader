@@ -168,28 +168,35 @@ export class CustomControllerBase {
 export class Controller {
   cbId!: string
   handle!: ControllerHandle
+  onCallback: (msg: string, detail: string) => void = () => {}
 
-  static init_from(from: ControllerHandle) {
+  static async init_from(from: ControllerHandle, cb: string) {
     const ctrl = new Controller()
+    ctrl.cbId = cb
     ctrl.handle = from
+    await context['utility.register_callback'](cb, (msg, detail) => {
+      ctrl.onCallback(msg, detail)
+    })
     return ctrl
   }
 
-  static initAdb(cb: Callback, cfg?: AdbControllerConfig) {
-    return new Controller().createAdb(cb, cfg)
+  static initAdb(cfg?: AdbControllerConfig) {
+    return new Controller().createAdb(cfg)
   }
 
   // static initCustom(cb: Callback, ctrl: CustomControllerBase) {
   //   return new Controller().createCustom(cb, ctrl)
   // }
 
-  async createAdb(cb: Callback, cfg?: AdbControllerConfig) {
+  async createAdb(cfg?: AdbControllerConfig) {
     const c = {
       ...defAdbCfg,
       ...(cfg ?? {})
     }
     this.cbId = await context['utility.acquire_id']()
-    await context['utility.register_callback'](this.cbId, cb)
+    await context['utility.register_callback'](this.cbId, (msg, detail) => {
+      this.onCallback(msg, detail)
+    })
     this.handle = await context['controller.create_adb'](
       this.cbId,
       c.path,
