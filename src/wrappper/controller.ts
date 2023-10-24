@@ -181,14 +181,14 @@ export class Controller {
   }
 
   static initAdb(cfg?: AdbControllerConfig) {
-    return new Controller().createAdb(cfg)
+    return new Controller().create_adb(cfg)
   }
 
   // static initCustom(cb: Callback, ctrl: CustomControllerBase) {
   //   return new Controller().createCustom(cb, ctrl)
   // }
 
-  async createAdb(cfg?: AdbControllerConfig) {
+  async create_adb(cfg?: AdbControllerConfig) {
     const c = {
       ...defAdbCfg,
       ...(cfg ?? {})

@@ -101,6 +101,7 @@ export class Instance {
 
   static async init_from(from: InstanceHandle, cb: string) {
     const inst = new Instance()
+    inst.cbId = cb
     inst.handle = from
     await context['utility.register_callback'](cb, (msg, detail) => {
       inst.onCallback(msg, detail)
