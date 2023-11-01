@@ -8,7 +8,7 @@ import * as dependency_2 from "./custom.controller";
 import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
 export class AdbControllerRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
+    #one_of_decls: number[][] = [[1], [2], [3], [4], [5], [6]];
     constructor(data?: any[] | ({} & (({
         id?: string;
     }) | ({
@@ -19,6 +19,8 @@ export class AdbControllerRequest extends pb_1.Message {
         adb_type?: number;
     }) | ({
         adb_config?: string;
+    }) | ({
+        agent_path?: string;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -37,6 +39,9 @@ export class AdbControllerRequest extends pb_1.Message {
             }
             if ("adb_config" in data && data.adb_config != undefined) {
                 this.adb_config = data.adb_config;
+            }
+            if ("agent_path" in data && data.agent_path != undefined) {
+                this.agent_path = data.agent_path;
             }
         }
     }
@@ -85,6 +90,15 @@ export class AdbControllerRequest extends pb_1.Message {
     get has_adb_config() {
         return pb_1.Message.getField(this, 5) != null;
     }
+    get agent_path() {
+        return pb_1.Message.getFieldWithDefault(this, 6, "") as string;
+    }
+    set agent_path(value: string) {
+        pb_1.Message.setOneofField(this, 6, this.#one_of_decls[5], value);
+    }
+    get has_agent_path() {
+        return pb_1.Message.getField(this, 6) != null;
+    }
     get _id() {
         const cases: {
             [index: number]: "none" | "id";
@@ -130,12 +144,22 @@ export class AdbControllerRequest extends pb_1.Message {
         };
         return cases[pb_1.Message.computeOneofCase(this, [5])];
     }
+    get _agent_path() {
+        const cases: {
+            [index: number]: "none" | "agent_path";
+        } = {
+            0: "none",
+            6: "agent_path"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [6])];
+    }
     static fromObject(data: {
         id?: string;
         adb_path?: string;
         adb_serial?: string;
         adb_type?: number;
         adb_config?: string;
+        agent_path?: string;
     }): AdbControllerRequest {
         const message = new AdbControllerRequest({});
         if (data.id != null) {
@@ -153,6 +177,9 @@ export class AdbControllerRequest extends pb_1.Message {
         if (data.adb_config != null) {
             message.adb_config = data.adb_config;
         }
+        if (data.agent_path != null) {
+            message.agent_path = data.agent_path;
+        }
         return message;
     }
     toObject() {
@@ -162,6 +189,7 @@ export class AdbControllerRequest extends pb_1.Message {
             adb_serial?: string;
             adb_type?: number;
             adb_config?: string;
+            agent_path?: string;
         } = {};
         if (this.id != null) {
             data.id = this.id;
@@ -177,6 +205,9 @@ export class AdbControllerRequest extends pb_1.Message {
         }
         if (this.adb_config != null) {
             data.adb_config = this.adb_config;
+        }
+        if (this.agent_path != null) {
+            data.agent_path = this.agent_path;
         }
         return data;
     }
@@ -194,6 +225,8 @@ export class AdbControllerRequest extends pb_1.Message {
             writer.writeUint32(4, this.adb_type);
         if (this.has_adb_config)
             writer.writeString(5, this.adb_config);
+        if (this.has_agent_path)
+            writer.writeString(6, this.agent_path);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -217,6 +250,9 @@ export class AdbControllerRequest extends pb_1.Message {
                     break;
                 case 5:
                     message.adb_config = reader.readString();
+                    break;
+                case 6:
+                    message.agent_path = reader.readString();
                     break;
                 default: reader.skipField();
             }

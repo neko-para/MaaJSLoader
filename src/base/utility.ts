@@ -1,6 +1,7 @@
 import * as grpc from '@grpc/grpc-js'
 
 import * as maarpc from '../gen'
+import { LoggingLevel } from '../wrappper'
 
 export class UtilityClient {
   _client: maarpc.UtilityClient
@@ -13,12 +14,24 @@ export class UtilityClient {
     return (await this._client.version(new maarpc.EmptyRequest())).str
   }
 
-  async set_logging(path: string) {
-    await this._client.set_global_option(new maarpc.SetGlobalOptionRequest({ logging: path }))
+  async set_log_dir(path: string) {
+    await this._client.set_global_option(new maarpc.SetGlobalOptionRequest({ log_dir: path }))
   }
 
-  async set_debug_mode(mode: boolean) {
-    await this._client.set_global_option(new maarpc.SetGlobalOptionRequest({ debug_mode: mode }))
+  async set_save_draw(save: boolean) {
+    await this._client.set_global_option(new maarpc.SetGlobalOptionRequest({ save_draw: save }))
+  }
+
+  async set_recording(record: boolean) {
+    await this._client.set_global_option(new maarpc.SetGlobalOptionRequest({ recording: record }))
+  }
+
+  async set_stdout_level(level: LoggingLevel) {
+    await this._client.set_global_option(new maarpc.SetGlobalOptionRequest({ stdout_level: level }))
+  }
+
+  async set_show_draw(show: boolean) {
+    await this._client.set_global_option(new maarpc.SetGlobalOptionRequest({ show_draw: show }))
   }
 
   async acquire_id() {

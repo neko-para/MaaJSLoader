@@ -6,7 +6,7 @@ export function FlatToStream(
   ctx: FlatContext,
   emit: (id: string, msg: string, detail: string) => void
 ) {
-  const cbs: Set<string> = new Set
+  const cbs: Set<string> = new Set()
   return async (cmd: string, args: any[]): Promise<any> => {
     if (cmd === 'utility.register_callback') {
       if (cbs.has(args[0])) {
@@ -69,8 +69,11 @@ export function StreamToFlat(
 export function setupFlatContext(ctx: Context) {
   return {
     'utility.version': ctx.utility.version.bind(ctx.utility),
-    'utility.set_logging': ctx.utility.set_logging.bind(ctx.utility),
-    'utility.set_debug_mode': ctx.utility.set_debug_mode.bind(ctx.utility),
+    'utility.set_log_dir': ctx.utility.set_log_dir.bind(ctx.utility),
+    'utility.set_save_draw': ctx.utility.set_save_draw.bind(ctx.utility),
+    'utility.set_recording': ctx.utility.set_recording.bind(ctx.utility),
+    'utility.set_stdout_level': ctx.utility.set_stdout_level.bind(ctx.utility),
+    'utility.set_show_draw': ctx.utility.set_show_draw.bind(ctx.utility),
     'utility.acquire_id': ctx.utility.acquire_id.bind(ctx.utility),
     'utility.register_callback': ctx.utility.register_callback.bind(ctx.utility),
     'utility.unregister_callback': ctx.utility.unregister_callback.bind(ctx.utility),

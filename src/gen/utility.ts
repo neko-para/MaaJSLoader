@@ -7,76 +7,163 @@ import * as dependency_1 from "./types";
 import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
 export class SetGlobalOptionRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1, 2]];
+    #one_of_decls: number[][] = [[1, 2, 3, 4, 5]];
     constructor(data?: any[] | ({} & (({
-        logging?: string;
-        debug_mode?: never;
+        log_dir?: string;
+        save_draw?: never;
+        recording?: never;
+        stdout_level?: never;
+        show_draw?: never;
     } | {
-        logging?: never;
-        debug_mode?: boolean;
+        log_dir?: never;
+        save_draw?: boolean;
+        recording?: never;
+        stdout_level?: never;
+        show_draw?: never;
+    } | {
+        log_dir?: never;
+        save_draw?: never;
+        recording?: boolean;
+        stdout_level?: never;
+        show_draw?: never;
+    } | {
+        log_dir?: never;
+        save_draw?: never;
+        recording?: never;
+        stdout_level?: number;
+        show_draw?: never;
+    } | {
+        log_dir?: never;
+        save_draw?: never;
+        recording?: never;
+        stdout_level?: never;
+        show_draw?: boolean;
     })))) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
-            if ("logging" in data && data.logging != undefined) {
-                this.logging = data.logging;
+            if ("log_dir" in data && data.log_dir != undefined) {
+                this.log_dir = data.log_dir;
             }
-            if ("debug_mode" in data && data.debug_mode != undefined) {
-                this.debug_mode = data.debug_mode;
+            if ("save_draw" in data && data.save_draw != undefined) {
+                this.save_draw = data.save_draw;
+            }
+            if ("recording" in data && data.recording != undefined) {
+                this.recording = data.recording;
+            }
+            if ("stdout_level" in data && data.stdout_level != undefined) {
+                this.stdout_level = data.stdout_level;
+            }
+            if ("show_draw" in data && data.show_draw != undefined) {
+                this.show_draw = data.show_draw;
             }
         }
     }
-    get logging() {
+    get log_dir() {
         return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-    set logging(value: string) {
+    set log_dir(value: string) {
         pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
     }
-    get has_logging() {
+    get has_log_dir() {
         return pb_1.Message.getField(this, 1) != null;
     }
-    get debug_mode() {
+    get save_draw() {
         return pb_1.Message.getFieldWithDefault(this, 2, false) as boolean;
     }
-    set debug_mode(value: boolean) {
+    set save_draw(value: boolean) {
         pb_1.Message.setOneofField(this, 2, this.#one_of_decls[0], value);
     }
-    get has_debug_mode() {
+    get has_save_draw() {
         return pb_1.Message.getField(this, 2) != null;
+    }
+    get recording() {
+        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
+    }
+    set recording(value: boolean) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[0], value);
+    }
+    get has_recording() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get stdout_level() {
+        return pb_1.Message.getFieldWithDefault(this, 4, 0) as number;
+    }
+    set stdout_level(value: number) {
+        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[0], value);
+    }
+    get has_stdout_level() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get show_draw() {
+        return pb_1.Message.getFieldWithDefault(this, 5, false) as boolean;
+    }
+    set show_draw(value: boolean) {
+        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[0], value);
+    }
+    get has_show_draw() {
+        return pb_1.Message.getField(this, 5) != null;
     }
     get option() {
         const cases: {
-            [index: number]: "none" | "logging" | "debug_mode";
+            [index: number]: "none" | "log_dir" | "save_draw" | "recording" | "stdout_level" | "show_draw";
         } = {
             0: "none",
-            1: "logging",
-            2: "debug_mode"
+            1: "log_dir",
+            2: "save_draw",
+            3: "recording",
+            4: "stdout_level",
+            5: "show_draw"
         };
-        return cases[pb_1.Message.computeOneofCase(this, [1, 2])];
+        return cases[pb_1.Message.computeOneofCase(this, [1, 2, 3, 4, 5])];
     }
     static fromObject(data: {
-        logging?: string;
-        debug_mode?: boolean;
+        log_dir?: string;
+        save_draw?: boolean;
+        recording?: boolean;
+        stdout_level?: number;
+        show_draw?: boolean;
     }): SetGlobalOptionRequest {
         const message = new SetGlobalOptionRequest({});
-        if (data.logging != null) {
-            message.logging = data.logging;
+        if (data.log_dir != null) {
+            message.log_dir = data.log_dir;
         }
-        if (data.debug_mode != null) {
-            message.debug_mode = data.debug_mode;
+        if (data.save_draw != null) {
+            message.save_draw = data.save_draw;
+        }
+        if (data.recording != null) {
+            message.recording = data.recording;
+        }
+        if (data.stdout_level != null) {
+            message.stdout_level = data.stdout_level;
+        }
+        if (data.show_draw != null) {
+            message.show_draw = data.show_draw;
         }
         return message;
     }
     toObject() {
         const data: {
-            logging?: string;
-            debug_mode?: boolean;
+            log_dir?: string;
+            save_draw?: boolean;
+            recording?: boolean;
+            stdout_level?: number;
+            show_draw?: boolean;
         } = {};
-        if (this.logging != null) {
-            data.logging = this.logging;
+        if (this.log_dir != null) {
+            data.log_dir = this.log_dir;
         }
-        if (this.debug_mode != null) {
-            data.debug_mode = this.debug_mode;
+        if (this.save_draw != null) {
+            data.save_draw = this.save_draw;
+        }
+        if (this.recording != null) {
+            data.recording = this.recording;
+        }
+        if (this.stdout_level != null) {
+            data.stdout_level = this.stdout_level;
+        }
+        if (this.show_draw != null) {
+            data.show_draw = this.show_draw;
         }
         return data;
     }
@@ -84,10 +171,16 @@ export class SetGlobalOptionRequest extends pb_1.Message {
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
-        if (this.has_logging)
-            writer.writeString(1, this.logging);
-        if (this.has_debug_mode)
-            writer.writeBool(2, this.debug_mode);
+        if (this.has_log_dir)
+            writer.writeString(1, this.log_dir);
+        if (this.has_save_draw)
+            writer.writeBool(2, this.save_draw);
+        if (this.has_recording)
+            writer.writeBool(3, this.recording);
+        if (this.has_stdout_level)
+            writer.writeInt32(4, this.stdout_level);
+        if (this.has_show_draw)
+            writer.writeBool(5, this.show_draw);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -98,10 +191,19 @@ export class SetGlobalOptionRequest extends pb_1.Message {
                 break;
             switch (reader.getFieldNumber()) {
                 case 1:
-                    message.logging = reader.readString();
+                    message.log_dir = reader.readString();
                     break;
                 case 2:
-                    message.debug_mode = reader.readBool();
+                    message.save_draw = reader.readBool();
+                    break;
+                case 3:
+                    message.recording = reader.readBool();
+                    break;
+                case 4:
+                    message.stdout_level = reader.readInt32();
+                    break;
+                case 5:
+                    message.show_draw = reader.readBool();
                     break;
                 default: reader.skipField();
             }

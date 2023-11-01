@@ -5,3 +5,13 @@ export const enum Status {
   Success = 3000,
   Failed = 4000
 }
+export const enum LoggingLevel {
+  Off = 0,
+  Fatal = 1,
+  Error = 2,
+  Warn = 3,
+  Info = 4,
+  Debug = 5,
+  Trace = 6,
+  All = 7
+}
