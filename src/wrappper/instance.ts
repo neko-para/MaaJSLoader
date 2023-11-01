@@ -1,5 +1,12 @@
 import { Controller, Image, Resource, context } from '.'
-import { ImageHandle, InstanceActionId, InstanceHandle, SyncCtxHandle } from '../base'
+import {
+  CustomActionBase,
+  CustomActionImpl,
+  ImageHandle,
+  InstanceActionId,
+  InstanceHandle,
+  SyncCtxHandle
+} from '../base'
 import { Rect, toJsRect, toPbRect } from '../base/utils'
 import * as maarpc from '../gen'
 import { Callback } from './types'
@@ -59,40 +66,6 @@ export class CustomRecognizerBase {
     return false
   }
 }
-
-export class CustomActionBase {
-  process(req: maarpc.CustomActionResponse, res: maarpc.CustomActionRequest) {
-    switch (req.command) {
-      case 'run': {
-        return this.run(
-          SyncCtx.init_from(req.run.context as SyncCtxHandle),
-          req.run.task,
-          req.run.param,
-          toJsRect(req.run.box),
-          req.run.detail
-        )
-      }
-      case 'stop':
-        return this.stop()
-      default:
-        return false
-    }
-  }
-
-  run(
-    ctx: SyncCtx,
-    task: string,
-    param: string,
-    box: Rect,
-    detail: string
-  ): boolean | Promise<boolean> {
-    return false
-  }
-
-  stop(): boolean | Promise<boolean> {
-    return false
-  }
-}
 */
 export class Instance {
   cbId!: string
@@ -141,19 +114,17 @@ export class Instance {
   //   await context['instance.clear_custom_recognizer'](this.handle)
   // }
 
-  // async register_custom_action(name: string, reco: CustomActionBase) {
-  //   await context['instance.register_custom_action'](this.handle, name, (req, res) => {
-  //     return reco.process(req, res)
-  //   })
-  // }
+  async register_custom_action(name: string, act: CustomActionImpl) {
+    await context['instance.register_custom_action'](this.handle, name, act)
+  }
 
-  // async unregister_custom_action(name: string) {
-  //   await context['instance.unregister_custom_action'](this.handle, name)
-  // }
+  async unregister_custom_action(name: string) {
+    await context['instance.unregister_custom_action'](this.handle, name)
+  }
 
-  // async clear_custom_action() {
-  //   await context['instance.clear_custom_action'](this.handle)
-  // }
+  async clear_custom_action() {
+    await context['instance.clear_custom_action'](this.handle)
+  }
 
   private wrap(id: Promise<InstanceActionId>) {
     return {

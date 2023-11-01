@@ -1,8 +1,8 @@
-import { FlatContext } from '../flat'
+import type { ClientFlatContext } from '../flat'
 
-export let context: FlatContext
+export let context: ClientFlatContext
 
-export function setContext(c: FlatContext) {
+export function setContext(c: ClientFlatContext) {
   context = c
 }
 

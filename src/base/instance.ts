@@ -1,9 +1,49 @@
 import * as maarpc from '../gen'
 import { ControllerHandle } from './controller'
 import { ResourceHandle } from './resource'
+import { SyncCtxHandle } from './syncctx'
+import { Rect, toJsRect } from './utils'
 
 export type InstanceHandle = string & { __brand: 'InstanceHandle' }
 export type InstanceActionId = number & { __brand: 'InstanceActionId' }
+
+export interface CustomActionImpl {
+  run(
+    ctx: SyncCtxHandle,
+    task: string,
+    param: string,
+    box: Rect,
+    detail: string
+  ): boolean | Promise<boolean>
+}
+
+export class CustomActionBase implements CustomActionImpl {
+  process(req: maarpc.CustomActionResponse, res: maarpc.CustomActionRequest) {
+    switch (req.command) {
+      case 'run': {
+        return this.run(
+          req.run.context as SyncCtxHandle,
+          req.run.task,
+          req.run.param,
+          toJsRect(req.run.box),
+          req.run.detail
+        )
+      }
+      default:
+        return false
+    }
+  }
+
+  run(
+    ctx: SyncCtxHandle,
+    task: string,
+    param: string,
+    box: Rect,
+    detail: string
+  ): boolean | Promise<boolean> {
+    return false
+  }
+}
 
 export class InstanceClient {
   _client: maarpc.InstanceClient
@@ -42,6 +82,9 @@ export class InstanceClient {
       if (!res) {
         return
       }
+      if (!res.has_analyze) {
+        return
+      }
       const req = new maarpc.CustomRecognizerRequest()
       req.ok = await reco(res, req)
       stream.write(req)
@@ -62,10 +105,7 @@ export class InstanceClient {
   async register_custom_action(
     handle: InstanceHandle,
     name: string,
-    reco: (
-      req: maarpc.CustomActionResponse,
-      res: maarpc.CustomActionRequest
-    ) => boolean | Promise<boolean>
+    reco: InstanceType<typeof CustomActionBase>['process']
   ) {
     const stream = this._client.register_custom_action()
     await new Promise(resolve => {
@@ -79,6 +119,9 @@ export class InstanceClient {
     stream.on('readable', async () => {
       const res = stream.read()
       if (!res) {
+        return
+      }
+      if (!res.has_run && !res.has_stop) {
         return
       }
       const req = new maarpc.CustomActionRequest()

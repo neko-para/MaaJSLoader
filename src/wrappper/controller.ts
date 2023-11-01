@@ -12,14 +12,6 @@ export interface AdbControllerConfig {
   config?: string
 }
 
-export type ResolutionOutput = {
-  resolution: [width: number, height: number]
-}
-
-export type UuidOutput = {
-  uuid: string
-}
-
 const defAdbCfg: Required<AdbControllerConfig> = {
   path: 'adb',
   serial: '127.0.0.1:5555',
