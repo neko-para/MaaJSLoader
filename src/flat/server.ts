@@ -1,8 +1,55 @@
-import { type Context, CustomActionBase, type InstanceHandle, type SyncCtxHandle } from '../base'
+import {
+  AnalyzeOutput,
+  type Context,
+  CustomActionBase,
+  CustomRecognizerBase,
+  ImageHandle,
+  type InstanceHandle,
+  type SyncCtxHandle
+} from '../base'
 import type { Rect } from '../base/utils'
 import type { StreamServerRecv, StreamServerSend } from './types'
 
 export type ServerFlatContext = Exclude<Awaited<ReturnType<typeof setupFlatContext>>, null>
+
+class CustomRecognizerServer extends CustomRecognizerBase {
+  handle: InstanceHandle
+  name: string
+  send: StreamServerSend
+
+  resolve?: (ret: [boolean, AnalyzeOutput]) => void
+
+  constructor(h: InstanceHandle, n: string, s: StreamServerSend) {
+    super()
+    this.handle = h
+    this.name = n
+    this.send = s
+  }
+
+  analyze(
+    ctx: SyncCtxHandle,
+    image: ImageHandle,
+    task: string,
+    param: string,
+    out: AnalyzeOutput
+  ): boolean | Promise<boolean> {
+    return new Promise<boolean>(resolve => {
+      this.resolve = ([r, o]) => {
+        Object.assign(out, o)
+        resolve(r)
+      }
+      this.send(
+        'instance.custom_recognizer.analyze',
+        this.handle,
+        this.name,
+        ctx,
+        image,
+        task,
+        param
+      )
+    })
+  }
+}
 
 class CustomActionServer extends CustomActionBase {
   handle: InstanceHandle
@@ -34,6 +81,7 @@ class CustomActionServer extends CustomActionBase {
 
 export function FlatToStream(ctx: ServerFlatContext, send: StreamServerSend): StreamServerRecv {
   const callbacks: Set<string> = new Set()
+  const custom_recos: Map<InstanceHandle, Map<string, CustomRecognizerServer>> = new Map()
   const custom_actions: Map<InstanceHandle, Map<string, CustomActionServer>> = new Map()
 
   return async (cmd: string, args: any[]): Promise<any> => {
@@ -54,6 +102,37 @@ export function FlatToStream(ctx: ServerFlatContext, send: StreamServerSend): St
         callbacks.delete(args[0])
         // @ts-ignore
         return await ctx[cmd](...args)
+      case 'instance.destroy': {
+        const handle = args[0] as InstanceHandle
+        custom_recos.delete(handle)
+        custom_actions.delete(handle)
+        // @ts-ignore
+        return await ctx[cmd](...args)
+      }
+      case 'instance.register_custom_recognizer': {
+        const handle = args[0] as InstanceHandle
+        const name = args[1] as string
+        const svr = new CustomRecognizerServer(handle, name, send)
+        if (!custom_recos.has(handle)) {
+          custom_recos.set(handle, new Map())
+        }
+        custom_recos.get(handle)!.set(name, svr)
+        await ctx['instance.register_custom_recognizer'](handle, name, svr.process.bind(svr))
+        return
+      }
+      case 'instance.unregister_custom_recognizer': {
+        const handle = args[0] as InstanceHandle
+        const name = args[1] as string
+        custom_recos.get(handle)?.delete(name)
+        // @ts-ignore
+        return await ctx[cmd](...args)
+      }
+      case 'instance.clear_custom_recognizer': {
+        const handle = args[0] as InstanceHandle
+        custom_recos.delete(handle)
+        // @ts-ignore
+        return await ctx[cmd](...args)
+      }
       case 'instance.register_custom_action': {
         const handle = args[0] as InstanceHandle
         const name = args[1] as string
@@ -65,8 +144,29 @@ export function FlatToStream(ctx: ServerFlatContext, send: StreamServerSend): St
         await ctx['instance.register_custom_action'](handle, name, svr.process.bind(svr))
         return
       }
+      case 'instance.unregister_custom_action': {
+        const handle = args[0] as InstanceHandle
+        const name = args[1] as string
+        custom_actions.get(handle)?.delete(name)
+        // @ts-ignore
+        return await ctx[cmd](...args)
+      }
+      case 'instance.clear_custom_action': {
+        const handle = args[0] as InstanceHandle
+        custom_actions.delete(handle)
+        // @ts-ignore
+        return await ctx[cmd](...args)
+      }
+      case 'instance.custom_recognizer': {
+        const handle = args[0] as InstanceHandle
+        const name = args[1] as string
+        custom_recos
+          .get(handle)
+          ?.get(name)
+          ?.resolve?.([args[2] as boolean, args[3] as AnalyzeOutput])
+        return
+      }
       case 'instance.custom_action': {
-        console.log(args)
         const handle = args[0] as InstanceHandle
         const name = args[1] as string
         custom_actions
@@ -135,6 +235,13 @@ export function setupFlatContext(ctx: Context) {
     // custom recognizer & action
     'instance.create': ctx.instance.create.bind(ctx.instance),
     'instance.destroy': ctx.instance.destroy.bind(ctx.instance),
+    'instance.register_custom_recognizer': ctx.instance.register_custom_recognizer.bind(
+      ctx.instance
+    ),
+    'instance.unregister_custom_recognizer': ctx.instance.unregister_custom_recognizer.bind(
+      ctx.instance
+    ),
+    'instance.clear_custom_recognizer': ctx.instance.clear_custom_recognizer.bind(ctx.instance),
     'instance.register_custom_action': ctx.instance.register_custom_action.bind(ctx.instance),
     'instance.unregister_custom_action': ctx.instance.unregister_custom_action.bind(ctx.instance),
     'instance.clear_custom_action': ctx.instance.clear_custom_action.bind(ctx.instance),
@@ -149,6 +256,18 @@ export function setupFlatContext(ctx: Context) {
     'instance.stop': ctx.instance.stop.bind(ctx.instance),
     'instance.resource': ctx.instance.resource.bind(ctx.instance),
     'instance.controller': ctx.instance.controller.bind(ctx.instance),
+
+    'syncctx.run_task': ctx.syncctx.run_task.bind(ctx.syncctx),
+    'syncctx.run_recognizer': ctx.syncctx.run_recognizer.bind(ctx.syncctx),
+    'syncctx.run_action': ctx.syncctx.run_action.bind(ctx.syncctx),
+    'syncctx.click': ctx.syncctx.click.bind(ctx.syncctx),
+    'syncctx.swipe': ctx.syncctx.swipe.bind(ctx.syncctx),
+    'syncctx.key': ctx.syncctx.key.bind(ctx.syncctx),
+    'syncctx.touch_down': ctx.syncctx.touch_down.bind(ctx.syncctx),
+    'syncctx.touch_move': ctx.syncctx.touch_move.bind(ctx.syncctx),
+    'syncctx.touch_up': ctx.syncctx.touch_up.bind(ctx.syncctx),
+    'syncctx.screencap': ctx.syncctx.screencap.bind(ctx.syncctx),
+    'syncctx.task_result': ctx.syncctx.task_result.bind(ctx.syncctx),
 
     'device.find': ctx.device.find.bind(ctx.device),
     'device.find_with_adb': ctx.device.find_with_adb.bind(ctx.device)

@@ -1,11 +1,78 @@
 import * as maarpc from '../gen'
+import { ImageHandle } from './buffer'
 import { ControllerHandle } from './controller'
 import { ResourceHandle } from './resource'
 import { SyncCtxHandle } from './syncctx'
-import { Rect, toJsRect } from './utils'
+import { Rect, toJsRect, toPbRect } from './utils'
 
 export type InstanceHandle = string & { __brand: 'InstanceHandle' }
 export type InstanceActionId = number & { __brand: 'InstanceActionId' }
+
+export type AnalyzeOutput = {
+  match: boolean
+  box: { x: number; y: number; width: number; height: number }
+  detail: string
+}
+
+export interface CustomRecognizerImpl {
+  analyze(
+    ctx: SyncCtxHandle,
+    image: ImageHandle,
+    task: string,
+    param: string,
+    out: AnalyzeOutput
+  ): boolean | Promise<boolean>
+}
+
+export class CustomRecognizerBase implements CustomRecognizerImpl {
+  process(req: maarpc.CustomRecognizerResponse, res: maarpc.CustomRecognizerRequest) {
+    switch (req.command) {
+      case 'analyze': {
+        const out: AnalyzeOutput = {
+          match: false,
+          box: { x: 0, y: 0, width: 0, height: 0 },
+          detail: ''
+        }
+        const ret = this.analyze(
+          req.analyze.context as SyncCtxHandle,
+          req.analyze.image_handle as ImageHandle,
+          req.analyze.task,
+          req.analyze.param,
+          out
+        )
+        if (typeof ret === 'boolean') {
+          res.analyze = new maarpc.CustomRecognizerAnalyzeResult({
+            match: out.match,
+            box: toPbRect(out.box),
+            detail: out.detail
+          })
+          return ret
+        } else {
+          return ret.then(v => {
+            res.analyze = new maarpc.CustomRecognizerAnalyzeResult({
+              match: out.match,
+              box: toPbRect(out.box),
+              detail: out.detail
+            })
+            return v
+          })
+        }
+      }
+      default:
+        return false
+    }
+  }
+
+  analyze(
+    ctx: SyncCtxHandle,
+    image: ImageHandle,
+    task: string,
+    param: string,
+    out: AnalyzeOutput
+  ): boolean | Promise<boolean> {
+    return false
+  }
+}
 
 export interface CustomActionImpl {
   run(
@@ -63,10 +130,7 @@ export class InstanceClient {
   async register_custom_recognizer(
     handle: InstanceHandle,
     name: string,
-    reco: (
-      req: maarpc.CustomRecognizerResponse,
-      res: maarpc.CustomRecognizerRequest
-    ) => boolean | Promise<boolean>
+    reco: InstanceType<typeof CustomRecognizerBase>['process']
   ) {
     const stream = this._client.register_custom_recognizer()
     await new Promise(resolve => {
@@ -105,7 +169,7 @@ export class InstanceClient {
   async register_custom_action(
     handle: InstanceHandle,
     name: string,
-    reco: InstanceType<typeof CustomActionBase>['process']
+    act: InstanceType<typeof CustomActionBase>['process']
   ) {
     const stream = this._client.register_custom_action()
     await new Promise(resolve => {
@@ -125,7 +189,7 @@ export class InstanceClient {
         return
       }
       const req = new maarpc.CustomActionRequest()
-      req.ok = await reco(res, req)
+      req.ok = await act(res, req)
       stream.write(req)
     })
     return stream
