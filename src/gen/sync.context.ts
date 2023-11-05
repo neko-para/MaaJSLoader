@@ -4,1295 +4,7 @@
  * source: sync.context.proto
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as dependency_1 from "./types";
-import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
-export class SyncContextRunTaskRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        task?: string;
-    }) | ({
-        param?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("task" in data && data.task != undefined) {
-                this.task = data.task;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get task() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set task(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_task() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get param() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
-    }
-    set param(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _task() {
-        const cases: {
-            [index: number]: "none" | "task";
-        } = {
-            0: "none",
-            2: "task"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            3: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        task?: string;
-        param?: string;
-    }): SyncContextRunTaskRequest {
-        const message = new SyncContextRunTaskRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.task != null) {
-            message.task = data.task;
-        }
-        if (data.param != null) {
-            message.param = data.param;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            task?: string;
-            param?: string;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.task != null) {
-            data.task = this.task;
-        }
-        if (this.param != null) {
-            data.param = this.param;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_task)
-            writer.writeString(2, this.task);
-        if (this.has_param)
-            writer.writeString(3, this.param);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunTaskRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunTaskRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.task = reader.readString();
-                    break;
-                case 3:
-                    message.param = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextRunTaskRequest {
-        return SyncContextRunTaskRequest.deserialize(bytes);
-    }
-}
-export class SyncContextRunRecognizerRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3], [4]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        task?: string;
-    }) | ({
-        param?: string;
-    }) | ({
-        image_handle?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("task" in data && data.task != undefined) {
-                this.task = data.task;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-            if ("image_handle" in data && data.image_handle != undefined) {
-                this.image_handle = data.image_handle;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get task() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set task(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_task() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get param() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
-    }
-    set param(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get image_handle() {
-        return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
-    }
-    set image_handle(value: string) {
-        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
-    }
-    get has_image_handle() {
-        return pb_1.Message.getField(this, 4) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _task() {
-        const cases: {
-            [index: number]: "none" | "task";
-        } = {
-            0: "none",
-            2: "task"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            3: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    get _image_handle() {
-        const cases: {
-            [index: number]: "none" | "image_handle";
-        } = {
-            0: "none",
-            4: "image_handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [4])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        task?: string;
-        param?: string;
-        image_handle?: string;
-    }): SyncContextRunRecognizerRequest {
-        const message = new SyncContextRunRecognizerRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.task != null) {
-            message.task = data.task;
-        }
-        if (data.param != null) {
-            message.param = data.param;
-        }
-        if (data.image_handle != null) {
-            message.image_handle = data.image_handle;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            task?: string;
-            param?: string;
-            image_handle?: string;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.task != null) {
-            data.task = this.task;
-        }
-        if (this.param != null) {
-            data.param = this.param;
-        }
-        if (this.image_handle != null) {
-            data.image_handle = this.image_handle;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_task)
-            writer.writeString(2, this.task);
-        if (this.has_param)
-            writer.writeString(3, this.param);
-        if (this.has_image_handle)
-            writer.writeString(4, this.image_handle);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunRecognizerRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunRecognizerRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.task = reader.readString();
-                    break;
-                case 3:
-                    message.param = reader.readString();
-                    break;
-                case 4:
-                    message.image_handle = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextRunRecognizerRequest {
-        return SyncContextRunRecognizerRequest.deserialize(bytes);
-    }
-}
-export class SyncContextRunRecognizerResponse extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3]];
-    constructor(data?: any[] | ({} & (({
-        match?: boolean;
-    }) | ({
-        box?: dependency_1.Rect;
-    }) | ({
-        detail?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("match" in data && data.match != undefined) {
-                this.match = data.match;
-            }
-            if ("box" in data && data.box != undefined) {
-                this.box = data.box;
-            }
-            if ("detail" in data && data.detail != undefined) {
-                this.detail = data.detail;
-            }
-        }
-    }
-    get match() {
-        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
-    }
-    set match(value: boolean) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_match() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get box() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Rect, 2) as dependency_1.Rect;
-    }
-    set box(value: dependency_1.Rect) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_box() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get detail() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
-    }
-    set detail(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_detail() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get _match() {
-        const cases: {
-            [index: number]: "none" | "match";
-        } = {
-            0: "none",
-            1: "match"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _box() {
-        const cases: {
-            [index: number]: "none" | "box";
-        } = {
-            0: "none",
-            2: "box"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _detail() {
-        const cases: {
-            [index: number]: "none" | "detail";
-        } = {
-            0: "none",
-            3: "detail"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    static fromObject(data: {
-        match?: boolean;
-        box?: ReturnType<typeof dependency_1.Rect.prototype.toObject>;
-        detail?: string;
-    }): SyncContextRunRecognizerResponse {
-        const message = new SyncContextRunRecognizerResponse({});
-        if (data.match != null) {
-            message.match = data.match;
-        }
-        if (data.box != null) {
-            message.box = dependency_1.Rect.fromObject(data.box);
-        }
-        if (data.detail != null) {
-            message.detail = data.detail;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            match?: boolean;
-            box?: ReturnType<typeof dependency_1.Rect.prototype.toObject>;
-            detail?: string;
-        } = {};
-        if (this.match != null) {
-            data.match = this.match;
-        }
-        if (this.box != null) {
-            data.box = this.box.toObject();
-        }
-        if (this.detail != null) {
-            data.detail = this.detail;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_match)
-            writer.writeBool(1, this.match);
-        if (this.has_box)
-            writer.writeMessage(2, this.box, () => this.box.serialize(writer));
-        if (this.has_detail)
-            writer.writeString(3, this.detail);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunRecognizerResponse {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunRecognizerResponse();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.match = reader.readBool();
-                    break;
-                case 2:
-                    reader.readMessage(message.box, () => message.box = dependency_1.Rect.deserialize(reader));
-                    break;
-                case 3:
-                    message.detail = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextRunRecognizerResponse {
-        return SyncContextRunRecognizerResponse.deserialize(bytes);
-    }
-}
-export class SyncContextRunActionRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        task?: string;
-    }) | ({
-        param?: string;
-    }) | ({
-        box?: dependency_1.Rect;
-    }) | ({
-        detail?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("task" in data && data.task != undefined) {
-                this.task = data.task;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-            if ("box" in data && data.box != undefined) {
-                this.box = data.box;
-            }
-            if ("detail" in data && data.detail != undefined) {
-                this.detail = data.detail;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get task() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set task(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_task() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get param() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
-    }
-    set param(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get box() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Rect, 4) as dependency_1.Rect;
-    }
-    set box(value: dependency_1.Rect) {
-        pb_1.Message.setOneofWrapperField(this, 4, this.#one_of_decls[3], value);
-    }
-    get has_box() {
-        return pb_1.Message.getField(this, 4) != null;
-    }
-    get detail() {
-        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
-    }
-    set detail(value: string) {
-        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
-    }
-    get has_detail() {
-        return pb_1.Message.getField(this, 5) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _task() {
-        const cases: {
-            [index: number]: "none" | "task";
-        } = {
-            0: "none",
-            2: "task"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            3: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    get _box() {
-        const cases: {
-            [index: number]: "none" | "box";
-        } = {
-            0: "none",
-            4: "box"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [4])];
-    }
-    get _detail() {
-        const cases: {
-            [index: number]: "none" | "detail";
-        } = {
-            0: "none",
-            5: "detail"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [5])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        task?: string;
-        param?: string;
-        box?: ReturnType<typeof dependency_1.Rect.prototype.toObject>;
-        detail?: string;
-    }): SyncContextRunActionRequest {
-        const message = new SyncContextRunActionRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.task != null) {
-            message.task = data.task;
-        }
-        if (data.param != null) {
-            message.param = data.param;
-        }
-        if (data.box != null) {
-            message.box = dependency_1.Rect.fromObject(data.box);
-        }
-        if (data.detail != null) {
-            message.detail = data.detail;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            task?: string;
-            param?: string;
-            box?: ReturnType<typeof dependency_1.Rect.prototype.toObject>;
-            detail?: string;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.task != null) {
-            data.task = this.task;
-        }
-        if (this.param != null) {
-            data.param = this.param;
-        }
-        if (this.box != null) {
-            data.box = this.box.toObject();
-        }
-        if (this.detail != null) {
-            data.detail = this.detail;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_task)
-            writer.writeString(2, this.task);
-        if (this.has_param)
-            writer.writeString(3, this.param);
-        if (this.has_box)
-            writer.writeMessage(4, this.box, () => this.box.serialize(writer));
-        if (this.has_detail)
-            writer.writeString(5, this.detail);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunActionRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunActionRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.task = reader.readString();
-                    break;
-                case 3:
-                    message.param = reader.readString();
-                    break;
-                case 4:
-                    reader.readMessage(message.box, () => message.box = dependency_1.Rect.deserialize(reader));
-                    break;
-                case 5:
-                    message.detail = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextRunActionRequest {
-        return SyncContextRunActionRequest.deserialize(bytes);
-    }
-}
-export class SyncContextClickRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.ClickParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.ClickParam, 2) as dependency_1.ClickParam;
-    }
-    set param(value: dependency_1.ClickParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
-    }): SyncContextClickRequest {
-        const message = new SyncContextClickRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.ClickParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextClickRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextClickRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.ClickParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextClickRequest {
-        return SyncContextClickRequest.deserialize(bytes);
-    }
-}
-export class SyncContextSwipeRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.SwipeParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.SwipeParam, 2) as dependency_1.SwipeParam;
-    }
-    set param(value: dependency_1.SwipeParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
-    }): SyncContextSwipeRequest {
-        const message = new SyncContextSwipeRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.SwipeParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextSwipeRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextSwipeRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.SwipeParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextSwipeRequest {
-        return SyncContextSwipeRequest.deserialize(bytes);
-    }
-}
-export class SyncContextKeyRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.KeyParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.KeyParam, 2) as dependency_1.KeyParam;
-    }
-    set param(value: dependency_1.KeyParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.KeyParam.prototype.toObject>;
-    }): SyncContextKeyRequest {
-        const message = new SyncContextKeyRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.KeyParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.KeyParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextKeyRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextKeyRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.KeyParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextKeyRequest {
-        return SyncContextKeyRequest.deserialize(bytes);
-    }
-}
-export class SyncContextTouchRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.TouchParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 2) as dependency_1.TouchParam;
-    }
-    set param(value: dependency_1.TouchParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.TouchParam.prototype.toObject>;
-    }): SyncContextTouchRequest {
-        const message = new SyncContextTouchRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.TouchParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.TouchParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextTouchRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextTouchRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.TouchParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextTouchRequest {
-        return SyncContextTouchRequest.deserialize(bytes);
-    }
-}
-export class SyncContextScreencapRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        image_handle?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("image_handle" in data && data.image_handle != undefined) {
-                this.image_handle = data.image_handle;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get image_handle() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set image_handle(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_image_handle() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _image_handle() {
-        const cases: {
-            [index: number]: "none" | "image_handle";
-        } = {
-            0: "none",
-            2: "image_handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        image_handle?: string;
-    }): SyncContextScreencapRequest {
-        const message = new SyncContextScreencapRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.image_handle != null) {
-            message.image_handle = data.image_handle;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            image_handle?: string;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.image_handle != null) {
-            data.image_handle = this.image_handle;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_image_handle)
-            writer.writeString(2, this.image_handle);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextScreencapRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextScreencapRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    message.image_handle = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SyncContextScreencapRequest {
-        return SyncContextScreencapRequest.deserialize(bytes);
-    }
-}
 interface GrpcUnaryServiceInterface<P, R> {
     (message: P, metadata: grpc_1.Metadata, options: grpc_1.CallOptions, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
     (message: P, metadata: grpc_1.Metadata, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
@@ -1323,8 +35,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/run_task",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextRunTaskRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextRunTaskRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextRunTaskRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextRunTaskRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1332,17 +44,17 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/run_recognizer",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextRunRecognizerRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextRunRecognizerRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: SyncContextRunRecognizerResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => SyncContextRunRecognizerResponse.deserialize(new Uint8Array(bytes))
+            requestSerialize: (message: dependency_1.SyncContextRunRecognizerRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextRunRecognizerRequest.deserialize(new Uint8Array(bytes)),
+            responseSerialize: (message: dependency_1.SyncContextRunRecognizerResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.SyncContextRunRecognizerResponse.deserialize(new Uint8Array(bytes))
         },
         run_action: {
             path: "/maarpc.SyncContext/run_action",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextRunActionRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextRunActionRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextRunActionRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextRunActionRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1350,8 +62,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/click",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextClickRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextClickRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextClickRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextClickRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes))
         },
@@ -1359,8 +71,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/swipe",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextSwipeRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextSwipeRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextSwipeRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextSwipeRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes))
         },
@@ -1368,8 +80,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/key",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextKeyRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextKeyRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextKeyRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextKeyRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes))
         },
@@ -1377,8 +89,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/touch_down",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextTouchRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextTouchRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextTouchRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextTouchRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes))
         },
@@ -1386,8 +98,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/touch_move",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextTouchRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextTouchRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextTouchRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextTouchRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes))
         },
@@ -1395,8 +107,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/touch_up",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextTouchRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextTouchRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextTouchRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextTouchRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes))
         },
@@ -1404,8 +116,8 @@ export abstract class UnimplementedSyncContextService {
             path: "/maarpc.SyncContext/screencap",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SyncContextScreencapRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SyncContextScreencapRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SyncContextScreencapRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SyncContextScreencapRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1420,23 +132,23 @@ export abstract class UnimplementedSyncContextService {
         }
     };
     [method: string]: grpc_1.UntypedHandleCall;
-    abstract run_task(call: grpc_1.ServerUnaryCall<SyncContextRunTaskRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract run_recognizer(call: grpc_1.ServerUnaryCall<SyncContextRunRecognizerRequest, SyncContextRunRecognizerResponse>, callback: grpc_1.sendUnaryData<SyncContextRunRecognizerResponse>): void;
-    abstract run_action(call: grpc_1.ServerUnaryCall<SyncContextRunActionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract click(call: grpc_1.ServerUnaryCall<SyncContextClickRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
-    abstract swipe(call: grpc_1.ServerUnaryCall<SyncContextSwipeRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
-    abstract key(call: grpc_1.ServerUnaryCall<SyncContextKeyRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
-    abstract touch_down(call: grpc_1.ServerUnaryCall<SyncContextTouchRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
-    abstract touch_move(call: grpc_1.ServerUnaryCall<SyncContextTouchRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
-    abstract touch_up(call: grpc_1.ServerUnaryCall<SyncContextTouchRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
-    abstract screencap(call: grpc_1.ServerUnaryCall<SyncContextScreencapRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract run_task(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextRunTaskRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract run_recognizer(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextRunRecognizerRequest, dependency_1.SyncContextRunRecognizerResponse>, callback: grpc_1.sendUnaryData<dependency_1.SyncContextRunRecognizerResponse>): void;
+    abstract run_action(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextRunActionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract click(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextClickRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
+    abstract swipe(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextSwipeRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
+    abstract key(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextKeyRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
+    abstract touch_down(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextTouchRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
+    abstract touch_move(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextTouchRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
+    abstract touch_up(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextTouchRequest, dependency_1.EmptyRequest>, callback: grpc_1.sendUnaryData<dependency_1.EmptyRequest>): void;
+    abstract screencap(call: grpc_1.ServerUnaryCall<dependency_1.SyncContextScreencapRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract task_result(call: grpc_1.ServerUnaryCall<dependency_1.HandleStringRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
 }
 export class SyncContextClient extends grpc_1.makeGenericClientConstructor(UnimplementedSyncContextService.definition, "SyncContext", {}) {
     constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
         super(address, credentials, options);
     }
-    run_task: GrpcPromiseServiceInterface<SyncContextRunTaskRequest, dependency_1.EmptyResponse> = (message: SyncContextRunTaskRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    run_task: GrpcPromiseServiceInterface<dependency_1.SyncContextRunTaskRequest, dependency_1.EmptyResponse> = (message: dependency_1.SyncContextRunTaskRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1448,11 +160,11 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    run_recognizer: GrpcPromiseServiceInterface<SyncContextRunRecognizerRequest, SyncContextRunRecognizerResponse> = (message: SyncContextRunRecognizerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<SyncContextRunRecognizerResponse> => { if (!metadata) {
+    run_recognizer: GrpcPromiseServiceInterface<dependency_1.SyncContextRunRecognizerRequest, dependency_1.SyncContextRunRecognizerResponse> = (message: dependency_1.SyncContextRunRecognizerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.SyncContextRunRecognizerResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.run_recognizer(message, metadata, options, (error: grpc_1.ServiceError, response: SyncContextRunRecognizerResponse) => {
+    } return new Promise((resolve, reject) => super.run_recognizer(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.SyncContextRunRecognizerResponse) => {
         if (error) {
             reject(error);
         }
@@ -1460,7 +172,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    run_action: GrpcPromiseServiceInterface<SyncContextRunActionRequest, dependency_1.EmptyResponse> = (message: SyncContextRunActionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    run_action: GrpcPromiseServiceInterface<dependency_1.SyncContextRunActionRequest, dependency_1.EmptyResponse> = (message: dependency_1.SyncContextRunActionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1472,7 +184,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    click: GrpcPromiseServiceInterface<SyncContextClickRequest, dependency_1.EmptyRequest> = (message: SyncContextClickRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
+    click: GrpcPromiseServiceInterface<dependency_1.SyncContextClickRequest, dependency_1.EmptyRequest> = (message: dependency_1.SyncContextClickRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1484,7 +196,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    swipe: GrpcPromiseServiceInterface<SyncContextSwipeRequest, dependency_1.EmptyRequest> = (message: SyncContextSwipeRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
+    swipe: GrpcPromiseServiceInterface<dependency_1.SyncContextSwipeRequest, dependency_1.EmptyRequest> = (message: dependency_1.SyncContextSwipeRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1496,7 +208,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    key: GrpcPromiseServiceInterface<SyncContextKeyRequest, dependency_1.EmptyRequest> = (message: SyncContextKeyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
+    key: GrpcPromiseServiceInterface<dependency_1.SyncContextKeyRequest, dependency_1.EmptyRequest> = (message: dependency_1.SyncContextKeyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1508,7 +220,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    touch_down: GrpcPromiseServiceInterface<SyncContextTouchRequest, dependency_1.EmptyRequest> = (message: SyncContextTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
+    touch_down: GrpcPromiseServiceInterface<dependency_1.SyncContextTouchRequest, dependency_1.EmptyRequest> = (message: dependency_1.SyncContextTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1520,7 +232,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    touch_move: GrpcPromiseServiceInterface<SyncContextTouchRequest, dependency_1.EmptyRequest> = (message: SyncContextTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
+    touch_move: GrpcPromiseServiceInterface<dependency_1.SyncContextTouchRequest, dependency_1.EmptyRequest> = (message: dependency_1.SyncContextTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1532,7 +244,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    touch_up: GrpcPromiseServiceInterface<SyncContextTouchRequest, dependency_1.EmptyRequest> = (message: SyncContextTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
+    touch_up: GrpcPromiseServiceInterface<dependency_1.SyncContextTouchRequest, dependency_1.EmptyRequest> = (message: dependency_1.SyncContextTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyRequest> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1544,7 +256,7 @@ export class SyncContextClient extends grpc_1.makeGenericClientConstructor(Unimp
             resolve(response);
         }
     })); };
-    screencap: GrpcPromiseServiceInterface<SyncContextScreencapRequest, dependency_1.EmptyResponse> = (message: SyncContextScreencapRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    screencap: GrpcPromiseServiceInterface<dependency_1.SyncContextScreencapRequest, dependency_1.EmptyResponse> = (message: dependency_1.SyncContextScreencapRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};

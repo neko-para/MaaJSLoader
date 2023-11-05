@@ -4,219 +4,7 @@
  * source: utility.proto
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as dependency_1 from "./types";
-import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
-export class SetGlobalOptionRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1, 2, 3, 4, 5]];
-    constructor(data?: any[] | ({} & (({
-        log_dir?: string;
-        save_draw?: never;
-        recording?: never;
-        stdout_level?: never;
-        show_draw?: never;
-    } | {
-        log_dir?: never;
-        save_draw?: boolean;
-        recording?: never;
-        stdout_level?: never;
-        show_draw?: never;
-    } | {
-        log_dir?: never;
-        save_draw?: never;
-        recording?: boolean;
-        stdout_level?: never;
-        show_draw?: never;
-    } | {
-        log_dir?: never;
-        save_draw?: never;
-        recording?: never;
-        stdout_level?: number;
-        show_draw?: never;
-    } | {
-        log_dir?: never;
-        save_draw?: never;
-        recording?: never;
-        stdout_level?: never;
-        show_draw?: boolean;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("log_dir" in data && data.log_dir != undefined) {
-                this.log_dir = data.log_dir;
-            }
-            if ("save_draw" in data && data.save_draw != undefined) {
-                this.save_draw = data.save_draw;
-            }
-            if ("recording" in data && data.recording != undefined) {
-                this.recording = data.recording;
-            }
-            if ("stdout_level" in data && data.stdout_level != undefined) {
-                this.stdout_level = data.stdout_level;
-            }
-            if ("show_draw" in data && data.show_draw != undefined) {
-                this.show_draw = data.show_draw;
-            }
-        }
-    }
-    get log_dir() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set log_dir(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_log_dir() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get save_draw() {
-        return pb_1.Message.getFieldWithDefault(this, 2, false) as boolean;
-    }
-    set save_draw(value: boolean) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[0], value);
-    }
-    get has_save_draw() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get recording() {
-        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
-    }
-    set recording(value: boolean) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[0], value);
-    }
-    get has_recording() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get stdout_level() {
-        return pb_1.Message.getFieldWithDefault(this, 4, 0) as number;
-    }
-    set stdout_level(value: number) {
-        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[0], value);
-    }
-    get has_stdout_level() {
-        return pb_1.Message.getField(this, 4) != null;
-    }
-    get show_draw() {
-        return pb_1.Message.getFieldWithDefault(this, 5, false) as boolean;
-    }
-    set show_draw(value: boolean) {
-        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[0], value);
-    }
-    get has_show_draw() {
-        return pb_1.Message.getField(this, 5) != null;
-    }
-    get option() {
-        const cases: {
-            [index: number]: "none" | "log_dir" | "save_draw" | "recording" | "stdout_level" | "show_draw";
-        } = {
-            0: "none",
-            1: "log_dir",
-            2: "save_draw",
-            3: "recording",
-            4: "stdout_level",
-            5: "show_draw"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1, 2, 3, 4, 5])];
-    }
-    static fromObject(data: {
-        log_dir?: string;
-        save_draw?: boolean;
-        recording?: boolean;
-        stdout_level?: number;
-        show_draw?: boolean;
-    }): SetGlobalOptionRequest {
-        const message = new SetGlobalOptionRequest({});
-        if (data.log_dir != null) {
-            message.log_dir = data.log_dir;
-        }
-        if (data.save_draw != null) {
-            message.save_draw = data.save_draw;
-        }
-        if (data.recording != null) {
-            message.recording = data.recording;
-        }
-        if (data.stdout_level != null) {
-            message.stdout_level = data.stdout_level;
-        }
-        if (data.show_draw != null) {
-            message.show_draw = data.show_draw;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            log_dir?: string;
-            save_draw?: boolean;
-            recording?: boolean;
-            stdout_level?: number;
-            show_draw?: boolean;
-        } = {};
-        if (this.log_dir != null) {
-            data.log_dir = this.log_dir;
-        }
-        if (this.save_draw != null) {
-            data.save_draw = this.save_draw;
-        }
-        if (this.recording != null) {
-            data.recording = this.recording;
-        }
-        if (this.stdout_level != null) {
-            data.stdout_level = this.stdout_level;
-        }
-        if (this.show_draw != null) {
-            data.show_draw = this.show_draw;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_log_dir)
-            writer.writeString(1, this.log_dir);
-        if (this.has_save_draw)
-            writer.writeBool(2, this.save_draw);
-        if (this.has_recording)
-            writer.writeBool(3, this.recording);
-        if (this.has_stdout_level)
-            writer.writeInt32(4, this.stdout_level);
-        if (this.has_show_draw)
-            writer.writeBool(5, this.show_draw);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SetGlobalOptionRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SetGlobalOptionRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.log_dir = reader.readString();
-                    break;
-                case 2:
-                    message.save_draw = reader.readBool();
-                    break;
-                case 3:
-                    message.recording = reader.readBool();
-                    break;
-                case 4:
-                    message.stdout_level = reader.readInt32();
-                    break;
-                case 5:
-                    message.show_draw = reader.readBool();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): SetGlobalOptionRequest {
-        return SetGlobalOptionRequest.deserialize(bytes);
-    }
-}
 interface GrpcUnaryServiceInterface<P, R> {
     (message: P, metadata: grpc_1.Metadata, options: grpc_1.CallOptions, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
     (message: P, metadata: grpc_1.Metadata, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
@@ -256,8 +44,8 @@ export abstract class UnimplementedUtilityService {
             path: "/maarpc.Utility/set_global_option",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: SetGlobalOptionRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => SetGlobalOptionRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.SetGlobalOptionRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.SetGlobalOptionRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -291,7 +79,7 @@ export abstract class UnimplementedUtilityService {
     };
     [method: string]: grpc_1.UntypedHandleCall;
     abstract version(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
-    abstract set_global_option(call: grpc_1.ServerUnaryCall<SetGlobalOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract set_global_option(call: grpc_1.ServerUnaryCall<dependency_1.SetGlobalOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract acquire_id(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
     abstract register_callback(call: grpc_1.ServerWritableStream<dependency_1.IdRequest, dependency_1.Callback>): void;
     abstract unregister_callback(call: grpc_1.ServerUnaryCall<dependency_1.IdRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
@@ -312,7 +100,7 @@ export class UtilityClient extends grpc_1.makeGenericClientConstructor(Unimpleme
             resolve(response);
         }
     })); };
-    set_global_option: GrpcPromiseServiceInterface<SetGlobalOptionRequest, dependency_1.EmptyResponse> = (message: SetGlobalOptionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    set_global_option: GrpcPromiseServiceInterface<dependency_1.SetGlobalOptionRequest, dependency_1.EmptyResponse> = (message: dependency_1.SetGlobalOptionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -336,7 +124,7 @@ export class UtilityClient extends grpc_1.makeGenericClientConstructor(Unimpleme
             resolve(response);
         }
     })); };
-    register_callback: GrpcStreamServiceInterface<dependency_1.IdRequest, dependency_1.IdRequest> = (message: dependency_1.IdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientReadableStream<dependency_1.IdRequest> => {
+    register_callback: GrpcStreamServiceInterface<dependency_1.IdRequest, dependency_1.Callback> = (message: dependency_1.IdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientReadableStream<dependency_1.Callback> => {
         return super.register_callback(message, metadata, options);
     };
     unregister_callback: GrpcPromiseServiceInterface<dependency_1.IdRequest, dependency_1.EmptyResponse> = (message: dependency_1.IdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {

@@ -2720,3 +2720,5294 @@ export class StatusResponse extends pb_1.Message {
         return StatusResponse.deserialize(bytes);
     }
 }
+export class ImageInfoResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        type?: number;
+    }) | ({
+        size?: Size;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("type" in data && data.type != undefined) {
+                this.type = data.type;
+            }
+            if ("size" in data && data.size != undefined) {
+                this.size = data.size;
+            }
+        }
+    }
+    get type() {
+        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
+    }
+    set type(value: number) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_type() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get size() {
+        return pb_1.Message.getWrapperField(this, Size, 2) as Size;
+    }
+    set size(value: Size) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_size() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _type() {
+        const cases: {
+            [index: number]: "none" | "type";
+        } = {
+            0: "none",
+            1: "type"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _size() {
+        const cases: {
+            [index: number]: "none" | "size";
+        } = {
+            0: "none",
+            2: "size"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        type?: number;
+        size?: ReturnType<typeof Size.prototype.toObject>;
+    }): ImageInfoResponse {
+        const message = new ImageInfoResponse({});
+        if (data.type != null) {
+            message.type = data.type;
+        }
+        if (data.size != null) {
+            message.size = Size.fromObject(data.size);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            type?: number;
+            size?: ReturnType<typeof Size.prototype.toObject>;
+        } = {};
+        if (this.type != null) {
+            data.type = this.type;
+        }
+        if (this.size != null) {
+            data.size = this.size.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_type)
+            writer.writeInt32(1, this.type);
+        if (this.has_size)
+            writer.writeMessage(2, this.size, () => this.size.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ImageInfoResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ImageInfoResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.type = reader.readInt32();
+                    break;
+                case 2:
+                    reader.readMessage(message.size, () => message.size = Size.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): ImageInfoResponse {
+        return ImageInfoResponse.deserialize(bytes);
+    }
+}
+export class AdbControllerRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3], [4], [5], [6]];
+    constructor(data?: any[] | ({} & (({
+        id?: string;
+    }) | ({
+        adb_path?: string;
+    }) | ({
+        adb_serial?: string;
+    }) | ({
+        adb_type?: number;
+    }) | ({
+        adb_config?: string;
+    }) | ({
+        agent_path?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
+            }
+            if ("adb_path" in data && data.adb_path != undefined) {
+                this.adb_path = data.adb_path;
+            }
+            if ("adb_serial" in data && data.adb_serial != undefined) {
+                this.adb_serial = data.adb_serial;
+            }
+            if ("adb_type" in data && data.adb_type != undefined) {
+                this.adb_type = data.adb_type;
+            }
+            if ("adb_config" in data && data.adb_config != undefined) {
+                this.adb_config = data.adb_config;
+            }
+            if ("agent_path" in data && data.agent_path != undefined) {
+                this.agent_path = data.agent_path;
+            }
+        }
+    }
+    get id() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set id(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_id() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get adb_path() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set adb_path(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_adb_path() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get adb_serial() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set adb_serial(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_adb_serial() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get adb_type() {
+        return pb_1.Message.getFieldWithDefault(this, 4, 0) as number;
+    }
+    set adb_type(value: number) {
+        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
+    }
+    get has_adb_type() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get adb_config() {
+        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
+    }
+    set adb_config(value: string) {
+        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
+    }
+    get has_adb_config() {
+        return pb_1.Message.getField(this, 5) != null;
+    }
+    get agent_path() {
+        return pb_1.Message.getFieldWithDefault(this, 6, "") as string;
+    }
+    set agent_path(value: string) {
+        pb_1.Message.setOneofField(this, 6, this.#one_of_decls[5], value);
+    }
+    get has_agent_path() {
+        return pb_1.Message.getField(this, 6) != null;
+    }
+    get _id() {
+        const cases: {
+            [index: number]: "none" | "id";
+        } = {
+            0: "none",
+            1: "id"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _adb_path() {
+        const cases: {
+            [index: number]: "none" | "adb_path";
+        } = {
+            0: "none",
+            2: "adb_path"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _adb_serial() {
+        const cases: {
+            [index: number]: "none" | "adb_serial";
+        } = {
+            0: "none",
+            3: "adb_serial"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    get _adb_type() {
+        const cases: {
+            [index: number]: "none" | "adb_type";
+        } = {
+            0: "none",
+            4: "adb_type"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [4])];
+    }
+    get _adb_config() {
+        const cases: {
+            [index: number]: "none" | "adb_config";
+        } = {
+            0: "none",
+            5: "adb_config"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [5])];
+    }
+    get _agent_path() {
+        const cases: {
+            [index: number]: "none" | "agent_path";
+        } = {
+            0: "none",
+            6: "agent_path"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [6])];
+    }
+    static fromObject(data: {
+        id?: string;
+        adb_path?: string;
+        adb_serial?: string;
+        adb_type?: number;
+        adb_config?: string;
+        agent_path?: string;
+    }): AdbControllerRequest {
+        const message = new AdbControllerRequest({});
+        if (data.id != null) {
+            message.id = data.id;
+        }
+        if (data.adb_path != null) {
+            message.adb_path = data.adb_path;
+        }
+        if (data.adb_serial != null) {
+            message.adb_serial = data.adb_serial;
+        }
+        if (data.adb_type != null) {
+            message.adb_type = data.adb_type;
+        }
+        if (data.adb_config != null) {
+            message.adb_config = data.adb_config;
+        }
+        if (data.agent_path != null) {
+            message.agent_path = data.agent_path;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            id?: string;
+            adb_path?: string;
+            adb_serial?: string;
+            adb_type?: number;
+            adb_config?: string;
+            agent_path?: string;
+        } = {};
+        if (this.id != null) {
+            data.id = this.id;
+        }
+        if (this.adb_path != null) {
+            data.adb_path = this.adb_path;
+        }
+        if (this.adb_serial != null) {
+            data.adb_serial = this.adb_serial;
+        }
+        if (this.adb_type != null) {
+            data.adb_type = this.adb_type;
+        }
+        if (this.adb_config != null) {
+            data.adb_config = this.adb_config;
+        }
+        if (this.agent_path != null) {
+            data.agent_path = this.agent_path;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_id)
+            writer.writeString(1, this.id);
+        if (this.has_adb_path)
+            writer.writeString(2, this.adb_path);
+        if (this.has_adb_serial)
+            writer.writeString(3, this.adb_serial);
+        if (this.has_adb_type)
+            writer.writeUint32(4, this.adb_type);
+        if (this.has_adb_config)
+            writer.writeString(5, this.adb_config);
+        if (this.has_agent_path)
+            writer.writeString(6, this.agent_path);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): AdbControllerRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new AdbControllerRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.id = reader.readString();
+                    break;
+                case 2:
+                    message.adb_path = reader.readString();
+                    break;
+                case 3:
+                    message.adb_serial = reader.readString();
+                    break;
+                case 4:
+                    message.adb_type = reader.readUint32();
+                    break;
+                case 5:
+                    message.adb_config = reader.readString();
+                    break;
+                case 6:
+                    message.agent_path = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): AdbControllerRequest {
+        return AdbControllerRequest.deserialize(bytes);
+    }
+}
+export class ControllerSetOptionRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[101, 102, 103, 104], [1]];
+    constructor(data?: any[] | ({} & (({
+        long_side?: number;
+        short_side?: never;
+        def_package_entry?: never;
+        def_package?: never;
+    } | {
+        long_side?: never;
+        short_side?: number;
+        def_package_entry?: never;
+        def_package?: never;
+    } | {
+        long_side?: never;
+        short_side?: never;
+        def_package_entry?: string;
+        def_package?: never;
+    } | {
+        long_side?: never;
+        short_side?: never;
+        def_package_entry?: never;
+        def_package?: string;
+    }) | ({
+        handle?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("long_side" in data && data.long_side != undefined) {
+                this.long_side = data.long_side;
+            }
+            if ("short_side" in data && data.short_side != undefined) {
+                this.short_side = data.short_side;
+            }
+            if ("def_package_entry" in data && data.def_package_entry != undefined) {
+                this.def_package_entry = data.def_package_entry;
+            }
+            if ("def_package" in data && data.def_package != undefined) {
+                this.def_package = data.def_package;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get long_side() {
+        return pb_1.Message.getFieldWithDefault(this, 101, 0) as number;
+    }
+    set long_side(value: number) {
+        pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_long_side() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get short_side() {
+        return pb_1.Message.getFieldWithDefault(this, 102, 0) as number;
+    }
+    set short_side(value: number) {
+        pb_1.Message.setOneofField(this, 102, this.#one_of_decls[0], value);
+    }
+    get has_short_side() {
+        return pb_1.Message.getField(this, 102) != null;
+    }
+    get def_package_entry() {
+        return pb_1.Message.getFieldWithDefault(this, 103, "") as string;
+    }
+    set def_package_entry(value: string) {
+        pb_1.Message.setOneofField(this, 103, this.#one_of_decls[0], value);
+    }
+    get has_def_package_entry() {
+        return pb_1.Message.getField(this, 103) != null;
+    }
+    get def_package() {
+        return pb_1.Message.getFieldWithDefault(this, 104, "") as string;
+    }
+    set def_package(value: string) {
+        pb_1.Message.setOneofField(this, 104, this.#one_of_decls[0], value);
+    }
+    get has_def_package() {
+        return pb_1.Message.getField(this, 104) != null;
+    }
+    get option() {
+        const cases: {
+            [index: number]: "none" | "long_side" | "short_side" | "def_package_entry" | "def_package";
+        } = {
+            0: "none",
+            101: "long_side",
+            102: "short_side",
+            103: "def_package_entry",
+            104: "def_package"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101, 102, 103, 104])];
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        long_side?: number;
+        short_side?: number;
+        def_package_entry?: string;
+        def_package?: string;
+    }): ControllerSetOptionRequest {
+        const message = new ControllerSetOptionRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.long_side != null) {
+            message.long_side = data.long_side;
+        }
+        if (data.short_side != null) {
+            message.short_side = data.short_side;
+        }
+        if (data.def_package_entry != null) {
+            message.def_package_entry = data.def_package_entry;
+        }
+        if (data.def_package != null) {
+            message.def_package = data.def_package;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            long_side?: number;
+            short_side?: number;
+            def_package_entry?: string;
+            def_package?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.long_side != null) {
+            data.long_side = this.long_side;
+        }
+        if (this.short_side != null) {
+            data.short_side = this.short_side;
+        }
+        if (this.def_package_entry != null) {
+            data.def_package_entry = this.def_package_entry;
+        }
+        if (this.def_package != null) {
+            data.def_package = this.def_package;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_long_side)
+            writer.writeInt32(101, this.long_side);
+        if (this.has_short_side)
+            writer.writeInt32(102, this.short_side);
+        if (this.has_def_package_entry)
+            writer.writeString(103, this.def_package_entry);
+        if (this.has_def_package)
+            writer.writeString(104, this.def_package);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerSetOptionRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerSetOptionRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 101:
+                    message.long_side = reader.readInt32();
+                    break;
+                case 102:
+                    message.short_side = reader.readInt32();
+                    break;
+                case 103:
+                    message.def_package_entry = reader.readString();
+                    break;
+                case 104:
+                    message.def_package = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): ControllerSetOptionRequest {
+        return ControllerSetOptionRequest.deserialize(bytes);
+    }
+}
+export class ControllerPostClickRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: ClickParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, ClickParam, 2) as ClickParam;
+    }
+    set param(value: ClickParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof ClickParam.prototype.toObject>;
+    }): ControllerPostClickRequest {
+        const message = new ControllerPostClickRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = ClickParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof ClickParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostClickRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostClickRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = ClickParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): ControllerPostClickRequest {
+        return ControllerPostClickRequest.deserialize(bytes);
+    }
+}
+export class ControllerPostSwipeRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: SwipeParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, SwipeParam, 2) as SwipeParam;
+    }
+    set param(value: SwipeParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof SwipeParam.prototype.toObject>;
+    }): ControllerPostSwipeRequest {
+        const message = new ControllerPostSwipeRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = SwipeParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof SwipeParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostSwipeRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostSwipeRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = SwipeParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): ControllerPostSwipeRequest {
+        return ControllerPostSwipeRequest.deserialize(bytes);
+    }
+}
+export class ControllerPostKeyRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: KeyParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, KeyParam, 2) as KeyParam;
+    }
+    set param(value: KeyParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof KeyParam.prototype.toObject>;
+    }): ControllerPostKeyRequest {
+        const message = new ControllerPostKeyRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = KeyParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof KeyParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostKeyRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostKeyRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = KeyParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): ControllerPostKeyRequest {
+        return ControllerPostKeyRequest.deserialize(bytes);
+    }
+}
+export class ControllerPostTouchRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: TouchParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, TouchParam, 2) as TouchParam;
+    }
+    set param(value: TouchParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof TouchParam.prototype.toObject>;
+    }): ControllerPostTouchRequest {
+        const message = new ControllerPostTouchRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = TouchParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof TouchParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostTouchRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostTouchRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = TouchParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): ControllerPostTouchRequest {
+        return ControllerPostTouchRequest.deserialize(bytes);
+    }
+}
+export class CustomControllerSetOptionParam extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        key?: number;
+    }) | ({
+        value?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("key" in data && data.key != undefined) {
+                this.key = data.key;
+            }
+            if ("value" in data && data.value != undefined) {
+                this.value = data.value;
+            }
+        }
+    }
+    get key() {
+        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
+    }
+    set key(value: number) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_key() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get value() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set value(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_value() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _key() {
+        const cases: {
+            [index: number]: "none" | "key";
+        } = {
+            0: "none",
+            1: "key"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _value() {
+        const cases: {
+            [index: number]: "none" | "value";
+        } = {
+            0: "none",
+            2: "value"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        key?: number;
+        value?: string;
+    }): CustomControllerSetOptionParam {
+        const message = new CustomControllerSetOptionParam({});
+        if (data.key != null) {
+            message.key = data.key;
+        }
+        if (data.value != null) {
+            message.value = data.value;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            key?: number;
+            value?: string;
+        } = {};
+        if (this.key != null) {
+            data.key = this.key;
+        }
+        if (this.value != null) {
+            data.value = this.value;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_key)
+            writer.writeInt32(1, this.key);
+        if (this.has_value)
+            writer.writeString(2, this.value);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerSetOptionParam {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerSetOptionParam();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.key = reader.readInt32();
+                    break;
+                case 2:
+                    message.value = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomControllerSetOptionParam {
+        return CustomControllerSetOptionParam.deserialize(bytes);
+    }
+}
+export class CustomControllerRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[101, 201, 202], [1]];
+    constructor(data?: any[] | ({} & (({
+        init?: string;
+        resolution?: never;
+        uuid?: never;
+    } | {
+        init?: never;
+        resolution?: Size;
+        uuid?: never;
+    } | {
+        init?: never;
+        resolution?: never;
+        uuid?: string;
+    }) | ({
+        ok?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("ok" in data && data.ok != undefined) {
+                this.ok = data.ok;
+            }
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
+            }
+            if ("resolution" in data && data.resolution != undefined) {
+                this.resolution = data.resolution;
+            }
+            if ("uuid" in data && data.uuid != undefined) {
+                this.uuid = data.uuid;
+            }
+        }
+    }
+    get ok() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    }
+    set ok(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
+    }
+    get has_ok() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get init() {
+        return pb_1.Message.getFieldWithDefault(this, 101, "") as string;
+    }
+    set init(value: string) {
+        pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_init() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get resolution() {
+        return pb_1.Message.getWrapperField(this, Size, 201) as Size;
+    }
+    set resolution(value: Size) {
+        pb_1.Message.setOneofWrapperField(this, 201, this.#one_of_decls[0], value);
+    }
+    get has_resolution() {
+        return pb_1.Message.getField(this, 201) != null;
+    }
+    get uuid() {
+        return pb_1.Message.getFieldWithDefault(this, 202, "") as string;
+    }
+    set uuid(value: string) {
+        pb_1.Message.setOneofField(this, 202, this.#one_of_decls[0], value);
+    }
+    get has_uuid() {
+        return pb_1.Message.getField(this, 202) != null;
+    }
+    get result() {
+        const cases: {
+            [index: number]: "none" | "init" | "resolution" | "uuid";
+        } = {
+            0: "none",
+            101: "init",
+            201: "resolution",
+            202: "uuid"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101, 201, 202])];
+    }
+    get _ok() {
+        const cases: {
+            [index: number]: "none" | "ok";
+        } = {
+            0: "none",
+            1: "ok"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        ok?: boolean;
+        init?: string;
+        resolution?: ReturnType<typeof Size.prototype.toObject>;
+        uuid?: string;
+    }): CustomControllerRequest {
+        const message = new CustomControllerRequest({});
+        if (data.ok != null) {
+            message.ok = data.ok;
+        }
+        if (data.init != null) {
+            message.init = data.init;
+        }
+        if (data.resolution != null) {
+            message.resolution = Size.fromObject(data.resolution);
+        }
+        if (data.uuid != null) {
+            message.uuid = data.uuid;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            ok?: boolean;
+            init?: string;
+            resolution?: ReturnType<typeof Size.prototype.toObject>;
+            uuid?: string;
+        } = {};
+        if (this.ok != null) {
+            data.ok = this.ok;
+        }
+        if (this.init != null) {
+            data.init = this.init;
+        }
+        if (this.resolution != null) {
+            data.resolution = this.resolution.toObject();
+        }
+        if (this.uuid != null) {
+            data.uuid = this.uuid;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_ok)
+            writer.writeBool(1, this.ok);
+        if (this.has_init)
+            writer.writeString(101, this.init);
+        if (this.has_resolution)
+            writer.writeMessage(201, this.resolution, () => this.resolution.serialize(writer));
+        if (this.has_uuid)
+            writer.writeString(202, this.uuid);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.ok = reader.readBool();
+                    break;
+                case 101:
+                    message.init = reader.readString();
+                    break;
+                case 201:
+                    reader.readMessage(message.resolution, () => message.resolution = Size.deserialize(reader));
+                    break;
+                case 202:
+                    message.uuid = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomControllerRequest {
+        return CustomControllerRequest.deserialize(bytes);
+    }
+}
+export class CustomControllerResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [[101, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213]];
+    constructor(data?: any[] | ({} & (({
+        init?: string;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: boolean;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: ClickParam;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: SwipeParam;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: KeyParam;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: TouchParam;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: TouchParam;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: TouchParam;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: string;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: string;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: boolean;
+        image?: never;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: string;
+        uuid?: never;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: boolean;
+        set_option?: never;
+    } | {
+        init?: never;
+        connect?: never;
+        click?: never;
+        swipe?: never;
+        key?: never;
+        touch_down?: never;
+        touch_move?: never;
+        touch_up?: never;
+        start?: never;
+        stop?: never;
+        resolution?: never;
+        image?: never;
+        uuid?: never;
+        set_option?: CustomControllerSetOptionParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
+            }
+            if ("connect" in data && data.connect != undefined) {
+                this.connect = data.connect;
+            }
+            if ("click" in data && data.click != undefined) {
+                this.click = data.click;
+            }
+            if ("swipe" in data && data.swipe != undefined) {
+                this.swipe = data.swipe;
+            }
+            if ("key" in data && data.key != undefined) {
+                this.key = data.key;
+            }
+            if ("touch_down" in data && data.touch_down != undefined) {
+                this.touch_down = data.touch_down;
+            }
+            if ("touch_move" in data && data.touch_move != undefined) {
+                this.touch_move = data.touch_move;
+            }
+            if ("touch_up" in data && data.touch_up != undefined) {
+                this.touch_up = data.touch_up;
+            }
+            if ("start" in data && data.start != undefined) {
+                this.start = data.start;
+            }
+            if ("stop" in data && data.stop != undefined) {
+                this.stop = data.stop;
+            }
+            if ("resolution" in data && data.resolution != undefined) {
+                this.resolution = data.resolution;
+            }
+            if ("image" in data && data.image != undefined) {
+                this.image = data.image;
+            }
+            if ("uuid" in data && data.uuid != undefined) {
+                this.uuid = data.uuid;
+            }
+            if ("set_option" in data && data.set_option != undefined) {
+                this.set_option = data.set_option;
+            }
+        }
+    }
+    get init() {
+        return pb_1.Message.getFieldWithDefault(this, 101, "") as string;
+    }
+    set init(value: string) {
+        pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_init() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get connect() {
+        return pb_1.Message.getFieldWithDefault(this, 201, false) as boolean;
+    }
+    set connect(value: boolean) {
+        pb_1.Message.setOneofField(this, 201, this.#one_of_decls[0], value);
+    }
+    get has_connect() {
+        return pb_1.Message.getField(this, 201) != null;
+    }
+    get click() {
+        return pb_1.Message.getWrapperField(this, ClickParam, 202) as ClickParam;
+    }
+    set click(value: ClickParam) {
+        pb_1.Message.setOneofWrapperField(this, 202, this.#one_of_decls[0], value);
+    }
+    get has_click() {
+        return pb_1.Message.getField(this, 202) != null;
+    }
+    get swipe() {
+        return pb_1.Message.getWrapperField(this, SwipeParam, 203) as SwipeParam;
+    }
+    set swipe(value: SwipeParam) {
+        pb_1.Message.setOneofWrapperField(this, 203, this.#one_of_decls[0], value);
+    }
+    get has_swipe() {
+        return pb_1.Message.getField(this, 203) != null;
+    }
+    get key() {
+        return pb_1.Message.getWrapperField(this, KeyParam, 204) as KeyParam;
+    }
+    set key(value: KeyParam) {
+        pb_1.Message.setOneofWrapperField(this, 204, this.#one_of_decls[0], value);
+    }
+    get has_key() {
+        return pb_1.Message.getField(this, 204) != null;
+    }
+    get touch_down() {
+        return pb_1.Message.getWrapperField(this, TouchParam, 205) as TouchParam;
+    }
+    set touch_down(value: TouchParam) {
+        pb_1.Message.setOneofWrapperField(this, 205, this.#one_of_decls[0], value);
+    }
+    get has_touch_down() {
+        return pb_1.Message.getField(this, 205) != null;
+    }
+    get touch_move() {
+        return pb_1.Message.getWrapperField(this, TouchParam, 206) as TouchParam;
+    }
+    set touch_move(value: TouchParam) {
+        pb_1.Message.setOneofWrapperField(this, 206, this.#one_of_decls[0], value);
+    }
+    get has_touch_move() {
+        return pb_1.Message.getField(this, 206) != null;
+    }
+    get touch_up() {
+        return pb_1.Message.getWrapperField(this, TouchParam, 207) as TouchParam;
+    }
+    set touch_up(value: TouchParam) {
+        pb_1.Message.setOneofWrapperField(this, 207, this.#one_of_decls[0], value);
+    }
+    get has_touch_up() {
+        return pb_1.Message.getField(this, 207) != null;
+    }
+    get start() {
+        return pb_1.Message.getFieldWithDefault(this, 208, "") as string;
+    }
+    set start(value: string) {
+        pb_1.Message.setOneofField(this, 208, this.#one_of_decls[0], value);
+    }
+    get has_start() {
+        return pb_1.Message.getField(this, 208) != null;
+    }
+    get stop() {
+        return pb_1.Message.getFieldWithDefault(this, 209, "") as string;
+    }
+    set stop(value: string) {
+        pb_1.Message.setOneofField(this, 209, this.#one_of_decls[0], value);
+    }
+    get has_stop() {
+        return pb_1.Message.getField(this, 209) != null;
+    }
+    get resolution() {
+        return pb_1.Message.getFieldWithDefault(this, 210, false) as boolean;
+    }
+    set resolution(value: boolean) {
+        pb_1.Message.setOneofField(this, 210, this.#one_of_decls[0], value);
+    }
+    get has_resolution() {
+        return pb_1.Message.getField(this, 210) != null;
+    }
+    get image() {
+        return pb_1.Message.getFieldWithDefault(this, 211, "") as string;
+    }
+    set image(value: string) {
+        pb_1.Message.setOneofField(this, 211, this.#one_of_decls[0], value);
+    }
+    get has_image() {
+        return pb_1.Message.getField(this, 211) != null;
+    }
+    get uuid() {
+        return pb_1.Message.getFieldWithDefault(this, 212, false) as boolean;
+    }
+    set uuid(value: boolean) {
+        pb_1.Message.setOneofField(this, 212, this.#one_of_decls[0], value);
+    }
+    get has_uuid() {
+        return pb_1.Message.getField(this, 212) != null;
+    }
+    get set_option() {
+        return pb_1.Message.getWrapperField(this, CustomControllerSetOptionParam, 213) as CustomControllerSetOptionParam;
+    }
+    set set_option(value: CustomControllerSetOptionParam) {
+        pb_1.Message.setOneofWrapperField(this, 213, this.#one_of_decls[0], value);
+    }
+    get has_set_option() {
+        return pb_1.Message.getField(this, 213) != null;
+    }
+    get command() {
+        const cases: {
+            [index: number]: "none" | "init" | "connect" | "click" | "swipe" | "key" | "touch_down" | "touch_move" | "touch_up" | "start" | "stop" | "resolution" | "image" | "uuid" | "set_option";
+        } = {
+            0: "none",
+            101: "init",
+            201: "connect",
+            202: "click",
+            203: "swipe",
+            204: "key",
+            205: "touch_down",
+            206: "touch_move",
+            207: "touch_up",
+            208: "start",
+            209: "stop",
+            210: "resolution",
+            211: "image",
+            212: "uuid",
+            213: "set_option"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213])];
+    }
+    static fromObject(data: {
+        init?: string;
+        connect?: boolean;
+        click?: ReturnType<typeof ClickParam.prototype.toObject>;
+        swipe?: ReturnType<typeof SwipeParam.prototype.toObject>;
+        key?: ReturnType<typeof KeyParam.prototype.toObject>;
+        touch_down?: ReturnType<typeof TouchParam.prototype.toObject>;
+        touch_move?: ReturnType<typeof TouchParam.prototype.toObject>;
+        touch_up?: ReturnType<typeof TouchParam.prototype.toObject>;
+        start?: string;
+        stop?: string;
+        resolution?: boolean;
+        image?: string;
+        uuid?: boolean;
+        set_option?: ReturnType<typeof CustomControllerSetOptionParam.prototype.toObject>;
+    }): CustomControllerResponse {
+        const message = new CustomControllerResponse({});
+        if (data.init != null) {
+            message.init = data.init;
+        }
+        if (data.connect != null) {
+            message.connect = data.connect;
+        }
+        if (data.click != null) {
+            message.click = ClickParam.fromObject(data.click);
+        }
+        if (data.swipe != null) {
+            message.swipe = SwipeParam.fromObject(data.swipe);
+        }
+        if (data.key != null) {
+            message.key = KeyParam.fromObject(data.key);
+        }
+        if (data.touch_down != null) {
+            message.touch_down = TouchParam.fromObject(data.touch_down);
+        }
+        if (data.touch_move != null) {
+            message.touch_move = TouchParam.fromObject(data.touch_move);
+        }
+        if (data.touch_up != null) {
+            message.touch_up = TouchParam.fromObject(data.touch_up);
+        }
+        if (data.start != null) {
+            message.start = data.start;
+        }
+        if (data.stop != null) {
+            message.stop = data.stop;
+        }
+        if (data.resolution != null) {
+            message.resolution = data.resolution;
+        }
+        if (data.image != null) {
+            message.image = data.image;
+        }
+        if (data.uuid != null) {
+            message.uuid = data.uuid;
+        }
+        if (data.set_option != null) {
+            message.set_option = CustomControllerSetOptionParam.fromObject(data.set_option);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            init?: string;
+            connect?: boolean;
+            click?: ReturnType<typeof ClickParam.prototype.toObject>;
+            swipe?: ReturnType<typeof SwipeParam.prototype.toObject>;
+            key?: ReturnType<typeof KeyParam.prototype.toObject>;
+            touch_down?: ReturnType<typeof TouchParam.prototype.toObject>;
+            touch_move?: ReturnType<typeof TouchParam.prototype.toObject>;
+            touch_up?: ReturnType<typeof TouchParam.prototype.toObject>;
+            start?: string;
+            stop?: string;
+            resolution?: boolean;
+            image?: string;
+            uuid?: boolean;
+            set_option?: ReturnType<typeof CustomControllerSetOptionParam.prototype.toObject>;
+        } = {};
+        if (this.init != null) {
+            data.init = this.init;
+        }
+        if (this.connect != null) {
+            data.connect = this.connect;
+        }
+        if (this.click != null) {
+            data.click = this.click.toObject();
+        }
+        if (this.swipe != null) {
+            data.swipe = this.swipe.toObject();
+        }
+        if (this.key != null) {
+            data.key = this.key.toObject();
+        }
+        if (this.touch_down != null) {
+            data.touch_down = this.touch_down.toObject();
+        }
+        if (this.touch_move != null) {
+            data.touch_move = this.touch_move.toObject();
+        }
+        if (this.touch_up != null) {
+            data.touch_up = this.touch_up.toObject();
+        }
+        if (this.start != null) {
+            data.start = this.start;
+        }
+        if (this.stop != null) {
+            data.stop = this.stop;
+        }
+        if (this.resolution != null) {
+            data.resolution = this.resolution;
+        }
+        if (this.image != null) {
+            data.image = this.image;
+        }
+        if (this.uuid != null) {
+            data.uuid = this.uuid;
+        }
+        if (this.set_option != null) {
+            data.set_option = this.set_option.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_init)
+            writer.writeString(101, this.init);
+        if (this.has_connect)
+            writer.writeBool(201, this.connect);
+        if (this.has_click)
+            writer.writeMessage(202, this.click, () => this.click.serialize(writer));
+        if (this.has_swipe)
+            writer.writeMessage(203, this.swipe, () => this.swipe.serialize(writer));
+        if (this.has_key)
+            writer.writeMessage(204, this.key, () => this.key.serialize(writer));
+        if (this.has_touch_down)
+            writer.writeMessage(205, this.touch_down, () => this.touch_down.serialize(writer));
+        if (this.has_touch_move)
+            writer.writeMessage(206, this.touch_move, () => this.touch_move.serialize(writer));
+        if (this.has_touch_up)
+            writer.writeMessage(207, this.touch_up, () => this.touch_up.serialize(writer));
+        if (this.has_start)
+            writer.writeString(208, this.start);
+        if (this.has_stop)
+            writer.writeString(209, this.stop);
+        if (this.has_resolution)
+            writer.writeBool(210, this.resolution);
+        if (this.has_image)
+            writer.writeString(211, this.image);
+        if (this.has_uuid)
+            writer.writeBool(212, this.uuid);
+        if (this.has_set_option)
+            writer.writeMessage(213, this.set_option, () => this.set_option.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomControllerResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomControllerResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 101:
+                    message.init = reader.readString();
+                    break;
+                case 201:
+                    message.connect = reader.readBool();
+                    break;
+                case 202:
+                    reader.readMessage(message.click, () => message.click = ClickParam.deserialize(reader));
+                    break;
+                case 203:
+                    reader.readMessage(message.swipe, () => message.swipe = SwipeParam.deserialize(reader));
+                    break;
+                case 204:
+                    reader.readMessage(message.key, () => message.key = KeyParam.deserialize(reader));
+                    break;
+                case 205:
+                    reader.readMessage(message.touch_down, () => message.touch_down = TouchParam.deserialize(reader));
+                    break;
+                case 206:
+                    reader.readMessage(message.touch_move, () => message.touch_move = TouchParam.deserialize(reader));
+                    break;
+                case 207:
+                    reader.readMessage(message.touch_up, () => message.touch_up = TouchParam.deserialize(reader));
+                    break;
+                case 208:
+                    message.start = reader.readString();
+                    break;
+                case 209:
+                    message.stop = reader.readString();
+                    break;
+                case 210:
+                    message.resolution = reader.readBool();
+                    break;
+                case 211:
+                    message.image = reader.readString();
+                    break;
+                case 212:
+                    message.uuid = reader.readBool();
+                    break;
+                case 213:
+                    reader.readMessage(message.set_option, () => message.set_option = CustomControllerSetOptionParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomControllerResponse {
+        return CustomControllerResponse.deserialize(bytes);
+    }
+}
+export class CustomRecognizerInit extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        name?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("name" in data && data.name != undefined) {
+                this.name = data.name;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get name() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set name(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_name() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _name() {
+        const cases: {
+            [index: number]: "none" | "name";
+        } = {
+            0: "none",
+            2: "name"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        name?: string;
+    }): CustomRecognizerInit {
+        const message = new CustomRecognizerInit({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.name != null) {
+            message.name = data.name;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            name?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.name != null) {
+            data.name = this.name;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_name)
+            writer.writeString(2, this.name);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomRecognizerInit {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomRecognizerInit();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.name = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomRecognizerInit {
+        return CustomRecognizerInit.deserialize(bytes);
+    }
+}
+export class CustomRecognizerAnalyzeResult extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3]];
+    constructor(data?: any[] | ({} & (({
+        match?: boolean;
+    }) | ({
+        box?: Rect;
+    }) | ({
+        detail?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("match" in data && data.match != undefined) {
+                this.match = data.match;
+            }
+            if ("box" in data && data.box != undefined) {
+                this.box = data.box;
+            }
+            if ("detail" in data && data.detail != undefined) {
+                this.detail = data.detail;
+            }
+        }
+    }
+    get match() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    }
+    set match(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_match() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get box() {
+        return pb_1.Message.getWrapperField(this, Rect, 2) as Rect;
+    }
+    set box(value: Rect) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_box() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get detail() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set detail(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_detail() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get _match() {
+        const cases: {
+            [index: number]: "none" | "match";
+        } = {
+            0: "none",
+            1: "match"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _box() {
+        const cases: {
+            [index: number]: "none" | "box";
+        } = {
+            0: "none",
+            2: "box"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _detail() {
+        const cases: {
+            [index: number]: "none" | "detail";
+        } = {
+            0: "none",
+            3: "detail"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    static fromObject(data: {
+        match?: boolean;
+        box?: ReturnType<typeof Rect.prototype.toObject>;
+        detail?: string;
+    }): CustomRecognizerAnalyzeResult {
+        const message = new CustomRecognizerAnalyzeResult({});
+        if (data.match != null) {
+            message.match = data.match;
+        }
+        if (data.box != null) {
+            message.box = Rect.fromObject(data.box);
+        }
+        if (data.detail != null) {
+            message.detail = data.detail;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            match?: boolean;
+            box?: ReturnType<typeof Rect.prototype.toObject>;
+            detail?: string;
+        } = {};
+        if (this.match != null) {
+            data.match = this.match;
+        }
+        if (this.box != null) {
+            data.box = this.box.toObject();
+        }
+        if (this.detail != null) {
+            data.detail = this.detail;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_match)
+            writer.writeBool(1, this.match);
+        if (this.has_box)
+            writer.writeMessage(2, this.box, () => this.box.serialize(writer));
+        if (this.has_detail)
+            writer.writeString(3, this.detail);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomRecognizerAnalyzeResult {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomRecognizerAnalyzeResult();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.match = reader.readBool();
+                    break;
+                case 2:
+                    reader.readMessage(message.box, () => message.box = Rect.deserialize(reader));
+                    break;
+                case 3:
+                    message.detail = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomRecognizerAnalyzeResult {
+        return CustomRecognizerAnalyzeResult.deserialize(bytes);
+    }
+}
+export class CustomRecognizerRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[101, 201], [1]];
+    constructor(data?: any[] | ({} & (({
+        init?: CustomRecognizerInit;
+        analyze?: never;
+    } | {
+        init?: never;
+        analyze?: CustomRecognizerAnalyzeResult;
+    }) | ({
+        ok?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("ok" in data && data.ok != undefined) {
+                this.ok = data.ok;
+            }
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
+            }
+            if ("analyze" in data && data.analyze != undefined) {
+                this.analyze = data.analyze;
+            }
+        }
+    }
+    get ok() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    }
+    set ok(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
+    }
+    get has_ok() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get init() {
+        return pb_1.Message.getWrapperField(this, CustomRecognizerInit, 101) as CustomRecognizerInit;
+    }
+    set init(value: CustomRecognizerInit) {
+        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_init() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get analyze() {
+        return pb_1.Message.getWrapperField(this, CustomRecognizerAnalyzeResult, 201) as CustomRecognizerAnalyzeResult;
+    }
+    set analyze(value: CustomRecognizerAnalyzeResult) {
+        pb_1.Message.setOneofWrapperField(this, 201, this.#one_of_decls[0], value);
+    }
+    get has_analyze() {
+        return pb_1.Message.getField(this, 201) != null;
+    }
+    get result() {
+        const cases: {
+            [index: number]: "none" | "init" | "analyze";
+        } = {
+            0: "none",
+            101: "init",
+            201: "analyze"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101, 201])];
+    }
+    get _ok() {
+        const cases: {
+            [index: number]: "none" | "ok";
+        } = {
+            0: "none",
+            1: "ok"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        ok?: boolean;
+        init?: ReturnType<typeof CustomRecognizerInit.prototype.toObject>;
+        analyze?: ReturnType<typeof CustomRecognizerAnalyzeResult.prototype.toObject>;
+    }): CustomRecognizerRequest {
+        const message = new CustomRecognizerRequest({});
+        if (data.ok != null) {
+            message.ok = data.ok;
+        }
+        if (data.init != null) {
+            message.init = CustomRecognizerInit.fromObject(data.init);
+        }
+        if (data.analyze != null) {
+            message.analyze = CustomRecognizerAnalyzeResult.fromObject(data.analyze);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            ok?: boolean;
+            init?: ReturnType<typeof CustomRecognizerInit.prototype.toObject>;
+            analyze?: ReturnType<typeof CustomRecognizerAnalyzeResult.prototype.toObject>;
+        } = {};
+        if (this.ok != null) {
+            data.ok = this.ok;
+        }
+        if (this.init != null) {
+            data.init = this.init.toObject();
+        }
+        if (this.analyze != null) {
+            data.analyze = this.analyze.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_ok)
+            writer.writeBool(1, this.ok);
+        if (this.has_init)
+            writer.writeMessage(101, this.init, () => this.init.serialize(writer));
+        if (this.has_analyze)
+            writer.writeMessage(201, this.analyze, () => this.analyze.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomRecognizerRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomRecognizerRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.ok = reader.readBool();
+                    break;
+                case 101:
+                    reader.readMessage(message.init, () => message.init = CustomRecognizerInit.deserialize(reader));
+                    break;
+                case 201:
+                    reader.readMessage(message.analyze, () => message.analyze = CustomRecognizerAnalyzeResult.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomRecognizerRequest {
+        return CustomRecognizerRequest.deserialize(bytes);
+    }
+}
+export class CustomRecognizerAnalyzeParam extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3], [4]];
+    constructor(data?: any[] | ({} & (({
+        context?: string;
+    }) | ({
+        image_handle?: string;
+    }) | ({
+        task?: string;
+    }) | ({
+        param?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("context" in data && data.context != undefined) {
+                this.context = data.context;
+            }
+            if ("image_handle" in data && data.image_handle != undefined) {
+                this.image_handle = data.image_handle;
+            }
+            if ("task" in data && data.task != undefined) {
+                this.task = data.task;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get context() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set context(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_context() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get image_handle() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set image_handle(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_image_handle() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get task() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set task(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_task() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get param() {
+        return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
+    }
+    set param(value: string) {
+        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get _context() {
+        const cases: {
+            [index: number]: "none" | "context";
+        } = {
+            0: "none",
+            1: "context"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _image_handle() {
+        const cases: {
+            [index: number]: "none" | "image_handle";
+        } = {
+            0: "none",
+            2: "image_handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _task() {
+        const cases: {
+            [index: number]: "none" | "task";
+        } = {
+            0: "none",
+            3: "task"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            4: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [4])];
+    }
+    static fromObject(data: {
+        context?: string;
+        image_handle?: string;
+        task?: string;
+        param?: string;
+    }): CustomRecognizerAnalyzeParam {
+        const message = new CustomRecognizerAnalyzeParam({});
+        if (data.context != null) {
+            message.context = data.context;
+        }
+        if (data.image_handle != null) {
+            message.image_handle = data.image_handle;
+        }
+        if (data.task != null) {
+            message.task = data.task;
+        }
+        if (data.param != null) {
+            message.param = data.param;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            context?: string;
+            image_handle?: string;
+            task?: string;
+            param?: string;
+        } = {};
+        if (this.context != null) {
+            data.context = this.context;
+        }
+        if (this.image_handle != null) {
+            data.image_handle = this.image_handle;
+        }
+        if (this.task != null) {
+            data.task = this.task;
+        }
+        if (this.param != null) {
+            data.param = this.param;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_context)
+            writer.writeString(1, this.context);
+        if (this.has_image_handle)
+            writer.writeString(2, this.image_handle);
+        if (this.has_task)
+            writer.writeString(3, this.task);
+        if (this.has_param)
+            writer.writeString(4, this.param);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomRecognizerAnalyzeParam {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomRecognizerAnalyzeParam();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.context = reader.readString();
+                    break;
+                case 2:
+                    message.image_handle = reader.readString();
+                    break;
+                case 3:
+                    message.task = reader.readString();
+                    break;
+                case 4:
+                    message.param = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomRecognizerAnalyzeParam {
+        return CustomRecognizerAnalyzeParam.deserialize(bytes);
+    }
+}
+export class CustomRecognizerResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [[101]];
+    constructor(data?: any[] | ({} & (({
+        analyze?: CustomRecognizerAnalyzeParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("analyze" in data && data.analyze != undefined) {
+                this.analyze = data.analyze;
+            }
+        }
+    }
+    get analyze() {
+        return pb_1.Message.getWrapperField(this, CustomRecognizerAnalyzeParam, 101) as CustomRecognizerAnalyzeParam;
+    }
+    set analyze(value: CustomRecognizerAnalyzeParam) {
+        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_analyze() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get command() {
+        const cases: {
+            [index: number]: "none" | "analyze";
+        } = {
+            0: "none",
+            101: "analyze"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101])];
+    }
+    static fromObject(data: {
+        analyze?: ReturnType<typeof CustomRecognizerAnalyzeParam.prototype.toObject>;
+    }): CustomRecognizerResponse {
+        const message = new CustomRecognizerResponse({});
+        if (data.analyze != null) {
+            message.analyze = CustomRecognizerAnalyzeParam.fromObject(data.analyze);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            analyze?: ReturnType<typeof CustomRecognizerAnalyzeParam.prototype.toObject>;
+        } = {};
+        if (this.analyze != null) {
+            data.analyze = this.analyze.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_analyze)
+            writer.writeMessage(101, this.analyze, () => this.analyze.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomRecognizerResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomRecognizerResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 101:
+                    reader.readMessage(message.analyze, () => message.analyze = CustomRecognizerAnalyzeParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomRecognizerResponse {
+        return CustomRecognizerResponse.deserialize(bytes);
+    }
+}
+export class CustomActionInit extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        name?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("name" in data && data.name != undefined) {
+                this.name = data.name;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get name() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set name(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_name() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _name() {
+        const cases: {
+            [index: number]: "none" | "name";
+        } = {
+            0: "none",
+            2: "name"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        name?: string;
+    }): CustomActionInit {
+        const message = new CustomActionInit({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.name != null) {
+            message.name = data.name;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            name?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.name != null) {
+            data.name = this.name;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_name)
+            writer.writeString(2, this.name);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionInit {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionInit();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.name = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomActionInit {
+        return CustomActionInit.deserialize(bytes);
+    }
+}
+export class CustomActionRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[101], [1]];
+    constructor(data?: any[] | ({} & (({
+        init?: CustomActionInit;
+    }) | ({
+        ok?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("ok" in data && data.ok != undefined) {
+                this.ok = data.ok;
+            }
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
+            }
+        }
+    }
+    get ok() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    }
+    set ok(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
+    }
+    get has_ok() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get init() {
+        return pb_1.Message.getWrapperField(this, CustomActionInit, 101) as CustomActionInit;
+    }
+    set init(value: CustomActionInit) {
+        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_init() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get result() {
+        const cases: {
+            [index: number]: "none" | "init";
+        } = {
+            0: "none",
+            101: "init"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101])];
+    }
+    get _ok() {
+        const cases: {
+            [index: number]: "none" | "ok";
+        } = {
+            0: "none",
+            1: "ok"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        ok?: boolean;
+        init?: ReturnType<typeof CustomActionInit.prototype.toObject>;
+    }): CustomActionRequest {
+        const message = new CustomActionRequest({});
+        if (data.ok != null) {
+            message.ok = data.ok;
+        }
+        if (data.init != null) {
+            message.init = CustomActionInit.fromObject(data.init);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            ok?: boolean;
+            init?: ReturnType<typeof CustomActionInit.prototype.toObject>;
+        } = {};
+        if (this.ok != null) {
+            data.ok = this.ok;
+        }
+        if (this.init != null) {
+            data.init = this.init.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_ok)
+            writer.writeBool(1, this.ok);
+        if (this.has_init)
+            writer.writeMessage(101, this.init, () => this.init.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.ok = reader.readBool();
+                    break;
+                case 101:
+                    reader.readMessage(message.init, () => message.init = CustomActionInit.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomActionRequest {
+        return CustomActionRequest.deserialize(bytes);
+    }
+}
+export class CustomActionRunParam extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
+    constructor(data?: any[] | ({} & (({
+        context?: string;
+    }) | ({
+        task?: string;
+    }) | ({
+        param?: string;
+    }) | ({
+        box?: Rect;
+    }) | ({
+        detail?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("context" in data && data.context != undefined) {
+                this.context = data.context;
+            }
+            if ("task" in data && data.task != undefined) {
+                this.task = data.task;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+            if ("box" in data && data.box != undefined) {
+                this.box = data.box;
+            }
+            if ("detail" in data && data.detail != undefined) {
+                this.detail = data.detail;
+            }
+        }
+    }
+    get context() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set context(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_context() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get task() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set task(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_task() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get param() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set param(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get box() {
+        return pb_1.Message.getWrapperField(this, Rect, 4) as Rect;
+    }
+    set box(value: Rect) {
+        pb_1.Message.setOneofWrapperField(this, 4, this.#one_of_decls[3], value);
+    }
+    get has_box() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get detail() {
+        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
+    }
+    set detail(value: string) {
+        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
+    }
+    get has_detail() {
+        return pb_1.Message.getField(this, 5) != null;
+    }
+    get _context() {
+        const cases: {
+            [index: number]: "none" | "context";
+        } = {
+            0: "none",
+            1: "context"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _task() {
+        const cases: {
+            [index: number]: "none" | "task";
+        } = {
+            0: "none",
+            2: "task"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            3: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    get _box() {
+        const cases: {
+            [index: number]: "none" | "box";
+        } = {
+            0: "none",
+            4: "box"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [4])];
+    }
+    get _detail() {
+        const cases: {
+            [index: number]: "none" | "detail";
+        } = {
+            0: "none",
+            5: "detail"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [5])];
+    }
+    static fromObject(data: {
+        context?: string;
+        task?: string;
+        param?: string;
+        box?: ReturnType<typeof Rect.prototype.toObject>;
+        detail?: string;
+    }): CustomActionRunParam {
+        const message = new CustomActionRunParam({});
+        if (data.context != null) {
+            message.context = data.context;
+        }
+        if (data.task != null) {
+            message.task = data.task;
+        }
+        if (data.param != null) {
+            message.param = data.param;
+        }
+        if (data.box != null) {
+            message.box = Rect.fromObject(data.box);
+        }
+        if (data.detail != null) {
+            message.detail = data.detail;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            context?: string;
+            task?: string;
+            param?: string;
+            box?: ReturnType<typeof Rect.prototype.toObject>;
+            detail?: string;
+        } = {};
+        if (this.context != null) {
+            data.context = this.context;
+        }
+        if (this.task != null) {
+            data.task = this.task;
+        }
+        if (this.param != null) {
+            data.param = this.param;
+        }
+        if (this.box != null) {
+            data.box = this.box.toObject();
+        }
+        if (this.detail != null) {
+            data.detail = this.detail;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_context)
+            writer.writeString(1, this.context);
+        if (this.has_task)
+            writer.writeString(2, this.task);
+        if (this.has_param)
+            writer.writeString(3, this.param);
+        if (this.has_box)
+            writer.writeMessage(4, this.box, () => this.box.serialize(writer));
+        if (this.has_detail)
+            writer.writeString(5, this.detail);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionRunParam {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionRunParam();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.context = reader.readString();
+                    break;
+                case 2:
+                    message.task = reader.readString();
+                    break;
+                case 3:
+                    message.param = reader.readString();
+                    break;
+                case 4:
+                    reader.readMessage(message.box, () => message.box = Rect.deserialize(reader));
+                    break;
+                case 5:
+                    message.detail = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomActionRunParam {
+        return CustomActionRunParam.deserialize(bytes);
+    }
+}
+export class CustomActionResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [[101, 102]];
+    constructor(data?: any[] | ({} & (({
+        run?: CustomActionRunParam;
+        stop?: never;
+    } | {
+        run?: never;
+        stop?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("run" in data && data.run != undefined) {
+                this.run = data.run;
+            }
+            if ("stop" in data && data.stop != undefined) {
+                this.stop = data.stop;
+            }
+        }
+    }
+    get run() {
+        return pb_1.Message.getWrapperField(this, CustomActionRunParam, 101) as CustomActionRunParam;
+    }
+    set run(value: CustomActionRunParam) {
+        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_run() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get stop() {
+        return pb_1.Message.getFieldWithDefault(this, 102, false) as boolean;
+    }
+    set stop(value: boolean) {
+        pb_1.Message.setOneofField(this, 102, this.#one_of_decls[0], value);
+    }
+    get has_stop() {
+        return pb_1.Message.getField(this, 102) != null;
+    }
+    get command() {
+        const cases: {
+            [index: number]: "none" | "run" | "stop";
+        } = {
+            0: "none",
+            101: "run",
+            102: "stop"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101, 102])];
+    }
+    static fromObject(data: {
+        run?: ReturnType<typeof CustomActionRunParam.prototype.toObject>;
+        stop?: boolean;
+    }): CustomActionResponse {
+        const message = new CustomActionResponse({});
+        if (data.run != null) {
+            message.run = CustomActionRunParam.fromObject(data.run);
+        }
+        if (data.stop != null) {
+            message.stop = data.stop;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            run?: ReturnType<typeof CustomActionRunParam.prototype.toObject>;
+            stop?: boolean;
+        } = {};
+        if (this.run != null) {
+            data.run = this.run.toObject();
+        }
+        if (this.stop != null) {
+            data.stop = this.stop;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_run)
+            writer.writeMessage(101, this.run, () => this.run.serialize(writer));
+        if (this.has_stop)
+            writer.writeBool(102, this.stop);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CustomActionResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CustomActionResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 101:
+                    reader.readMessage(message.run, () => message.run = CustomActionRunParam.deserialize(reader));
+                    break;
+                case 102:
+                    message.stop = reader.readBool();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CustomActionResponse {
+        return CustomActionResponse.deserialize(bytes);
+    }
+}
+export class DeviceInfo extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
+    constructor(data?: any[] | ({} & (({
+        name?: string;
+    }) | ({
+        adb_path?: string;
+    }) | ({
+        adb_serial?: string;
+    }) | ({
+        adb_type?: number;
+    }) | ({
+        adb_config?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("name" in data && data.name != undefined) {
+                this.name = data.name;
+            }
+            if ("adb_path" in data && data.adb_path != undefined) {
+                this.adb_path = data.adb_path;
+            }
+            if ("adb_serial" in data && data.adb_serial != undefined) {
+                this.adb_serial = data.adb_serial;
+            }
+            if ("adb_type" in data && data.adb_type != undefined) {
+                this.adb_type = data.adb_type;
+            }
+            if ("adb_config" in data && data.adb_config != undefined) {
+                this.adb_config = data.adb_config;
+            }
+        }
+    }
+    get name() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set name(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_name() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get adb_path() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set adb_path(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_adb_path() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get adb_serial() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set adb_serial(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_adb_serial() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get adb_type() {
+        return pb_1.Message.getFieldWithDefault(this, 4, 0) as number;
+    }
+    set adb_type(value: number) {
+        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
+    }
+    get has_adb_type() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get adb_config() {
+        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
+    }
+    set adb_config(value: string) {
+        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
+    }
+    get has_adb_config() {
+        return pb_1.Message.getField(this, 5) != null;
+    }
+    get _name() {
+        const cases: {
+            [index: number]: "none" | "name";
+        } = {
+            0: "none",
+            1: "name"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _adb_path() {
+        const cases: {
+            [index: number]: "none" | "adb_path";
+        } = {
+            0: "none",
+            2: "adb_path"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _adb_serial() {
+        const cases: {
+            [index: number]: "none" | "adb_serial";
+        } = {
+            0: "none",
+            3: "adb_serial"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    get _adb_type() {
+        const cases: {
+            [index: number]: "none" | "adb_type";
+        } = {
+            0: "none",
+            4: "adb_type"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [4])];
+    }
+    get _adb_config() {
+        const cases: {
+            [index: number]: "none" | "adb_config";
+        } = {
+            0: "none",
+            5: "adb_config"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [5])];
+    }
+    static fromObject(data: {
+        name?: string;
+        adb_path?: string;
+        adb_serial?: string;
+        adb_type?: number;
+        adb_config?: string;
+    }): DeviceInfo {
+        const message = new DeviceInfo({});
+        if (data.name != null) {
+            message.name = data.name;
+        }
+        if (data.adb_path != null) {
+            message.adb_path = data.adb_path;
+        }
+        if (data.adb_serial != null) {
+            message.adb_serial = data.adb_serial;
+        }
+        if (data.adb_type != null) {
+            message.adb_type = data.adb_type;
+        }
+        if (data.adb_config != null) {
+            message.adb_config = data.adb_config;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            name?: string;
+            adb_path?: string;
+            adb_serial?: string;
+            adb_type?: number;
+            adb_config?: string;
+        } = {};
+        if (this.name != null) {
+            data.name = this.name;
+        }
+        if (this.adb_path != null) {
+            data.adb_path = this.adb_path;
+        }
+        if (this.adb_serial != null) {
+            data.adb_serial = this.adb_serial;
+        }
+        if (this.adb_type != null) {
+            data.adb_type = this.adb_type;
+        }
+        if (this.adb_config != null) {
+            data.adb_config = this.adb_config;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_name)
+            writer.writeString(1, this.name);
+        if (this.has_adb_path)
+            writer.writeString(2, this.adb_path);
+        if (this.has_adb_serial)
+            writer.writeString(3, this.adb_serial);
+        if (this.has_adb_type)
+            writer.writeInt32(4, this.adb_type);
+        if (this.has_adb_config)
+            writer.writeString(5, this.adb_config);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): DeviceInfo {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new DeviceInfo();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.name = reader.readString();
+                    break;
+                case 2:
+                    message.adb_path = reader.readString();
+                    break;
+                case 3:
+                    message.adb_serial = reader.readString();
+                    break;
+                case 4:
+                    message.adb_type = reader.readInt32();
+                    break;
+                case 5:
+                    message.adb_config = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): DeviceInfo {
+        return DeviceInfo.deserialize(bytes);
+    }
+}
+export class DeviceInfosResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [];
+    constructor(data?: any[] | {
+        info?: DeviceInfo[];
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("info" in data && data.info != undefined) {
+                this.info = data.info;
+            }
+        }
+    }
+    get info() {
+        return pb_1.Message.getRepeatedWrapperField(this, DeviceInfo, 1) as DeviceInfo[];
+    }
+    set info(value: DeviceInfo[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 1, value);
+    }
+    static fromObject(data: {
+        info?: ReturnType<typeof DeviceInfo.prototype.toObject>[];
+    }): DeviceInfosResponse {
+        const message = new DeviceInfosResponse({});
+        if (data.info != null) {
+            message.info = data.info.map(item => DeviceInfo.fromObject(item));
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            info?: ReturnType<typeof DeviceInfo.prototype.toObject>[];
+        } = {};
+        if (this.info != null) {
+            data.info = this.info.map((item: DeviceInfo) => item.toObject());
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.info.length)
+            writer.writeRepeatedMessage(1, this.info, (item: DeviceInfo) => item.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): DeviceInfosResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new DeviceInfosResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.info, () => pb_1.Message.addToRepeatedWrapperField(message, 1, DeviceInfo.deserialize(reader), DeviceInfo));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): DeviceInfosResponse {
+        return DeviceInfosResponse.deserialize(bytes);
+    }
+}
+export class InstancePostTaskRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        task?: string;
+    }) | ({
+        param?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("task" in data && data.task != undefined) {
+                this.task = data.task;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get task() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set task(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_task() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get param() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set param(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _task() {
+        const cases: {
+            [index: number]: "none" | "task";
+        } = {
+            0: "none",
+            2: "task"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            3: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        task?: string;
+        param?: string;
+    }): InstancePostTaskRequest {
+        const message = new InstancePostTaskRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.task != null) {
+            message.task = data.task;
+        }
+        if (data.param != null) {
+            message.param = data.param;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            task?: string;
+            param?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.task != null) {
+            data.task = this.task;
+        }
+        if (this.param != null) {
+            data.param = this.param;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_task)
+            writer.writeString(2, this.task);
+        if (this.has_param)
+            writer.writeString(3, this.param);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): InstancePostTaskRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new InstancePostTaskRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.task = reader.readString();
+                    break;
+                case 3:
+                    message.param = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): InstancePostTaskRequest {
+        return InstancePostTaskRequest.deserialize(bytes);
+    }
+}
+export class InstanceSetTaskParamRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        id?: number;
+    }) | ({
+        param?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("id" in data && data.id != undefined) {
+                this.id = data.id;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get id() {
+        return pb_1.Message.getFieldWithDefault(this, 2, 0) as number;
+    }
+    set id(value: number) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_id() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get param() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set param(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _id() {
+        const cases: {
+            [index: number]: "none" | "id";
+        } = {
+            0: "none",
+            2: "id"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            3: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        id?: number;
+        param?: string;
+    }): InstanceSetTaskParamRequest {
+        const message = new InstanceSetTaskParamRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.id != null) {
+            message.id = data.id;
+        }
+        if (data.param != null) {
+            message.param = data.param;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            id?: number;
+            param?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.id != null) {
+            data.id = this.id;
+        }
+        if (this.param != null) {
+            data.param = this.param;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_id)
+            writer.writeUint64(2, this.id);
+        if (this.has_param)
+            writer.writeString(3, this.param);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): InstanceSetTaskParamRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new InstanceSetTaskParamRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.id = reader.readUint64();
+                    break;
+                case 3:
+                    message.param = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): InstanceSetTaskParamRequest {
+        return InstanceSetTaskParamRequest.deserialize(bytes);
+    }
+}
+export class SyncContextRunTaskRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        task?: string;
+    }) | ({
+        param?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("task" in data && data.task != undefined) {
+                this.task = data.task;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get task() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set task(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_task() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get param() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set param(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _task() {
+        const cases: {
+            [index: number]: "none" | "task";
+        } = {
+            0: "none",
+            2: "task"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            3: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        task?: string;
+        param?: string;
+    }): SyncContextRunTaskRequest {
+        const message = new SyncContextRunTaskRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.task != null) {
+            message.task = data.task;
+        }
+        if (data.param != null) {
+            message.param = data.param;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            task?: string;
+            param?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.task != null) {
+            data.task = this.task;
+        }
+        if (this.param != null) {
+            data.param = this.param;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_task)
+            writer.writeString(2, this.task);
+        if (this.has_param)
+            writer.writeString(3, this.param);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunTaskRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunTaskRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.task = reader.readString();
+                    break;
+                case 3:
+                    message.param = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextRunTaskRequest {
+        return SyncContextRunTaskRequest.deserialize(bytes);
+    }
+}
+export class SyncContextRunRecognizerRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3], [4]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        task?: string;
+    }) | ({
+        param?: string;
+    }) | ({
+        image_handle?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("task" in data && data.task != undefined) {
+                this.task = data.task;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+            if ("image_handle" in data && data.image_handle != undefined) {
+                this.image_handle = data.image_handle;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get task() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set task(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_task() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get param() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set param(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get image_handle() {
+        return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
+    }
+    set image_handle(value: string) {
+        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
+    }
+    get has_image_handle() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _task() {
+        const cases: {
+            [index: number]: "none" | "task";
+        } = {
+            0: "none",
+            2: "task"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            3: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    get _image_handle() {
+        const cases: {
+            [index: number]: "none" | "image_handle";
+        } = {
+            0: "none",
+            4: "image_handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [4])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        task?: string;
+        param?: string;
+        image_handle?: string;
+    }): SyncContextRunRecognizerRequest {
+        const message = new SyncContextRunRecognizerRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.task != null) {
+            message.task = data.task;
+        }
+        if (data.param != null) {
+            message.param = data.param;
+        }
+        if (data.image_handle != null) {
+            message.image_handle = data.image_handle;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            task?: string;
+            param?: string;
+            image_handle?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.task != null) {
+            data.task = this.task;
+        }
+        if (this.param != null) {
+            data.param = this.param;
+        }
+        if (this.image_handle != null) {
+            data.image_handle = this.image_handle;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_task)
+            writer.writeString(2, this.task);
+        if (this.has_param)
+            writer.writeString(3, this.param);
+        if (this.has_image_handle)
+            writer.writeString(4, this.image_handle);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunRecognizerRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunRecognizerRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.task = reader.readString();
+                    break;
+                case 3:
+                    message.param = reader.readString();
+                    break;
+                case 4:
+                    message.image_handle = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextRunRecognizerRequest {
+        return SyncContextRunRecognizerRequest.deserialize(bytes);
+    }
+}
+export class SyncContextRunRecognizerResponse extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3]];
+    constructor(data?: any[] | ({} & (({
+        match?: boolean;
+    }) | ({
+        box?: Rect;
+    }) | ({
+        detail?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("match" in data && data.match != undefined) {
+                this.match = data.match;
+            }
+            if ("box" in data && data.box != undefined) {
+                this.box = data.box;
+            }
+            if ("detail" in data && data.detail != undefined) {
+                this.detail = data.detail;
+            }
+        }
+    }
+    get match() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    }
+    set match(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_match() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get box() {
+        return pb_1.Message.getWrapperField(this, Rect, 2) as Rect;
+    }
+    set box(value: Rect) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_box() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get detail() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set detail(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_detail() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get _match() {
+        const cases: {
+            [index: number]: "none" | "match";
+        } = {
+            0: "none",
+            1: "match"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _box() {
+        const cases: {
+            [index: number]: "none" | "box";
+        } = {
+            0: "none",
+            2: "box"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _detail() {
+        const cases: {
+            [index: number]: "none" | "detail";
+        } = {
+            0: "none",
+            3: "detail"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    static fromObject(data: {
+        match?: boolean;
+        box?: ReturnType<typeof Rect.prototype.toObject>;
+        detail?: string;
+    }): SyncContextRunRecognizerResponse {
+        const message = new SyncContextRunRecognizerResponse({});
+        if (data.match != null) {
+            message.match = data.match;
+        }
+        if (data.box != null) {
+            message.box = Rect.fromObject(data.box);
+        }
+        if (data.detail != null) {
+            message.detail = data.detail;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            match?: boolean;
+            box?: ReturnType<typeof Rect.prototype.toObject>;
+            detail?: string;
+        } = {};
+        if (this.match != null) {
+            data.match = this.match;
+        }
+        if (this.box != null) {
+            data.box = this.box.toObject();
+        }
+        if (this.detail != null) {
+            data.detail = this.detail;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_match)
+            writer.writeBool(1, this.match);
+        if (this.has_box)
+            writer.writeMessage(2, this.box, () => this.box.serialize(writer));
+        if (this.has_detail)
+            writer.writeString(3, this.detail);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunRecognizerResponse {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunRecognizerResponse();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.match = reader.readBool();
+                    break;
+                case 2:
+                    reader.readMessage(message.box, () => message.box = Rect.deserialize(reader));
+                    break;
+                case 3:
+                    message.detail = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextRunRecognizerResponse {
+        return SyncContextRunRecognizerResponse.deserialize(bytes);
+    }
+}
+export class SyncContextRunActionRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        task?: string;
+    }) | ({
+        param?: string;
+    }) | ({
+        box?: Rect;
+    }) | ({
+        detail?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("task" in data && data.task != undefined) {
+                this.task = data.task;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+            if ("box" in data && data.box != undefined) {
+                this.box = data.box;
+            }
+            if ("detail" in data && data.detail != undefined) {
+                this.detail = data.detail;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get task() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set task(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_task() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get param() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+    set param(value: string) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get box() {
+        return pb_1.Message.getWrapperField(this, Rect, 4) as Rect;
+    }
+    set box(value: Rect) {
+        pb_1.Message.setOneofWrapperField(this, 4, this.#one_of_decls[3], value);
+    }
+    get has_box() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get detail() {
+        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
+    }
+    set detail(value: string) {
+        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
+    }
+    get has_detail() {
+        return pb_1.Message.getField(this, 5) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _task() {
+        const cases: {
+            [index: number]: "none" | "task";
+        } = {
+            0: "none",
+            2: "task"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            3: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [3])];
+    }
+    get _box() {
+        const cases: {
+            [index: number]: "none" | "box";
+        } = {
+            0: "none",
+            4: "box"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [4])];
+    }
+    get _detail() {
+        const cases: {
+            [index: number]: "none" | "detail";
+        } = {
+            0: "none",
+            5: "detail"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [5])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        task?: string;
+        param?: string;
+        box?: ReturnType<typeof Rect.prototype.toObject>;
+        detail?: string;
+    }): SyncContextRunActionRequest {
+        const message = new SyncContextRunActionRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.task != null) {
+            message.task = data.task;
+        }
+        if (data.param != null) {
+            message.param = data.param;
+        }
+        if (data.box != null) {
+            message.box = Rect.fromObject(data.box);
+        }
+        if (data.detail != null) {
+            message.detail = data.detail;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            task?: string;
+            param?: string;
+            box?: ReturnType<typeof Rect.prototype.toObject>;
+            detail?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.task != null) {
+            data.task = this.task;
+        }
+        if (this.param != null) {
+            data.param = this.param;
+        }
+        if (this.box != null) {
+            data.box = this.box.toObject();
+        }
+        if (this.detail != null) {
+            data.detail = this.detail;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_task)
+            writer.writeString(2, this.task);
+        if (this.has_param)
+            writer.writeString(3, this.param);
+        if (this.has_box)
+            writer.writeMessage(4, this.box, () => this.box.serialize(writer));
+        if (this.has_detail)
+            writer.writeString(5, this.detail);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextRunActionRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextRunActionRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.task = reader.readString();
+                    break;
+                case 3:
+                    message.param = reader.readString();
+                    break;
+                case 4:
+                    reader.readMessage(message.box, () => message.box = Rect.deserialize(reader));
+                    break;
+                case 5:
+                    message.detail = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextRunActionRequest {
+        return SyncContextRunActionRequest.deserialize(bytes);
+    }
+}
+export class SyncContextClickRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: ClickParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, ClickParam, 2) as ClickParam;
+    }
+    set param(value: ClickParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof ClickParam.prototype.toObject>;
+    }): SyncContextClickRequest {
+        const message = new SyncContextClickRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = ClickParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof ClickParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextClickRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextClickRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = ClickParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextClickRequest {
+        return SyncContextClickRequest.deserialize(bytes);
+    }
+}
+export class SyncContextSwipeRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: SwipeParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, SwipeParam, 2) as SwipeParam;
+    }
+    set param(value: SwipeParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof SwipeParam.prototype.toObject>;
+    }): SyncContextSwipeRequest {
+        const message = new SyncContextSwipeRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = SwipeParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof SwipeParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextSwipeRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextSwipeRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = SwipeParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextSwipeRequest {
+        return SyncContextSwipeRequest.deserialize(bytes);
+    }
+}
+export class SyncContextKeyRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: KeyParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, KeyParam, 2) as KeyParam;
+    }
+    set param(value: KeyParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof KeyParam.prototype.toObject>;
+    }): SyncContextKeyRequest {
+        const message = new SyncContextKeyRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = KeyParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof KeyParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextKeyRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextKeyRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = KeyParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextKeyRequest {
+        return SyncContextKeyRequest.deserialize(bytes);
+    }
+}
+export class SyncContextTouchRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        param?: TouchParam;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("param" in data && data.param != undefined) {
+                this.param = data.param;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get param() {
+        return pb_1.Message.getWrapperField(this, TouchParam, 2) as TouchParam;
+    }
+    set param(value: TouchParam) {
+        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_param() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _param() {
+        const cases: {
+            [index: number]: "none" | "param";
+        } = {
+            0: "none",
+            2: "param"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        param?: ReturnType<typeof TouchParam.prototype.toObject>;
+    }): SyncContextTouchRequest {
+        const message = new SyncContextTouchRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.param != null) {
+            message.param = TouchParam.fromObject(data.param);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            param?: ReturnType<typeof TouchParam.prototype.toObject>;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.param != null) {
+            data.param = this.param.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_param)
+            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextTouchRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextTouchRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    reader.readMessage(message.param, () => message.param = TouchParam.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextTouchRequest {
+        return SyncContextTouchRequest.deserialize(bytes);
+    }
+}
+export class SyncContextScreencapRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1], [2]];
+    constructor(data?: any[] | ({} & (({
+        handle?: string;
+    }) | ({
+        image_handle?: string;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("handle" in data && data.handle != undefined) {
+                this.handle = data.handle;
+            }
+            if ("image_handle" in data && data.image_handle != undefined) {
+                this.image_handle = data.image_handle;
+            }
+        }
+    }
+    get handle() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set handle(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_handle() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get image_handle() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+    set image_handle(value: string) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
+    }
+    get has_image_handle() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get _handle() {
+        const cases: {
+            [index: number]: "none" | "handle";
+        } = {
+            0: "none",
+            1: "handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    get _image_handle() {
+        const cases: {
+            [index: number]: "none" | "image_handle";
+        } = {
+            0: "none",
+            2: "image_handle"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [2])];
+    }
+    static fromObject(data: {
+        handle?: string;
+        image_handle?: string;
+    }): SyncContextScreencapRequest {
+        const message = new SyncContextScreencapRequest({});
+        if (data.handle != null) {
+            message.handle = data.handle;
+        }
+        if (data.image_handle != null) {
+            message.image_handle = data.image_handle;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            handle?: string;
+            image_handle?: string;
+        } = {};
+        if (this.handle != null) {
+            data.handle = this.handle;
+        }
+        if (this.image_handle != null) {
+            data.image_handle = this.image_handle;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_handle)
+            writer.writeString(1, this.handle);
+        if (this.has_image_handle)
+            writer.writeString(2, this.image_handle);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SyncContextScreencapRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SyncContextScreencapRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.handle = reader.readString();
+                    break;
+                case 2:
+                    message.image_handle = reader.readString();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SyncContextScreencapRequest {
+        return SyncContextScreencapRequest.deserialize(bytes);
+    }
+}
+export class SetGlobalOptionRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[1, 2, 3, 4, 5]];
+    constructor(data?: any[] | ({} & (({
+        log_dir?: string;
+        save_draw?: never;
+        recording?: never;
+        stdout_level?: never;
+        show_draw?: never;
+    } | {
+        log_dir?: never;
+        save_draw?: boolean;
+        recording?: never;
+        stdout_level?: never;
+        show_draw?: never;
+    } | {
+        log_dir?: never;
+        save_draw?: never;
+        recording?: boolean;
+        stdout_level?: never;
+        show_draw?: never;
+    } | {
+        log_dir?: never;
+        save_draw?: never;
+        recording?: never;
+        stdout_level?: number;
+        show_draw?: never;
+    } | {
+        log_dir?: never;
+        save_draw?: never;
+        recording?: never;
+        stdout_level?: never;
+        show_draw?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("log_dir" in data && data.log_dir != undefined) {
+                this.log_dir = data.log_dir;
+            }
+            if ("save_draw" in data && data.save_draw != undefined) {
+                this.save_draw = data.save_draw;
+            }
+            if ("recording" in data && data.recording != undefined) {
+                this.recording = data.recording;
+            }
+            if ("stdout_level" in data && data.stdout_level != undefined) {
+                this.stdout_level = data.stdout_level;
+            }
+            if ("show_draw" in data && data.show_draw != undefined) {
+                this.show_draw = data.show_draw;
+            }
+        }
+    }
+    get log_dir() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+    set log_dir(value: string) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
+    }
+    get has_log_dir() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get save_draw() {
+        return pb_1.Message.getFieldWithDefault(this, 2, false) as boolean;
+    }
+    set save_draw(value: boolean) {
+        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[0], value);
+    }
+    get has_save_draw() {
+        return pb_1.Message.getField(this, 2) != null;
+    }
+    get recording() {
+        return pb_1.Message.getFieldWithDefault(this, 3, false) as boolean;
+    }
+    set recording(value: boolean) {
+        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[0], value);
+    }
+    get has_recording() {
+        return pb_1.Message.getField(this, 3) != null;
+    }
+    get stdout_level() {
+        return pb_1.Message.getFieldWithDefault(this, 4, 0) as number;
+    }
+    set stdout_level(value: number) {
+        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[0], value);
+    }
+    get has_stdout_level() {
+        return pb_1.Message.getField(this, 4) != null;
+    }
+    get show_draw() {
+        return pb_1.Message.getFieldWithDefault(this, 5, false) as boolean;
+    }
+    set show_draw(value: boolean) {
+        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[0], value);
+    }
+    get has_show_draw() {
+        return pb_1.Message.getField(this, 5) != null;
+    }
+    get option() {
+        const cases: {
+            [index: number]: "none" | "log_dir" | "save_draw" | "recording" | "stdout_level" | "show_draw";
+        } = {
+            0: "none",
+            1: "log_dir",
+            2: "save_draw",
+            3: "recording",
+            4: "stdout_level",
+            5: "show_draw"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1, 2, 3, 4, 5])];
+    }
+    static fromObject(data: {
+        log_dir?: string;
+        save_draw?: boolean;
+        recording?: boolean;
+        stdout_level?: number;
+        show_draw?: boolean;
+    }): SetGlobalOptionRequest {
+        const message = new SetGlobalOptionRequest({});
+        if (data.log_dir != null) {
+            message.log_dir = data.log_dir;
+        }
+        if (data.save_draw != null) {
+            message.save_draw = data.save_draw;
+        }
+        if (data.recording != null) {
+            message.recording = data.recording;
+        }
+        if (data.stdout_level != null) {
+            message.stdout_level = data.stdout_level;
+        }
+        if (data.show_draw != null) {
+            message.show_draw = data.show_draw;
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            log_dir?: string;
+            save_draw?: boolean;
+            recording?: boolean;
+            stdout_level?: number;
+            show_draw?: boolean;
+        } = {};
+        if (this.log_dir != null) {
+            data.log_dir = this.log_dir;
+        }
+        if (this.save_draw != null) {
+            data.save_draw = this.save_draw;
+        }
+        if (this.recording != null) {
+            data.recording = this.recording;
+        }
+        if (this.stdout_level != null) {
+            data.stdout_level = this.stdout_level;
+        }
+        if (this.show_draw != null) {
+            data.show_draw = this.show_draw;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_log_dir)
+            writer.writeString(1, this.log_dir);
+        if (this.has_save_draw)
+            writer.writeBool(2, this.save_draw);
+        if (this.has_recording)
+            writer.writeBool(3, this.recording);
+        if (this.has_stdout_level)
+            writer.writeInt32(4, this.stdout_level);
+        if (this.has_show_draw)
+            writer.writeBool(5, this.show_draw);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): SetGlobalOptionRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new SetGlobalOptionRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.log_dir = reader.readString();
+                    break;
+                case 2:
+                    message.save_draw = reader.readBool();
+                    break;
+                case 3:
+                    message.recording = reader.readBool();
+                    break;
+                case 4:
+                    message.stdout_level = reader.readInt32();
+                    break;
+                case 5:
+                    message.show_draw = reader.readBool();
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): SetGlobalOptionRequest {
+        return SetGlobalOptionRequest.deserialize(bytes);
+    }
+}

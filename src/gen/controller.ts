@@ -4,939 +4,7 @@
  * source: controller.proto
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as dependency_1 from "./types";
-import * as dependency_2 from "./custom.controller";
-import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
-export class AdbControllerRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3], [4], [5], [6]];
-    constructor(data?: any[] | ({} & (({
-        id?: string;
-    }) | ({
-        adb_path?: string;
-    }) | ({
-        adb_serial?: string;
-    }) | ({
-        adb_type?: number;
-    }) | ({
-        adb_config?: string;
-    }) | ({
-        agent_path?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("id" in data && data.id != undefined) {
-                this.id = data.id;
-            }
-            if ("adb_path" in data && data.adb_path != undefined) {
-                this.adb_path = data.adb_path;
-            }
-            if ("adb_serial" in data && data.adb_serial != undefined) {
-                this.adb_serial = data.adb_serial;
-            }
-            if ("adb_type" in data && data.adb_type != undefined) {
-                this.adb_type = data.adb_type;
-            }
-            if ("adb_config" in data && data.adb_config != undefined) {
-                this.adb_config = data.adb_config;
-            }
-            if ("agent_path" in data && data.agent_path != undefined) {
-                this.agent_path = data.agent_path;
-            }
-        }
-    }
-    get id() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set id(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_id() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get adb_path() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set adb_path(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_adb_path() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get adb_serial() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
-    }
-    set adb_serial(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_adb_serial() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get adb_type() {
-        return pb_1.Message.getFieldWithDefault(this, 4, 0) as number;
-    }
-    set adb_type(value: number) {
-        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
-    }
-    get has_adb_type() {
-        return pb_1.Message.getField(this, 4) != null;
-    }
-    get adb_config() {
-        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
-    }
-    set adb_config(value: string) {
-        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
-    }
-    get has_adb_config() {
-        return pb_1.Message.getField(this, 5) != null;
-    }
-    get agent_path() {
-        return pb_1.Message.getFieldWithDefault(this, 6, "") as string;
-    }
-    set agent_path(value: string) {
-        pb_1.Message.setOneofField(this, 6, this.#one_of_decls[5], value);
-    }
-    get has_agent_path() {
-        return pb_1.Message.getField(this, 6) != null;
-    }
-    get _id() {
-        const cases: {
-            [index: number]: "none" | "id";
-        } = {
-            0: "none",
-            1: "id"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _adb_path() {
-        const cases: {
-            [index: number]: "none" | "adb_path";
-        } = {
-            0: "none",
-            2: "adb_path"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _adb_serial() {
-        const cases: {
-            [index: number]: "none" | "adb_serial";
-        } = {
-            0: "none",
-            3: "adb_serial"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    get _adb_type() {
-        const cases: {
-            [index: number]: "none" | "adb_type";
-        } = {
-            0: "none",
-            4: "adb_type"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [4])];
-    }
-    get _adb_config() {
-        const cases: {
-            [index: number]: "none" | "adb_config";
-        } = {
-            0: "none",
-            5: "adb_config"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [5])];
-    }
-    get _agent_path() {
-        const cases: {
-            [index: number]: "none" | "agent_path";
-        } = {
-            0: "none",
-            6: "agent_path"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [6])];
-    }
-    static fromObject(data: {
-        id?: string;
-        adb_path?: string;
-        adb_serial?: string;
-        adb_type?: number;
-        adb_config?: string;
-        agent_path?: string;
-    }): AdbControllerRequest {
-        const message = new AdbControllerRequest({});
-        if (data.id != null) {
-            message.id = data.id;
-        }
-        if (data.adb_path != null) {
-            message.adb_path = data.adb_path;
-        }
-        if (data.adb_serial != null) {
-            message.adb_serial = data.adb_serial;
-        }
-        if (data.adb_type != null) {
-            message.adb_type = data.adb_type;
-        }
-        if (data.adb_config != null) {
-            message.adb_config = data.adb_config;
-        }
-        if (data.agent_path != null) {
-            message.agent_path = data.agent_path;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            id?: string;
-            adb_path?: string;
-            adb_serial?: string;
-            adb_type?: number;
-            adb_config?: string;
-            agent_path?: string;
-        } = {};
-        if (this.id != null) {
-            data.id = this.id;
-        }
-        if (this.adb_path != null) {
-            data.adb_path = this.adb_path;
-        }
-        if (this.adb_serial != null) {
-            data.adb_serial = this.adb_serial;
-        }
-        if (this.adb_type != null) {
-            data.adb_type = this.adb_type;
-        }
-        if (this.adb_config != null) {
-            data.adb_config = this.adb_config;
-        }
-        if (this.agent_path != null) {
-            data.agent_path = this.agent_path;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_id)
-            writer.writeString(1, this.id);
-        if (this.has_adb_path)
-            writer.writeString(2, this.adb_path);
-        if (this.has_adb_serial)
-            writer.writeString(3, this.adb_serial);
-        if (this.has_adb_type)
-            writer.writeUint32(4, this.adb_type);
-        if (this.has_adb_config)
-            writer.writeString(5, this.adb_config);
-        if (this.has_agent_path)
-            writer.writeString(6, this.agent_path);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): AdbControllerRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new AdbControllerRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.id = reader.readString();
-                    break;
-                case 2:
-                    message.adb_path = reader.readString();
-                    break;
-                case 3:
-                    message.adb_serial = reader.readString();
-                    break;
-                case 4:
-                    message.adb_type = reader.readUint32();
-                    break;
-                case 5:
-                    message.adb_config = reader.readString();
-                    break;
-                case 6:
-                    message.agent_path = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): AdbControllerRequest {
-        return AdbControllerRequest.deserialize(bytes);
-    }
-}
-export class ControllerSetOptionRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[101, 102, 103, 104], [1]];
-    constructor(data?: any[] | ({} & (({
-        long_side?: number;
-        short_side?: never;
-        def_package_entry?: never;
-        def_package?: never;
-    } | {
-        long_side?: never;
-        short_side?: number;
-        def_package_entry?: never;
-        def_package?: never;
-    } | {
-        long_side?: never;
-        short_side?: never;
-        def_package_entry?: string;
-        def_package?: never;
-    } | {
-        long_side?: never;
-        short_side?: never;
-        def_package_entry?: never;
-        def_package?: string;
-    }) | ({
-        handle?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("long_side" in data && data.long_side != undefined) {
-                this.long_side = data.long_side;
-            }
-            if ("short_side" in data && data.short_side != undefined) {
-                this.short_side = data.short_side;
-            }
-            if ("def_package_entry" in data && data.def_package_entry != undefined) {
-                this.def_package_entry = data.def_package_entry;
-            }
-            if ("def_package" in data && data.def_package != undefined) {
-                this.def_package = data.def_package;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get long_side() {
-        return pb_1.Message.getFieldWithDefault(this, 101, 0) as number;
-    }
-    set long_side(value: number) {
-        pb_1.Message.setOneofField(this, 101, this.#one_of_decls[0], value);
-    }
-    get has_long_side() {
-        return pb_1.Message.getField(this, 101) != null;
-    }
-    get short_side() {
-        return pb_1.Message.getFieldWithDefault(this, 102, 0) as number;
-    }
-    set short_side(value: number) {
-        pb_1.Message.setOneofField(this, 102, this.#one_of_decls[0], value);
-    }
-    get has_short_side() {
-        return pb_1.Message.getField(this, 102) != null;
-    }
-    get def_package_entry() {
-        return pb_1.Message.getFieldWithDefault(this, 103, "") as string;
-    }
-    set def_package_entry(value: string) {
-        pb_1.Message.setOneofField(this, 103, this.#one_of_decls[0], value);
-    }
-    get has_def_package_entry() {
-        return pb_1.Message.getField(this, 103) != null;
-    }
-    get def_package() {
-        return pb_1.Message.getFieldWithDefault(this, 104, "") as string;
-    }
-    set def_package(value: string) {
-        pb_1.Message.setOneofField(this, 104, this.#one_of_decls[0], value);
-    }
-    get has_def_package() {
-        return pb_1.Message.getField(this, 104) != null;
-    }
-    get option() {
-        const cases: {
-            [index: number]: "none" | "long_side" | "short_side" | "def_package_entry" | "def_package";
-        } = {
-            0: "none",
-            101: "long_side",
-            102: "short_side",
-            103: "def_package_entry",
-            104: "def_package"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [101, 102, 103, 104])];
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        long_side?: number;
-        short_side?: number;
-        def_package_entry?: string;
-        def_package?: string;
-    }): ControllerSetOptionRequest {
-        const message = new ControllerSetOptionRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.long_side != null) {
-            message.long_side = data.long_side;
-        }
-        if (data.short_side != null) {
-            message.short_side = data.short_side;
-        }
-        if (data.def_package_entry != null) {
-            message.def_package_entry = data.def_package_entry;
-        }
-        if (data.def_package != null) {
-            message.def_package = data.def_package;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            long_side?: number;
-            short_side?: number;
-            def_package_entry?: string;
-            def_package?: string;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.long_side != null) {
-            data.long_side = this.long_side;
-        }
-        if (this.short_side != null) {
-            data.short_side = this.short_side;
-        }
-        if (this.def_package_entry != null) {
-            data.def_package_entry = this.def_package_entry;
-        }
-        if (this.def_package != null) {
-            data.def_package = this.def_package;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_long_side)
-            writer.writeInt32(101, this.long_side);
-        if (this.has_short_side)
-            writer.writeInt32(102, this.short_side);
-        if (this.has_def_package_entry)
-            writer.writeString(103, this.def_package_entry);
-        if (this.has_def_package)
-            writer.writeString(104, this.def_package);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerSetOptionRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerSetOptionRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 101:
-                    message.long_side = reader.readInt32();
-                    break;
-                case 102:
-                    message.short_side = reader.readInt32();
-                    break;
-                case 103:
-                    message.def_package_entry = reader.readString();
-                    break;
-                case 104:
-                    message.def_package = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): ControllerSetOptionRequest {
-        return ControllerSetOptionRequest.deserialize(bytes);
-    }
-}
-export class ControllerPostClickRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.ClickParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.ClickParam, 2) as dependency_1.ClickParam;
-    }
-    set param(value: dependency_1.ClickParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
-    }): ControllerPostClickRequest {
-        const message = new ControllerPostClickRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.ClickParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.ClickParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostClickRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostClickRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.ClickParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): ControllerPostClickRequest {
-        return ControllerPostClickRequest.deserialize(bytes);
-    }
-}
-export class ControllerPostSwipeRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.SwipeParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.SwipeParam, 2) as dependency_1.SwipeParam;
-    }
-    set param(value: dependency_1.SwipeParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
-    }): ControllerPostSwipeRequest {
-        const message = new ControllerPostSwipeRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.SwipeParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.SwipeParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostSwipeRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostSwipeRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.SwipeParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): ControllerPostSwipeRequest {
-        return ControllerPostSwipeRequest.deserialize(bytes);
-    }
-}
-export class ControllerPostKeyRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.KeyParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.KeyParam, 2) as dependency_1.KeyParam;
-    }
-    set param(value: dependency_1.KeyParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.KeyParam.prototype.toObject>;
-    }): ControllerPostKeyRequest {
-        const message = new ControllerPostKeyRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.KeyParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.KeyParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostKeyRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostKeyRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.KeyParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): ControllerPostKeyRequest {
-        return ControllerPostKeyRequest.deserialize(bytes);
-    }
-}
-export class ControllerPostTouchRequest extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        handle?: string;
-    }) | ({
-        param?: dependency_1.TouchParam;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("handle" in data && data.handle != undefined) {
-                this.handle = data.handle;
-            }
-            if ("param" in data && data.param != undefined) {
-                this.param = data.param;
-            }
-        }
-    }
-    get handle() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set handle(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_handle() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get param() {
-        return pb_1.Message.getWrapperField(this, dependency_1.TouchParam, 2) as dependency_1.TouchParam;
-    }
-    set param(value: dependency_1.TouchParam) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_param() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _handle() {
-        const cases: {
-            [index: number]: "none" | "handle";
-        } = {
-            0: "none",
-            1: "handle"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _param() {
-        const cases: {
-            [index: number]: "none" | "param";
-        } = {
-            0: "none",
-            2: "param"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        handle?: string;
-        param?: ReturnType<typeof dependency_1.TouchParam.prototype.toObject>;
-    }): ControllerPostTouchRequest {
-        const message = new ControllerPostTouchRequest({});
-        if (data.handle != null) {
-            message.handle = data.handle;
-        }
-        if (data.param != null) {
-            message.param = dependency_1.TouchParam.fromObject(data.param);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            handle?: string;
-            param?: ReturnType<typeof dependency_1.TouchParam.prototype.toObject>;
-        } = {};
-        if (this.handle != null) {
-            data.handle = this.handle;
-        }
-        if (this.param != null) {
-            data.param = this.param.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_handle)
-            writer.writeString(1, this.handle);
-        if (this.has_param)
-            writer.writeMessage(2, this.param, () => this.param.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ControllerPostTouchRequest {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ControllerPostTouchRequest();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.handle = reader.readString();
-                    break;
-                case 2:
-                    reader.readMessage(message.param, () => message.param = dependency_1.TouchParam.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): ControllerPostTouchRequest {
-        return ControllerPostTouchRequest.deserialize(bytes);
-    }
-}
 interface GrpcUnaryServiceInterface<P, R> {
     (message: P, metadata: grpc_1.Metadata, options: grpc_1.CallOptions, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
     (message: P, metadata: grpc_1.Metadata, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
@@ -967,8 +35,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/create_adb",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: AdbControllerRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => AdbControllerRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.AdbControllerRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.AdbControllerRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.HandleResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.HandleResponse.deserialize(new Uint8Array(bytes))
         },
@@ -985,17 +53,17 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/create_custom",
             requestStream: true,
             responseStream: true,
-            requestSerialize: (message: dependency_2.CustomControllerRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_2.CustomControllerRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: dependency_2.CustomControllerResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => dependency_2.CustomControllerResponse.deserialize(new Uint8Array(bytes))
+            requestSerialize: (message: dependency_1.CustomControllerRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.CustomControllerRequest.deserialize(new Uint8Array(bytes)),
+            responseSerialize: (message: dependency_1.CustomControllerResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.CustomControllerResponse.deserialize(new Uint8Array(bytes))
         },
         set_option: {
             path: "/maarpc.Controller/set_option",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerSetOptionRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerSetOptionRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.ControllerSetOptionRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.ControllerSetOptionRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.EmptyResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.EmptyResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1012,8 +80,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/post_click",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerPostClickRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerPostClickRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.ControllerPostClickRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.ControllerPostClickRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1021,8 +89,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/post_swipe",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerPostSwipeRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerPostSwipeRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.ControllerPostSwipeRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.ControllerPostSwipeRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1030,8 +98,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/post_press_key",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerPostKeyRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerPostKeyRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.ControllerPostKeyRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.ControllerPostKeyRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1039,8 +107,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/post_touch_down",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerPostTouchRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.ControllerPostTouchRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1048,8 +116,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/post_touch_move",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerPostTouchRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.ControllerPostTouchRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1057,8 +125,8 @@ export abstract class UnimplementedControllerService {
             path: "/maarpc.Controller/post_touch_up",
             requestStream: false,
             responseStream: false,
-            requestSerialize: (message: ControllerPostTouchRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.ControllerPostTouchRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.ControllerPostTouchRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.IIdResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.IIdResponse.deserialize(new Uint8Array(bytes))
         },
@@ -1118,17 +186,17 @@ export abstract class UnimplementedControllerService {
         }
     };
     [method: string]: grpc_1.UntypedHandleCall;
-    abstract create_adb(call: grpc_1.ServerUnaryCall<AdbControllerRequest, dependency_1.HandleResponse>, callback: grpc_1.sendUnaryData<dependency_1.HandleResponse>): void;
+    abstract create_adb(call: grpc_1.ServerUnaryCall<dependency_1.AdbControllerRequest, dependency_1.HandleResponse>, callback: grpc_1.sendUnaryData<dependency_1.HandleResponse>): void;
     abstract destroy(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract create_custom(call: grpc_1.ServerDuplexStream<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse>): void;
-    abstract set_option(call: grpc_1.ServerUnaryCall<ControllerSetOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
+    abstract create_custom(call: grpc_1.ServerDuplexStream<dependency_1.CustomControllerRequest, dependency_1.CustomControllerResponse>): void;
+    abstract set_option(call: grpc_1.ServerUnaryCall<dependency_1.ControllerSetOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract post_connection(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
-    abstract post_click(call: grpc_1.ServerUnaryCall<ControllerPostClickRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
-    abstract post_swipe(call: grpc_1.ServerUnaryCall<ControllerPostSwipeRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
-    abstract post_press_key(call: grpc_1.ServerUnaryCall<ControllerPostKeyRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
-    abstract post_touch_down(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
-    abstract post_touch_move(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
-    abstract post_touch_up(call: grpc_1.ServerUnaryCall<ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_click(call: grpc_1.ServerUnaryCall<dependency_1.ControllerPostClickRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_swipe(call: grpc_1.ServerUnaryCall<dependency_1.ControllerPostSwipeRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_press_key(call: grpc_1.ServerUnaryCall<dependency_1.ControllerPostKeyRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_touch_down(call: grpc_1.ServerUnaryCall<dependency_1.ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_touch_move(call: grpc_1.ServerUnaryCall<dependency_1.ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
+    abstract post_touch_up(call: grpc_1.ServerUnaryCall<dependency_1.ControllerPostTouchRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
     abstract post_screencap(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.IIdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IIdResponse>): void;
     abstract status(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
     abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
@@ -1140,7 +208,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
     constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
         super(address, credentials, options);
     }
-    create_adb: GrpcPromiseServiceInterface<AdbControllerRequest, dependency_1.HandleResponse> = (message: AdbControllerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.HandleResponse> => { if (!metadata) {
+    create_adb: GrpcPromiseServiceInterface<dependency_1.AdbControllerRequest, dependency_1.HandleResponse> = (message: dependency_1.AdbControllerRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.HandleResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1164,10 +232,10 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    create_custom: GrpcChunkServiceInterface<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse> = (metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientDuplexStream<dependency_2.CustomControllerRequest, dependency_2.CustomControllerResponse> => {
+    create_custom: GrpcChunkServiceInterface<dependency_1.CustomControllerRequest, dependency_1.CustomControllerResponse> = (metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientDuplexStream<dependency_1.CustomControllerRequest, dependency_1.CustomControllerResponse> => {
         return super.create_custom(metadata, options);
     };
-    set_option: GrpcPromiseServiceInterface<ControllerSetOptionRequest, dependency_1.EmptyResponse> = (message: ControllerSetOptionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
+    set_option: GrpcPromiseServiceInterface<dependency_1.ControllerSetOptionRequest, dependency_1.EmptyResponse> = (message: dependency_1.ControllerSetOptionRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1191,7 +259,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_click: GrpcPromiseServiceInterface<ControllerPostClickRequest, dependency_1.IIdResponse> = (message: ControllerPostClickRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
+    post_click: GrpcPromiseServiceInterface<dependency_1.ControllerPostClickRequest, dependency_1.IIdResponse> = (message: dependency_1.ControllerPostClickRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1203,7 +271,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_swipe: GrpcPromiseServiceInterface<ControllerPostSwipeRequest, dependency_1.IIdResponse> = (message: ControllerPostSwipeRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
+    post_swipe: GrpcPromiseServiceInterface<dependency_1.ControllerPostSwipeRequest, dependency_1.IIdResponse> = (message: dependency_1.ControllerPostSwipeRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1215,7 +283,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_press_key: GrpcPromiseServiceInterface<ControllerPostKeyRequest, dependency_1.IIdResponse> = (message: ControllerPostKeyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
+    post_press_key: GrpcPromiseServiceInterface<dependency_1.ControllerPostKeyRequest, dependency_1.IIdResponse> = (message: dependency_1.ControllerPostKeyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1227,7 +295,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_touch_down: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
+    post_touch_down: GrpcPromiseServiceInterface<dependency_1.ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: dependency_1.ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1239,7 +307,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_touch_move: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
+    post_touch_move: GrpcPromiseServiceInterface<dependency_1.ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: dependency_1.ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
@@ -1251,7 +319,7 @@ export class ControllerClient extends grpc_1.makeGenericClientConstructor(Unimpl
             resolve(response);
         }
     })); };
-    post_touch_up: GrpcPromiseServiceInterface<ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
+    post_touch_up: GrpcPromiseServiceInterface<dependency_1.ControllerPostTouchRequest, dependency_1.IIdResponse> = (message: dependency_1.ControllerPostTouchRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.IIdResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};

@@ -4,298 +4,7 @@
  * source: device.proto
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as dependency_1 from "./types";
-import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
-export class DeviceInfo extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2], [3], [4], [5]];
-    constructor(data?: any[] | ({} & (({
-        name?: string;
-    }) | ({
-        adb_path?: string;
-    }) | ({
-        adb_serial?: string;
-    }) | ({
-        adb_type?: number;
-    }) | ({
-        adb_config?: string;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("name" in data && data.name != undefined) {
-                this.name = data.name;
-            }
-            if ("adb_path" in data && data.adb_path != undefined) {
-                this.adb_path = data.adb_path;
-            }
-            if ("adb_serial" in data && data.adb_serial != undefined) {
-                this.adb_serial = data.adb_serial;
-            }
-            if ("adb_type" in data && data.adb_type != undefined) {
-                this.adb_type = data.adb_type;
-            }
-            if ("adb_config" in data && data.adb_config != undefined) {
-                this.adb_config = data.adb_config;
-            }
-        }
-    }
-    get name() {
-        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
-    }
-    set name(value: string) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_name() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get adb_path() {
-        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
-    }
-    set adb_path(value: string) {
-        pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_adb_path() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get adb_serial() {
-        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
-    }
-    set adb_serial(value: string) {
-        pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
-    }
-    get has_adb_serial() {
-        return pb_1.Message.getField(this, 3) != null;
-    }
-    get adb_type() {
-        return pb_1.Message.getFieldWithDefault(this, 4, 0) as number;
-    }
-    set adb_type(value: number) {
-        pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
-    }
-    get has_adb_type() {
-        return pb_1.Message.getField(this, 4) != null;
-    }
-    get adb_config() {
-        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
-    }
-    set adb_config(value: string) {
-        pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
-    }
-    get has_adb_config() {
-        return pb_1.Message.getField(this, 5) != null;
-    }
-    get _name() {
-        const cases: {
-            [index: number]: "none" | "name";
-        } = {
-            0: "none",
-            1: "name"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _adb_path() {
-        const cases: {
-            [index: number]: "none" | "adb_path";
-        } = {
-            0: "none",
-            2: "adb_path"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    get _adb_serial() {
-        const cases: {
-            [index: number]: "none" | "adb_serial";
-        } = {
-            0: "none",
-            3: "adb_serial"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [3])];
-    }
-    get _adb_type() {
-        const cases: {
-            [index: number]: "none" | "adb_type";
-        } = {
-            0: "none",
-            4: "adb_type"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [4])];
-    }
-    get _adb_config() {
-        const cases: {
-            [index: number]: "none" | "adb_config";
-        } = {
-            0: "none",
-            5: "adb_config"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [5])];
-    }
-    static fromObject(data: {
-        name?: string;
-        adb_path?: string;
-        adb_serial?: string;
-        adb_type?: number;
-        adb_config?: string;
-    }): DeviceInfo {
-        const message = new DeviceInfo({});
-        if (data.name != null) {
-            message.name = data.name;
-        }
-        if (data.adb_path != null) {
-            message.adb_path = data.adb_path;
-        }
-        if (data.adb_serial != null) {
-            message.adb_serial = data.adb_serial;
-        }
-        if (data.adb_type != null) {
-            message.adb_type = data.adb_type;
-        }
-        if (data.adb_config != null) {
-            message.adb_config = data.adb_config;
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            name?: string;
-            adb_path?: string;
-            adb_serial?: string;
-            adb_type?: number;
-            adb_config?: string;
-        } = {};
-        if (this.name != null) {
-            data.name = this.name;
-        }
-        if (this.adb_path != null) {
-            data.adb_path = this.adb_path;
-        }
-        if (this.adb_serial != null) {
-            data.adb_serial = this.adb_serial;
-        }
-        if (this.adb_type != null) {
-            data.adb_type = this.adb_type;
-        }
-        if (this.adb_config != null) {
-            data.adb_config = this.adb_config;
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_name)
-            writer.writeString(1, this.name);
-        if (this.has_adb_path)
-            writer.writeString(2, this.adb_path);
-        if (this.has_adb_serial)
-            writer.writeString(3, this.adb_serial);
-        if (this.has_adb_type)
-            writer.writeInt32(4, this.adb_type);
-        if (this.has_adb_config)
-            writer.writeString(5, this.adb_config);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): DeviceInfo {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new DeviceInfo();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.name = reader.readString();
-                    break;
-                case 2:
-                    message.adb_path = reader.readString();
-                    break;
-                case 3:
-                    message.adb_serial = reader.readString();
-                    break;
-                case 4:
-                    message.adb_type = reader.readInt32();
-                    break;
-                case 5:
-                    message.adb_config = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): DeviceInfo {
-        return DeviceInfo.deserialize(bytes);
-    }
-}
-export class DeviceInfosResponse extends pb_1.Message {
-    #one_of_decls: number[][] = [];
-    constructor(data?: any[] | {
-        info?: DeviceInfo[];
-    }) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("info" in data && data.info != undefined) {
-                this.info = data.info;
-            }
-        }
-    }
-    get info() {
-        return pb_1.Message.getRepeatedWrapperField(this, DeviceInfo, 1) as DeviceInfo[];
-    }
-    set info(value: DeviceInfo[]) {
-        pb_1.Message.setRepeatedWrapperField(this, 1, value);
-    }
-    static fromObject(data: {
-        info?: ReturnType<typeof DeviceInfo.prototype.toObject>[];
-    }): DeviceInfosResponse {
-        const message = new DeviceInfosResponse({});
-        if (data.info != null) {
-            message.info = data.info.map(item => DeviceInfo.fromObject(item));
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            info?: ReturnType<typeof DeviceInfo.prototype.toObject>[];
-        } = {};
-        if (this.info != null) {
-            data.info = this.info.map((item: DeviceInfo) => item.toObject());
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.info.length)
-            writer.writeRepeatedMessage(1, this.info, (item: DeviceInfo) => item.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): DeviceInfosResponse {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new DeviceInfosResponse();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    reader.readMessage(message.info, () => pb_1.Message.addToRepeatedWrapperField(message, 1, DeviceInfo.deserialize(reader), DeviceInfo));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): DeviceInfosResponse {
-        return DeviceInfosResponse.deserialize(bytes);
-    }
-}
 interface GrpcUnaryServiceInterface<P, R> {
     (message: P, metadata: grpc_1.Metadata, options: grpc_1.CallOptions, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
     (message: P, metadata: grpc_1.Metadata, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
@@ -328,8 +37,8 @@ export abstract class UnimplementedDeviceService {
             responseStream: false,
             requestSerialize: (message: dependency_1.EmptyRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.EmptyRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: DeviceInfosResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => DeviceInfosResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.DeviceInfosResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.DeviceInfosResponse.deserialize(new Uint8Array(bytes))
         },
         find_with_adb: {
             path: "/maarpc.Device/find_with_adb",
@@ -337,23 +46,23 @@ export abstract class UnimplementedDeviceService {
             responseStream: false,
             requestSerialize: (message: dependency_1.StringRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.StringRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: DeviceInfosResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => DeviceInfosResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.DeviceInfosResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.DeviceInfosResponse.deserialize(new Uint8Array(bytes))
         }
     };
     [method: string]: grpc_1.UntypedHandleCall;
-    abstract find(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, DeviceInfosResponse>, callback: grpc_1.sendUnaryData<DeviceInfosResponse>): void;
-    abstract find_with_adb(call: grpc_1.ServerUnaryCall<dependency_1.StringRequest, DeviceInfosResponse>, callback: grpc_1.sendUnaryData<DeviceInfosResponse>): void;
+    abstract find(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.DeviceInfosResponse>, callback: grpc_1.sendUnaryData<dependency_1.DeviceInfosResponse>): void;
+    abstract find_with_adb(call: grpc_1.ServerUnaryCall<dependency_1.StringRequest, dependency_1.DeviceInfosResponse>, callback: grpc_1.sendUnaryData<dependency_1.DeviceInfosResponse>): void;
 }
 export class DeviceClient extends grpc_1.makeGenericClientConstructor(UnimplementedDeviceService.definition, "Device", {}) {
     constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
         super(address, credentials, options);
     }
-    find: GrpcPromiseServiceInterface<dependency_1.EmptyRequest, DeviceInfosResponse> = (message: dependency_1.EmptyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<DeviceInfosResponse> => { if (!metadata) {
+    find: GrpcPromiseServiceInterface<dependency_1.EmptyRequest, dependency_1.DeviceInfosResponse> = (message: dependency_1.EmptyRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.DeviceInfosResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.find(message, metadata, options, (error: grpc_1.ServiceError, response: DeviceInfosResponse) => {
+    } return new Promise((resolve, reject) => super.find(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.DeviceInfosResponse) => {
         if (error) {
             reject(error);
         }
@@ -361,11 +70,11 @@ export class DeviceClient extends grpc_1.makeGenericClientConstructor(Unimplemen
             resolve(response);
         }
     })); };
-    find_with_adb: GrpcPromiseServiceInterface<dependency_1.StringRequest, DeviceInfosResponse> = (message: dependency_1.StringRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<DeviceInfosResponse> => { if (!metadata) {
+    find_with_adb: GrpcPromiseServiceInterface<dependency_1.StringRequest, dependency_1.DeviceInfosResponse> = (message: dependency_1.StringRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.DeviceInfosResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.find_with_adb(message, metadata, options, (error: grpc_1.ServiceError, response: DeviceInfosResponse) => {
+    } return new Promise((resolve, reject) => super.find_with_adb(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.DeviceInfosResponse) => {
         if (error) {
             reject(error);
         }

@@ -4,123 +4,7 @@
  * source: buffer.proto
  * git: https://github.com/thesayyn/protoc-gen-ts */
 import * as dependency_1 from "./types";
-import * as pb_1 from "google-protobuf";
 import * as grpc_1 from "@grpc/grpc-js";
-export class ImageInfoResponse extends pb_1.Message {
-    #one_of_decls: number[][] = [[1], [2]];
-    constructor(data?: any[] | ({} & (({
-        type?: number;
-    }) | ({
-        size?: dependency_1.Size;
-    })))) {
-        super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
-        if (!Array.isArray(data) && typeof data == "object") {
-            if ("type" in data && data.type != undefined) {
-                this.type = data.type;
-            }
-            if ("size" in data && data.size != undefined) {
-                this.size = data.size;
-            }
-        }
-    }
-    get type() {
-        return pb_1.Message.getFieldWithDefault(this, 1, 0) as number;
-    }
-    set type(value: number) {
-        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
-    }
-    get has_type() {
-        return pb_1.Message.getField(this, 1) != null;
-    }
-    get size() {
-        return pb_1.Message.getWrapperField(this, dependency_1.Size, 2) as dependency_1.Size;
-    }
-    set size(value: dependency_1.Size) {
-        pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
-    }
-    get has_size() {
-        return pb_1.Message.getField(this, 2) != null;
-    }
-    get _type() {
-        const cases: {
-            [index: number]: "none" | "type";
-        } = {
-            0: "none",
-            1: "type"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [1])];
-    }
-    get _size() {
-        const cases: {
-            [index: number]: "none" | "size";
-        } = {
-            0: "none",
-            2: "size"
-        };
-        return cases[pb_1.Message.computeOneofCase(this, [2])];
-    }
-    static fromObject(data: {
-        type?: number;
-        size?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
-    }): ImageInfoResponse {
-        const message = new ImageInfoResponse({});
-        if (data.type != null) {
-            message.type = data.type;
-        }
-        if (data.size != null) {
-            message.size = dependency_1.Size.fromObject(data.size);
-        }
-        return message;
-    }
-    toObject() {
-        const data: {
-            type?: number;
-            size?: ReturnType<typeof dependency_1.Size.prototype.toObject>;
-        } = {};
-        if (this.type != null) {
-            data.type = this.type;
-        }
-        if (this.size != null) {
-            data.size = this.size.toObject();
-        }
-        return data;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.has_type)
-            writer.writeInt32(1, this.type);
-        if (this.has_size)
-            writer.writeMessage(2, this.size, () => this.size.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ImageInfoResponse {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ImageInfoResponse();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    message.type = reader.readInt32();
-                    break;
-                case 2:
-                    reader.readMessage(message.size, () => message.size = dependency_1.Size.deserialize(reader));
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
-    static deserializeBinary(bytes: Uint8Array): ImageInfoResponse {
-        return ImageInfoResponse.deserialize(bytes);
-    }
-}
 interface GrpcUnaryServiceInterface<P, R> {
     (message: P, metadata: grpc_1.Metadata, options: grpc_1.CallOptions, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
     (message: P, metadata: grpc_1.Metadata, callback: grpc_1.requestCallback<R>): grpc_1.ClientUnaryCall;
@@ -189,8 +73,8 @@ export abstract class UnimplementedImageService {
             responseStream: false,
             requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
             requestDeserialize: (bytes: Buffer) => dependency_1.HandleRequest.deserialize(new Uint8Array(bytes)),
-            responseSerialize: (message: ImageInfoResponse) => Buffer.from(message.serialize()),
-            responseDeserialize: (bytes: Buffer) => ImageInfoResponse.deserialize(new Uint8Array(bytes))
+            responseSerialize: (message: dependency_1.ImageInfoResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.ImageInfoResponse.deserialize(new Uint8Array(bytes))
         },
         encoded: {
             path: "/maarpc.Image/encoded",
@@ -216,7 +100,7 @@ export abstract class UnimplementedImageService {
     abstract destroy(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract is_empty(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
     abstract clear(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
-    abstract info(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, ImageInfoResponse>, callback: grpc_1.sendUnaryData<ImageInfoResponse>): void;
+    abstract info(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.ImageInfoResponse>, callback: grpc_1.sendUnaryData<dependency_1.ImageInfoResponse>): void;
     abstract encoded(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BufferResponse>, callback: grpc_1.sendUnaryData<dependency_1.BufferResponse>): void;
     abstract set_encoded(call: grpc_1.ServerUnaryCall<dependency_1.HandleBufferRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
 }
@@ -272,11 +156,11 @@ export class ImageClient extends grpc_1.makeGenericClientConstructor(Unimplement
             resolve(response);
         }
     })); };
-    info: GrpcPromiseServiceInterface<dependency_1.HandleRequest, ImageInfoResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<ImageInfoResponse> => { if (!metadata) {
+    info: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.ImageInfoResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.ImageInfoResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;
     } if (!options) {
         options = {};
-    } return new Promise((resolve, reject) => super.info(message, metadata, options, (error: grpc_1.ServiceError, response: ImageInfoResponse) => {
+    } return new Promise((resolve, reject) => super.info(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.ImageInfoResponse) => {
         if (error) {
             reject(error);
         }
