@@ -10,7 +10,7 @@ export type ControllerActionId = number & { __brand: 'ControllerActionId' }
 export type InstanceHandle = string & { __brand: 'InstanceHandle' }
 export type InstanceActionId = number & { __brand: 'InstanceActionId' }
 
-export type Callback = (msg: string, details: string) => void
+export type Callback = (msg: string, details: string) => Promise<void>
 export type Rect = { x: number; y: number; width: number; height: number }
 
 export const enum Status {

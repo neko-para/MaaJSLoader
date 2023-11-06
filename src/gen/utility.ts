@@ -60,10 +60,10 @@ export abstract class UnimplementedUtilityService {
         },
         register_callback: {
             path: "/maarpc.Utility/register_callback",
-            requestStream: false,
+            requestStream: true,
             responseStream: true,
-            requestSerialize: (message: dependency_1.IdRequest) => Buffer.from(message.serialize()),
-            requestDeserialize: (bytes: Buffer) => dependency_1.IdRequest.deserialize(new Uint8Array(bytes)),
+            requestSerialize: (message: dependency_1.CallbackRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.CallbackRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.Callback) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.Callback.deserialize(new Uint8Array(bytes))
         },
@@ -81,7 +81,7 @@ export abstract class UnimplementedUtilityService {
     abstract version(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
     abstract set_global_option(call: grpc_1.ServerUnaryCall<dependency_1.SetGlobalOptionRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
     abstract acquire_id(call: grpc_1.ServerUnaryCall<dependency_1.EmptyRequest, dependency_1.IdResponse>, callback: grpc_1.sendUnaryData<dependency_1.IdResponse>): void;
-    abstract register_callback(call: grpc_1.ServerWritableStream<dependency_1.IdRequest, dependency_1.Callback>): void;
+    abstract register_callback(call: grpc_1.ServerDuplexStream<dependency_1.CallbackRequest, dependency_1.Callback>): void;
     abstract unregister_callback(call: grpc_1.ServerUnaryCall<dependency_1.IdRequest, dependency_1.EmptyResponse>, callback: grpc_1.sendUnaryData<dependency_1.EmptyResponse>): void;
 }
 export class UtilityClient extends grpc_1.makeGenericClientConstructor(UnimplementedUtilityService.definition, "Utility", {}) {
@@ -124,8 +124,8 @@ export class UtilityClient extends grpc_1.makeGenericClientConstructor(Unimpleme
             resolve(response);
         }
     })); };
-    register_callback: GrpcStreamServiceInterface<dependency_1.IdRequest, dependency_1.Callback> = (message: dependency_1.IdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientReadableStream<dependency_1.Callback> => {
-        return super.register_callback(message, metadata, options);
+    register_callback: GrpcChunkServiceInterface<dependency_1.CallbackRequest, dependency_1.Callback> = (metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): grpc_1.ClientDuplexStream<dependency_1.CallbackRequest, dependency_1.Callback> => {
+        return super.register_callback(metadata, options);
     };
     unregister_callback: GrpcPromiseServiceInterface<dependency_1.IdRequest, dependency_1.EmptyResponse> = (message: dependency_1.IdRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.EmptyResponse> => { if (!metadata) {
         metadata = new grpc_1.Metadata;

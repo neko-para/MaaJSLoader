@@ -1,6 +1,6 @@
 import * as maarpc from '../gen/types'
 import { PbToObject } from '../helper'
-import { context, contextOutput } from './context'
+import { context, contextInput, contextOutput } from './context'
 import type { Callback, LoggingLevel, Rect } from './types'
 
 export async function version() {
@@ -32,12 +32,22 @@ export async function acquire_id() {
 }
 
 export async function register_callback(id: string, cb: Callback) {
-  const rid = await context['utility.register_callback']({ id }, d => {
+  let resolve: (rid: string) => void
+  const rid = await context['utility.register_callback'](d => {
     if (d) {
-      cb(d.msg!, d.detail!)
+      if (d.msg! === 'Rpc.Inited') {
+        resolve(rid)
+      } else {
+        cb(d.msg!, d.detail!).then(() => {
+          contextInput[rid]?.({})
+        })
+      }
     }
   })
-  return rid
+  await contextInput[rid]!({ init: { id } })
+  return new Promise<string>(res => {
+    resolve = res
+  })
 }
 
 export async function register_callback_for(id: string, target: { onCallback: Callback }) {
@@ -45,9 +55,25 @@ export async function register_callback_for(id: string, target: { onCallback: Ca
 }
 
 export async function update_callback(rid: string, cb: Callback) {
-  contextOutput[rid] = (d: PbToObject<maarpc.Callback>) => {
-    if (d) {
-      cb(d.msg!, d.detail!)
+  if (rid in contextOutput) {
+    const prev = contextOutput[rid]!
+    contextOutput[rid] = async (d: PbToObject<maarpc.Callback>) => {
+      if (d) {
+        if (d.msg! !== 'Rpc.Inited') {
+          await cb(d.msg!, d.detail!)
+        }
+      }
+      prev(d)
+    }
+  } else {
+    contextOutput[rid] = (d: PbToObject<maarpc.Callback>) => {
+      if (d) {
+        if (d.msg! !== 'Rpc.Inited') {
+          cb(d.msg!, d.detail!).then(() => {
+            contextInput[rid]?.({})
+          })
+        }
+      }
     }
   }
 }

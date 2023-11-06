@@ -96,7 +96,7 @@ export class Frontend {
             return id
           }
         } else {
-          this.client[key] = async (arg, out) => {
+          this.client[key] = async out => {
             const id = Frontend.make_id()
             this.output[id] = out
             this.streaming[id] = [
@@ -109,7 +109,7 @@ export class Frontend {
                 delete this.output[id]
               }
             ]
-            await this.adapter.invoke(key, defs.request.fromObject(arg).serialize(), id)
+            await this.adapter.invoke(key, new Uint8Array(), id)
             this.input[id] = async (msg: any) => {
               if (msg === null) {
                 await this.adapter.invoke('$close', new Uint8Array(), id)

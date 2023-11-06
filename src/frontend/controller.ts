@@ -169,7 +169,7 @@ export class Controller {
   rpcCtrlId?: string
   cbId!: string
   handle!: ControllerHandle
-  onCallback: (msg: string, detail: string) => void = () => {}
+  onCallback: (msg: string, detail: string) => Promise<void> = async () => {}
 
   static async init_from(from: ControllerHandle, id: string, rid: string) {
     const ctrl = new Controller()
@@ -271,14 +271,15 @@ export class Controller {
       get status() {
         return (async () => {
           const i = await id
-          return context['controller.status']({ handle: this.controller.handle, id: i.id })
+          return (await context['controller.status']({ handle: this.controller.handle, id: i.id }))!
+            .status!
         })()
       },
       async wait() {
-        return await context['controller.wait']({
+        return (await context['controller.wait']({
           handle: this.controller.handle,
           id: (await id).id
-        })
+        }))!.status!
       }
     }
   }
@@ -379,7 +380,7 @@ export class Controller {
   }
 
   get connected() {
-    return context['controller.connected']({ handle: this.handle })
+    return (async () => (await context['controller.connected']({ handle: this.handle }))!.bool!)()
   }
 
   async image(img: Image) {

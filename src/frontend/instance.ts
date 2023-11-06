@@ -105,7 +105,9 @@ export class Instance {
   rpcId!: string
   cbId!: string
   handle!: InstanceHandle
-  onCallback: (msg: string, detail: string) => void = () => {}
+  onCallback: (msg: string, detail: string) => Promise<void> = async (...args) => {
+    console.log(...args)
+  }
 
   static async init_from(from: InstanceHandle, id: string, rid: string) {
     const inst = new Instance()
@@ -196,11 +198,15 @@ export class Instance {
       get status() {
         return (async () => {
           const i = await id
-          return context['instance.status']({ handle: this.instance.handle, id: i.id })
+          return (await context['instance.status']({ handle: this.instance.handle, id: i.id }))!
+            .status!
         })()
       },
       async wait() {
-        return await context['instance.wait']({ handle: this.instance.handle, id: (await id).id })
+        return (await context['instance.wait']({
+          handle: this.instance.handle,
+          id: (await id).id
+        }))!.status!
       }
     }
   }
@@ -220,7 +226,7 @@ export class Instance {
   }
 
   get inited() {
-    return context['instance.inited']({ handle: this.handle })
+    return (async () => (await context['instance.inited']({ handle: this.handle }))!.bool!)()
   }
 
   post_task(task: string, param: string | Record<string, unknown>) {
@@ -248,7 +254,7 @@ export class Instance {
   }
 
   get all_finished() {
-    return context['instance.all_finished']({ handle: this.handle })
+    return (async () => (await context['instance.all_finished']({ handle: this.handle }))!.bool!)()
   }
 
   async stop() {

@@ -1,4 +1,13 @@
-import { Backend, Frontend, definitions, directAdapter, setupContext, waitClientReady } from '..'
+import {
+  Backend,
+  Frontend,
+  Resource,
+  definitions,
+  directAdapter,
+  setFrontend,
+  setupContext,
+  waitClientReady
+} from '..'
 
 async function main() {
   const [bs, fs] = directAdapter()
@@ -15,13 +24,18 @@ async function main() {
   back.add_all(ctx, definitions)
   front.add_all(definitions)
 
-  const client = front.cast_client<typeof definitions>()
+  setFrontend(front)
 
-  const id = (await client['utility.acquire_id']({}))?.id
-
-  client['utility.register_callback']({ id }, args => {
-    console.log(args)
-  })
+  const res = await Resource.init()
+  res.onCallback = async (msg, detail) => {
+    console.log(msg, detail)
+    await new Promise<void>(resolve => {
+      setTimeout(resolve, 2000)
+    })
+    console.log('<<<', msg, detail)
+  }
+  await res.post_path(process.cwd()).wait()
+  await res.destroy()
 }
 
 main()

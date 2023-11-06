@@ -8011,3 +8011,118 @@ export class SetGlobalOptionRequest extends pb_1.Message {
         return SetGlobalOptionRequest.deserialize(bytes);
     }
 }
+export class CallbackRequest extends pb_1.Message {
+    #one_of_decls: number[][] = [[101], [1]];
+    constructor(data?: any[] | ({} & (({
+        init?: IdRequest;
+    }) | ({
+        ok?: boolean;
+    })))) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("ok" in data && data.ok != undefined) {
+                this.ok = data.ok;
+            }
+            if ("init" in data && data.init != undefined) {
+                this.init = data.init;
+            }
+        }
+    }
+    get ok() {
+        return pb_1.Message.getFieldWithDefault(this, 1, false) as boolean;
+    }
+    set ok(value: boolean) {
+        pb_1.Message.setOneofField(this, 1, this.#one_of_decls[1], value);
+    }
+    get has_ok() {
+        return pb_1.Message.getField(this, 1) != null;
+    }
+    get init() {
+        return pb_1.Message.getWrapperField(this, IdRequest, 101) as IdRequest;
+    }
+    set init(value: IdRequest) {
+        pb_1.Message.setOneofWrapperField(this, 101, this.#one_of_decls[0], value);
+    }
+    get has_init() {
+        return pb_1.Message.getField(this, 101) != null;
+    }
+    get result() {
+        const cases: {
+            [index: number]: "none" | "init";
+        } = {
+            0: "none",
+            101: "init"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [101])];
+    }
+    get _ok() {
+        const cases: {
+            [index: number]: "none" | "ok";
+        } = {
+            0: "none",
+            1: "ok"
+        };
+        return cases[pb_1.Message.computeOneofCase(this, [1])];
+    }
+    static fromObject(data: {
+        ok?: boolean;
+        init?: ReturnType<typeof IdRequest.prototype.toObject>;
+    }): CallbackRequest {
+        const message = new CallbackRequest({});
+        if (data.ok != null) {
+            message.ok = data.ok;
+        }
+        if (data.init != null) {
+            message.init = IdRequest.fromObject(data.init);
+        }
+        return message;
+    }
+    toObject() {
+        const data: {
+            ok?: boolean;
+            init?: ReturnType<typeof IdRequest.prototype.toObject>;
+        } = {};
+        if (this.ok != null) {
+            data.ok = this.ok;
+        }
+        if (this.init != null) {
+            data.init = this.init.toObject();
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.has_ok)
+            writer.writeBool(1, this.ok);
+        if (this.has_init)
+            writer.writeMessage(101, this.init, () => this.init.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
+    }
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CallbackRequest {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new CallbackRequest();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.ok = reader.readBool();
+                    break;
+                case 101:
+                    reader.readMessage(message.init, () => message.init = IdRequest.deserialize(reader));
+                    break;
+                default: reader.skipField();
+            }
+        }
+        return message;
+    }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+    static deserializeBinary(bytes: Uint8Array): CallbackRequest {
+        return CallbackRequest.deserialize(bytes);
+    }
+}

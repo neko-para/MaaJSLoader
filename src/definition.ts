@@ -501,9 +501,9 @@ export const definitions = {
         },
         register_callback: {
             path: "/maarpc.Utility/register_callback",
-            requestStream: false,
+            requestStream: true,
             responseStream: true,
-            request: dependency_1.IdRequest,
+            request: dependency_1.CallbackRequest,
             response: dependency_1.Callback,
         },
         unregister_callback: {

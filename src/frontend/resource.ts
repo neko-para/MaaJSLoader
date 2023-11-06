@@ -11,7 +11,7 @@ export class Resource {
   rpcId!: string
   cbId!: string
   handle!: ResourceHandle
-  onCallback: (msg: string, detail: string) => void = () => {}
+  onCallback: (msg: string, detail: string) => Promise<void> = async () => {}
 
   static async init_from(from: ResourceHandle, id: string, rid: string) {
     const res = new Resource()
@@ -48,11 +48,15 @@ export class Resource {
       get status() {
         return (async () => {
           const i = await id
-          return context['resource.status']({ handle: this.resource.handle, id: i.id })
+          return (await context['resource.status']({ handle: this.resource.handle, id: i.id }))!
+            .status!
         })()
       },
       async wait() {
-        return await context['resource.wait']({ handle: this.resource.handle, id: (await id).id })
+        return (await context['resource.wait']({
+          handle: this.resource.handle,
+          id: (await id).id
+        }))!.status!
       }
     }
   }
@@ -62,10 +66,10 @@ export class Resource {
   }
 
   get loaded() {
-    return context['resource.loaded']({ handle: this.handle })
+    return (async () => (await context['resource.loaded']({ handle: this.handle }))!.bool!)()
   }
 
   get hash() {
-    return context['resource.hash']({ handle: this.handle })
+    return (async () => (await context['resource.hash']({ handle: this.handle }))!.str!)()
   }
 }
