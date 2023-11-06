@@ -49,6 +49,42 @@ export function streamAdapterBackend(
   ]
 }
 
+export function streamAdapterBackendWithDirect(
+  send: (msg: string, arg: Uint8Array, id?: string) => void
+): [
+  (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>,
+  InvokeServer & PostClient,
+  InvokeClient & PostServer
+] {
+  const invokes: Record<string, (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>> = {}
+  const posts: Record<string, (arg: Uint8Array, id?: string) => void> = {}
+
+  const server: InvokeServer & PostClient = {
+    handle(msg, func) {
+      invokes[msg] = func
+    },
+    post(msg, arg, id) {
+      send(msg, arg, id)
+      posts[msg]?.(arg, id)
+    }
+  }
+
+  return [
+    async (msg, arg, id) => {
+      return (await invokes[msg]?.(arg, id)) ?? null
+    },
+    server,
+    {
+      invoke(msg, arg, id) {
+        return invokes[msg]?.(arg, id)
+      },
+      on(msg, func) {
+        posts[msg] = func
+      }
+    }
+  ]
+}
+
 export function streamAdapterFrontend(
   invoke: (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>
 ): [(msg: string, arg: Uint8Array, id?: string) => void, InvokeClient & PostServer] {
