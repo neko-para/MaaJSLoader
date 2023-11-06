@@ -1,4 +1,18 @@
+export type ImageHandle = string & { __brand: 'ImageHandle' }
+export type SyncCtxHandle = string & { __brand: 'SyncCtxHandle' }
+
+export type ResourceHandle = string & { __brand: 'ResourceHandle' }
+export type ResourceActionId = number & { __brand: 'ResourceActionId' }
+
+export type ControllerHandle = string & { __brand: 'ControllerHandle' }
+export type ControllerActionId = number & { __brand: 'ControllerActionId' }
+
+export type InstanceHandle = string & { __brand: 'InstanceHandle' }
+export type InstanceActionId = number & { __brand: 'InstanceActionId' }
+
 export type Callback = (msg: string, details: string) => void
+export type Rect = { x: number; y: number; width: number; height: number }
+
 export const enum Status {
   Pending = 1000,
   Running = 2000,

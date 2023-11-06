@@ -1,6 +1,4 @@
-import { setupContext, waitClientReady } from '../src/backend/context'
-import { definitions } from '../src/definition'
-import { Backend, Frontend, directAdapter } from '../src/helper'
+import { Backend, Frontend, definitions, directAdapter, setupContext, waitClientReady } from '..'
 
 async function main() {
   const [bs, fs] = directAdapter()

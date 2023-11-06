@@ -15,17 +15,17 @@ export type ServiceDefinition = {
 }
 
 export type InvokeServer = {
-  handle: (msg: string, func: (arg: Uint8Array, id?: number) => Promise<Uint8Array | null>) => void
+  handle: (msg: string, func: (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>) => void
 }
 export type InvokeClient = {
-  invoke: (msg: string, arg: Uint8Array, id?: number) => Promise<Uint8Array | null>
+  invoke: (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>
 }
 
 export type PostServer = {
-  on: (msg: string, func: (arg: Uint8Array, id?: number) => void) => void
+  on: (msg: string, func: (arg: Uint8Array, id?: string) => void) => void
 }
 export type PostClient = {
-  post: (msg: string, arg: Uint8Array, id?: number) => void
+  post: (msg: string, arg: Uint8Array, id?: string) => void
 }
 
 export type PbToObject<Msg> = Msg extends {
@@ -51,14 +51,10 @@ export type TranslateRpc<T> = T extends GeneralDefinition<
   ? SS extends false
     ? RS extends false
       ? (req: PbToObject<SMsg>) => Promise<PbToObject<RMsg> | null>
-      : (req: PbToObject<SMsg>, out: (res: PbToObject<RMsg> | null) => void) => Promise<void>
+      : (req: PbToObject<SMsg>, out: (res: PbToObject<RMsg> | null) => void) => Promise<string>
     : RS extends false
-    ? (
-        out: (res: PbToObject<RMsg> | null) => void
-      ) => Promise<(req: PbToObject<SMsg> | null) => Promise<void>>
-    : (
-        out: (res: PbToObject<RMsg> | null) => void
-      ) => Promise<(req: PbToObject<SMsg> | null) => Promise<void>>
+    ? (out: (res: PbToObject<RMsg> | null) => void) => Promise<string>
+    : (out: (res: PbToObject<RMsg> | null) => void) => Promise<string>
   : never
 
 export type TranslateAllRpc<T, N extends string> = {

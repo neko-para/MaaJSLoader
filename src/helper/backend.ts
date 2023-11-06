@@ -2,7 +2,7 @@ import type { InvokeServer, PostClient, ServiceDefinition } from './types'
 
 export class Backend {
   adapter: InvokeServer & PostClient
-  streaming: Record<number, [(data: Uint8Array) => Promise<void>, () => void]>
+  streaming: Record<string, [(data: Uint8Array) => Promise<void>, () => void]>
 
   constructor(adapter: InvokeServer & PostClient) {
     this.adapter = adapter

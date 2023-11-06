@@ -2,17 +2,19 @@
   "name": "@maa/loader",
   "version": "1.0.0",
   "main": "src/node.ts",
-  "browser": "src/index.ts",
+  "browser": "src/browser.ts",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@tsconfig/node18": "^18.2.0",
     "@types/google-protobuf": "^3.15.7",
     "@types/node": "^18.17.1",
+    "@types/uuid": "^9.0.6",
     "typescript": "^5.1.6"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.9.3",
-    "google-protobuf": "^3.21.2"
+    "google-protobuf": "^3.21.2",
+    "uuid": "^9.0.1"
   },
   "author": "nekosu",
   "license": "AGPL"

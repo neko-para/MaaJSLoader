@@ -1,8 +1,8 @@
-import { InvokeClient, InvokeServer, PostClient, PostServer } from './types'
+import type { InvokeClient, InvokeServer, PostClient, PostServer } from './types'
 
 export function directAdapter(): [InvokeServer & PostClient, InvokeClient & PostServer] {
-  const invokes: Record<string, (arg: Uint8Array, id?: number) => Promise<Uint8Array | null>> = {}
-  const posts: Record<string, (arg: Uint8Array, id?: number) => void> = {}
+  const invokes: Record<string, (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>> = {}
+  const posts: Record<string, (arg: Uint8Array, id?: string) => void> = {}
 
   return [
     {
@@ -25,12 +25,12 @@ export function directAdapter(): [InvokeServer & PostClient, InvokeClient & Post
 }
 
 export function streamAdapterBackend(
-  send: (msg: string, arg: Uint8Array, id?: number) => void
+  send: (msg: string, arg: Uint8Array, id?: string) => void
 ): [
-  (msg: string, arg: Uint8Array, id?: number) => Promise<Uint8Array | null>,
+  (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>,
   InvokeServer & PostClient
 ] {
-  const invokes: Record<string, (arg: Uint8Array, id?: number) => Promise<Uint8Array | null>> = {}
+  const invokes: Record<string, (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>> = {}
 
   const server: InvokeServer & PostClient = {
     handle(msg, func) {
@@ -50,9 +50,9 @@ export function streamAdapterBackend(
 }
 
 export function streamAdapterFrontend(
-  invoke: (msg: string, arg: Uint8Array, id?: number) => Promise<Uint8Array | null>
-): [(msg: string, arg: Uint8Array, id?: number) => void, InvokeClient & PostServer] {
-  const posts: Record<string, (arg: Uint8Array, id?: number) => void> = {}
+  invoke: (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>
+): [(msg: string, arg: Uint8Array, id?: string) => void, InvokeClient & PostServer] {
+  const posts: Record<string, (arg: Uint8Array, id?: string) => void> = {}
 
   const client: InvokeClient & PostServer = {
     invoke(msg, arg, id) {

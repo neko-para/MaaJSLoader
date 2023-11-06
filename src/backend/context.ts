@@ -2,7 +2,7 @@ import * as grpc from '@grpc/grpc-js'
 
 import * as maarpc from '../gen'
 
-export type Context = ReturnType<typeof setupContext>
+export type BackendContext = ReturnType<typeof setupContext>
 
 export function setupContext(address: string, cred = grpc.credentials.createInsecure()) {
   return {
@@ -17,7 +17,7 @@ export function setupContext(address: string, cred = grpc.credentials.createInse
   }
 }
 
-export async function waitClientReady(ctx: Context) {
+export async function waitClientReady(ctx: BackendContext) {
   try {
     await Promise.all(
       Object.entries(ctx).map(
@@ -43,7 +43,7 @@ export async function waitClientReady(ctx: Context) {
   }
 }
 
-export async function destroyContext(context: Context) {
+export async function destroyContext(context: BackendContext) {
   context.config.close()
   context.device.close()
   context.instance.close()

@@ -1,21 +1,23 @@
-import type {
-  InvokeClient,
-  PostServer,
-  ServiceDefinition,
-  TranslateAllRpc,
-  TranslateAllService
-} from './types'
+import { v4 } from 'uuid'
+
+import type { InvokeClient, PostServer, ServiceDefinition, TranslateAllService } from './types'
 
 export class Frontend {
-  counter: number
   adapter: InvokeClient & PostServer
-  streaming: Record<number, [(data: Uint8Array) => Promise<void>, () => void]>
-  client: Record<string, (...args: any) => any>
+  streaming: Record<string, [(data: Uint8Array) => Promise<void>, () => void]>
+  input: Record<string, (arg: any) => any>
+  output: Partial<Record<string, (arg: any) => Promise<void>>>
+  client: Partial<Record<string, (...args: any) => void>>
+
+  static make_id() {
+    return v4()
+  }
 
   constructor(adapter: InvokeClient & PostServer) {
-    this.counter = 1
     this.adapter = adapter
     this.streaming = {}
+    this.input = {}
+    this.output = {}
     this.client = {}
   }
 
@@ -55,59 +57,67 @@ export class Frontend {
           }
         } else {
           this.client[key] = async (arg, out) => {
-            const id = this.counter
-            this.counter += 1
+            const id = Frontend.make_id()
+            this.output[id] = out
             this.streaming[id] = [
               async data => {
-                out(defs.response.deserialize(data).toObject())
+                this.output[id]?.(defs.response.deserialize(data).toObject())
               },
               () => {
-                out(null)
+                this.output[id]?.(null)
+                delete this.output[id]
               }
             ]
             await this.adapter.invoke(key, defs.request.fromObject(arg).serialize(), id)
+            return id
           }
         }
       } else {
         if (!defs.responseStream) {
           this.client[key] = async out => {
-            const id = this.counter
-            this.counter += 1
+            const id = Frontend.make_id()
+            this.output[id] = out
             this.adapter.invoke(key, new Uint8Array(), id).then(result => {
               if (result) {
-                out(defs.response.deserialize(result).toObject())
+                this.output[id]?.(defs.response.deserialize(result).toObject())
               } else {
-                out(null)
+                this.output[id]?.(null)
+                delete this.input[id]
+                delete this.output[id]
               }
             })
-            return async (msg: any) => {
+            this.input[id] = async (msg: any) => {
               if (msg === null) {
                 await this.adapter.invoke('$close', new Uint8Array(), id)
               } else {
                 await this.adapter.invoke('$stream', defs.request.fromObject(msg).serialize(), id)
               }
             }
+            return id
           }
         } else {
           this.client[key] = async (arg, out) => {
-            const id = this.counter
-            this.counter += 1
+            const id = Frontend.make_id()
+            this.output[id] = out
             this.streaming[id] = [
               async data => {
-                out(defs.response.deserialize(data).toObject())
+                this.output[id]?.(defs.response.deserialize(data).toObject())
               },
               () => {
-                out(null)
+                this.output[id]?.(null)
+                delete this.input[id]
+                delete this.output[id]
               }
             ]
             await this.adapter.invoke(key, defs.request.fromObject(arg).serialize(), id)
-            return async (msg: any) => {
+            this.input[id] = async (msg: any) => {
               if (msg === null) {
                 await this.adapter.invoke('$close', new Uint8Array(), id)
               } else {
                 await this.adapter.invoke('$stream', defs.request.fromObject(msg).serialize(), id)
               }
             }
+            return id
           }
         }
       }

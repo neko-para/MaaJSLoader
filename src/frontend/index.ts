@@ -1,10 +1,10 @@
-export * from './buffer'
-export * from './config'
 export * from './controller'
 export * from './device'
+export * from './image'
 export * from './instance'
 export * from './resource'
 export * from './syncctx'
+export * from './types'
 export * from './utility'
 
 export * from './context'
