@@ -1,8 +1,9 @@
+import type { PbBuffer } from './buffer'
 import type { InvokeClient, InvokeServer, PostClient, PostServer } from './types'
 
 export function directAdapter(): [InvokeServer & PostClient, InvokeClient & PostServer] {
-  const invokes: Record<string, (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>> = {}
-  const posts: Record<string, (arg: Uint8Array, id?: string) => void> = {}
+  const invokes: Record<string, (arg: PbBuffer, id?: string) => Promise<PbBuffer | null>> = {}
+  const posts: Record<string, (arg: PbBuffer, id?: string) => void> = {}
 
   return [
     {
@@ -25,12 +26,12 @@ export function directAdapter(): [InvokeServer & PostClient, InvokeClient & Post
 }
 
 export function streamAdapterBackend(
-  send: (msg: string, arg: Uint8Array, id?: string) => void
+  send: (msg: string, arg: PbBuffer, id?: string) => void
 ): [
-  (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>,
+  (msg: string, arg: PbBuffer, id?: string) => Promise<PbBuffer | null>,
   InvokeServer & PostClient
 ] {
-  const invokes: Record<string, (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>> = {}
+  const invokes: Record<string, (arg: PbBuffer, id?: string) => Promise<PbBuffer | null>> = {}
 
   const server: InvokeServer & PostClient = {
     handle(msg, func) {
@@ -50,14 +51,14 @@ export function streamAdapterBackend(
 }
 
 export function streamAdapterBackendWithDirect(
-  send: (msg: string, arg: Uint8Array, id?: string) => void
+  send: (msg: string, arg: PbBuffer, id?: string) => void
 ): [
-  (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>,
+  (msg: string, arg: PbBuffer, id?: string) => Promise<PbBuffer | null>,
   InvokeServer & PostClient,
   InvokeClient & PostServer
 ] {
-  const invokes: Record<string, (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>> = {}
-  const posts: Record<string, (arg: Uint8Array, id?: string) => void> = {}
+  const invokes: Record<string, (arg: PbBuffer, id?: string) => Promise<PbBuffer | null>> = {}
+  const posts: Record<string, (arg: PbBuffer, id?: string) => void> = {}
 
   const server: InvokeServer & PostClient = {
     handle(msg, func) {
@@ -86,9 +87,9 @@ export function streamAdapterBackendWithDirect(
 }
 
 export function streamAdapterFrontend(
-  invoke: (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>
-): [(msg: string, arg: Uint8Array, id?: string) => void, InvokeClient & PostServer] {
-  const posts: Record<string, (arg: Uint8Array, id?: string) => void> = {}
+  invoke: (msg: string, arg: PbBuffer, id?: string) => Promise<PbBuffer | null>
+): [(msg: string, arg: PbBuffer, id?: string) => void, InvokeClient & PostServer] {
+  const posts: Record<string, (arg: PbBuffer, id?: string) => void> = {}
 
   const client: InvokeClient & PostServer = {
     invoke(msg, arg, id) {

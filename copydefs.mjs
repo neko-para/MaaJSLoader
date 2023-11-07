@@ -36,6 +36,7 @@ for (const file of await fs.readdir(d)) {
           if (m) {
             if (m[2] === 'S') {
               result.push(`            ${m[1]}: ${m[3]},`)
+              result.push(`            ${m[1]}Type: '${m[3].replace('dependency_1.', '')}',`)
             }
           } else {
             result.push(row)

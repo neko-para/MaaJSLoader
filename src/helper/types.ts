@@ -1,31 +1,41 @@
+import type * as maarpc from '../gen/types'
+import type { PbBuffer } from './buffer'
+
+interface PbMessage {
+  serialize(): Uint8Array
+  toObject(): any
+}
+
 export type ServiceDefinition = {
   [name: string]: {
     path: string
     requestStream: boolean
     responseStream: boolean
     request: (abstract new () => any) & {
-      deserialize: (buf: Uint8Array) => any
-      fromObject: (obj: any) => any
+      deserialize: (buf: Uint8Array) => PbMessage
+      fromObject: (obj: any) => PbMessage
     }
+    requestType: keyof typeof maarpc
     response: (abstract new () => any) & {
-      deserialize: (buf: Uint8Array) => any
-      fromObject: (obj: any) => any
+      deserialize: (buf: Uint8Array) => PbMessage
+      fromObject: (obj: any) => PbMessage
     }
+    responseType: keyof typeof maarpc
   }
 }
 
 export type InvokeServer = {
-  handle: (msg: string, func: (arg: Uint8Array, id?: string) => Promise<Uint8Array | null>) => void
+  handle: (msg: string, func: (arg: PbBuffer, id?: string) => Promise<PbBuffer | null>) => void
 }
 export type InvokeClient = {
-  invoke: (msg: string, arg: Uint8Array, id?: string) => Promise<Uint8Array | null>
+  invoke: (msg: string, arg: PbBuffer, id?: string) => Promise<PbBuffer | null>
 }
 
 export type PostServer = {
-  on: (msg: string, func: (arg: Uint8Array, id?: string) => void) => void
+  on: (msg: string, func: (arg: PbBuffer, id?: string) => void) => void
 }
 export type PostClient = {
-  post: (msg: string, arg: Uint8Array, id?: string) => void
+  post: (msg: string, arg: PbBuffer, id?: string) => void
 }
 
 export type PbToObject<Msg> = Msg extends {

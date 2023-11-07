@@ -1,8 +1,9 @@
+import { type PbBuffer, markBuffer } from './buffer'
 import type { InvokeServer, PostClient, ServiceDefinition } from './types'
 
 export class Backend {
   adapter: InvokeServer & PostClient
-  streaming: Record<string, [(data: Uint8Array) => Promise<void>, () => void]>
+  streaming: Record<string, [(data: PbBuffer) => Promise<void>, () => void]>
 
   constructor(adapter: InvokeServer & PostClient) {
     this.adapter = adapter
@@ -40,21 +41,24 @@ export class Backend {
       if (!defs.requestStream) {
         if (!defs.responseStream) {
           this.adapter.handle(`${name}.${method}`, async arg => {
-            return (await service[method](defs.request.deserialize(arg))).serialize()
+            return markBuffer(
+              (await service[method](defs.request.deserialize(arg.__msg__))).serialize(),
+              defs.responseType
+            )
           })
         } else {
           this.adapter.handle(`${name}.${method}`, async (arg, id) => {
-            const stream = service[method](defs.request.deserialize(arg))
+            const stream = service[method](defs.request.deserialize(arg.__msg__))
 
             stream.on('readable', () => {
               const res = stream.read()
               if (!res) {
                 return
               }
-              this.adapter.post('$stream', res.serialize(), id)
+              this.adapter.post('$stream', markBuffer(res.serialize(), defs.responseType), id)
             })
             stream.on('close', () => {
-              this.adapter.post('$close', new Uint8Array(), id)
+              this.adapter.post('$close', markBuffer(new Uint8Array(), ''), id)
             })
             return null
           })
@@ -62,19 +66,19 @@ export class Backend {
       } else {
         if (!defs.responseStream) {
           this.adapter.handle(`${name}.${method}`, async (arg, id) => {
-            return new Promise<Buffer | null>(resolve => {
+            return new Promise<PbBuffer | null>(resolve => {
               const stream = service[method]((err: any, val: any) => {
                 if (err) {
                   console.log(err)
                   resolve(null)
                 } else {
-                  resolve(val.serialize())
+                  resolve(markBuffer(val.serialize(), defs.responseType))
                 }
               })
               this.streaming[id!] = [
                 data => {
                   return new Promise<void>(resolve => {
-                    stream.write(defs.request.deserialize(data), resolve)
+                    stream.write(defs.request.deserialize(data.__msg__), resolve)
                   })
                 },
                 () => {
@@ -82,7 +86,7 @@ export class Backend {
                 }
               ]
               stream.on('close', () => {
-                this.adapter.post('$close', new Uint8Array(), id)
+                this.adapter.post('$close', markBuffer(new Uint8Array(), ''), id)
               })
             })
           })
@@ -92,7 +96,7 @@ export class Backend {
             this.streaming[id!] = [
               data => {
                 return new Promise<void>(resolve => {
-                  stream.write(defs.request.deserialize(data), resolve)
+                  stream.write(defs.request.deserialize(data.__msg__), resolve)
                 })
               },
               () => {
@@ -105,10 +109,10 @@ export class Backend {
               if (!res) {
                 return
               }
-              this.adapter.post('$stream', res.serialize(), id)
+              this.adapter.post('$stream', markBuffer(res.serialize(), defs.responseType), id)
             })
             stream.on('close', () => {
-              this.adapter.post('$close', new Uint8Array(), id)
+              this.adapter.post('$close', markBuffer(new Uint8Array(), ''), id)
             })
             return null
           })
