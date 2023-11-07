@@ -207,7 +207,7 @@ export class Controller {
   }
 
   static init_custom(ctrl: CustomControllerBase) {
-    return new Controller().createCustom(ctrl)
+    return new Controller().create_custom(ctrl)
   }
 
   async create_adb(cfg?: AdbControllerConfig) {
@@ -227,15 +227,24 @@ export class Controller {
     return this
   }
 
-  async createCustom(ctrl: CustomControllerBase) {
+  async create_custom(ctrl: CustomControllerBase) {
     this.cbId = await acquire_id()
     this.rpcId = await register_callback_for(this.cbId, this)
+    let initRes: ((h: ControllerHandle) => void) | null = null
     this.rpcCtrlId = await context['controller.create_custom'](async res => {
       if (res) {
-        const req: PbToObject<maarpc.CustomControllerRequest> = {}
-        req.ok = await ctrl.process(res, req)
-        contextInput[this.rpcCtrlId!]?.(req)
+        if (initRes && res.init) {
+          initRes(res.init as ControllerHandle)
+          initRes = null
+        } else {
+          const req: PbToObject<maarpc.CustomControllerRequest> = {}
+          req.ok = await ctrl.process(res, req)
+          contextInput[this.rpcCtrlId!]?.(req)
+        }
       }
+    })
+    this.handle = await new Promise<ControllerHandle>(res => {
+      initRes = res
     })
     return this
   }

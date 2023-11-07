@@ -135,11 +135,17 @@ export class Instance {
   }
 
   async register_custom_recognizer(name: string, reco: CustomRecognizerBase) {
+    let initRes: (() => void) | null = null
     const rpcRecoId = await context['instance.register_custom_recognizer'](async res => {
       if (res) {
-        const req: PbToObject<maarpc.CustomRecognizerRequest> = {}
-        req.ok = await reco.process(res, req)
-        contextInput[rpcRecoId]?.(req)
+        if (initRes) {
+          initRes()
+          initRes = null
+        } else {
+          const req: PbToObject<maarpc.CustomRecognizerRequest> = {}
+          req.ok = await reco.process(res, req)
+          contextInput[rpcRecoId]?.(req)
+        }
       }
     })
     const initReq: PbToObject<maarpc.CustomRecognizerRequest> = {
@@ -150,6 +156,9 @@ export class Instance {
       }
     }
     await contextInput[rpcRecoId]?.(initReq)
+    await new Promise<void>(res => {
+      initRes = res
+    })
     return rpcRecoId
   }
 
@@ -162,11 +171,17 @@ export class Instance {
   }
 
   async register_custom_action(name: string, act: CustomActionBase) {
+    let initRes: (() => void) | null = null
     const rpcActId = await context['instance.register_custom_action'](async res => {
       if (res) {
-        const req: PbToObject<maarpc.CustomActionRequest> = {}
-        req.ok = await act.process(res, req)
-        contextInput[rpcActId]?.(req)
+        if (initRes) {
+          initRes()
+          initRes = null
+        } else {
+          const req: PbToObject<maarpc.CustomActionRequest> = {}
+          req.ok = await act.process(res, req)
+          contextInput[rpcActId]?.(req)
+        }
       }
     })
     const initReq: PbToObject<maarpc.CustomActionRequest> = {
@@ -177,6 +192,9 @@ export class Instance {
       }
     }
     await contextInput[rpcActId]?.(initReq)
+    await new Promise<void>(res => {
+      initRes = res
+    })
     return rpcActId
   }
 
