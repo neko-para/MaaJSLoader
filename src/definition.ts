@@ -502,6 +502,15 @@ export const definitions = {
             requestType: 'HandleRequest',
             response: dependency_1.StringResponse,
             responseType: 'StringResponse',
+        },
+        task_list: {
+            path: "/maarpc.Resource/task_list",
+            requestStream: false,
+            responseStream: false,
+            request: dependency_1.HandleRequest,
+            requestType: 'HandleRequest',
+            response: dependency_1.StringResponse,
+            responseType: 'StringResponse',
         }
     },
 

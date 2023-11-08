@@ -93,6 +93,15 @@ export abstract class UnimplementedResourceService {
             requestDeserialize: (bytes: Buffer) => dependency_1.HandleRequest.deserialize(new Uint8Array(bytes)),
             responseSerialize: (message: dependency_1.StringResponse) => Buffer.from(message.serialize()),
             responseDeserialize: (bytes: Buffer) => dependency_1.StringResponse.deserialize(new Uint8Array(bytes))
+        },
+        task_list: {
+            path: "/maarpc.Resource/task_list",
+            requestStream: false,
+            responseStream: false,
+            requestSerialize: (message: dependency_1.HandleRequest) => Buffer.from(message.serialize()),
+            requestDeserialize: (bytes: Buffer) => dependency_1.HandleRequest.deserialize(new Uint8Array(bytes)),
+            responseSerialize: (message: dependency_1.StringResponse) => Buffer.from(message.serialize()),
+            responseDeserialize: (bytes: Buffer) => dependency_1.StringResponse.deserialize(new Uint8Array(bytes))
         }
     };
     [method: string]: grpc_1.UntypedHandleCall;
@@ -103,6 +112,7 @@ export abstract class UnimplementedResourceService {
     abstract wait(call: grpc_1.ServerUnaryCall<dependency_1.HandleIIdRequest, dependency_1.StatusResponse>, callback: grpc_1.sendUnaryData<dependency_1.StatusResponse>): void;
     abstract loaded(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.BoolResponse>, callback: grpc_1.sendUnaryData<dependency_1.BoolResponse>): void;
     abstract hash(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
+    abstract task_list(call: grpc_1.ServerUnaryCall<dependency_1.HandleRequest, dependency_1.StringResponse>, callback: grpc_1.sendUnaryData<dependency_1.StringResponse>): void;
 }
 export class ResourceClient extends grpc_1.makeGenericClientConstructor(UnimplementedResourceService.definition, "Resource", {}) {
     constructor(address: string, credentials: grpc_1.ChannelCredentials, options?: Partial<grpc_1.ChannelOptions>) {
@@ -185,6 +195,18 @@ export class ResourceClient extends grpc_1.makeGenericClientConstructor(Unimplem
     } if (!options) {
         options = {};
     } return new Promise((resolve, reject) => super.hash(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.StringResponse) => {
+        if (error) {
+            reject(error);
+        }
+        else {
+            resolve(response);
+        }
+    })); };
+    task_list: GrpcPromiseServiceInterface<dependency_1.HandleRequest, dependency_1.StringResponse> = (message: dependency_1.HandleRequest, metadata?: grpc_1.Metadata | grpc_1.CallOptions, options?: grpc_1.CallOptions): Promise<dependency_1.StringResponse> => { if (!metadata) {
+        metadata = new grpc_1.Metadata;
+    } if (!options) {
+        options = {};
+    } return new Promise((resolve, reject) => super.task_list(message, metadata, options, (error: grpc_1.ServiceError, response: dependency_1.StringResponse) => {
         if (error) {
             reject(error);
         }

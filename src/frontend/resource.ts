@@ -72,4 +72,11 @@ export class Resource {
   get hash() {
     return (async () => (await context['resource.hash']({ handle: this.handle }))!.str!)()
   }
+
+  get task_list() {
+    return (async () =>
+      JSON.parse(
+        (await context['resource.task_list']({ handle: this.handle }))!.str!
+      ) as string[])()
+  }
 }
